@@ -128,7 +128,7 @@
   "解谜怪盗团": {
     "P&KU1": 2,
     "CCBC12": 4,
-    "P&KU2": 25,
+    "P&KU2": null,
     "CCBCBA": "50+",
     "MH2023": 4,
     "JH2024": 1,
@@ -500,6 +500,24 @@
     "US-TC": 22,
     "ZJUPH1": 25,
     "SECO2": 8,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "耗": {
+    "P&KU1": 6,
+    "CCBC12": 2,
+    "P&KU2": 25,
+    "CCBCBA": 26,
+    "MH2023": null,
+    "JH2024": null,
+    "P&KU3a": null,
+    "CCBC15": 16,
+    "JUST1": null,
+    "GnPH": null,
+    "CCBC16": 35,
+    "US-TC": null,
+    "ZJUPH1": null,
+    "SECO2": null,
     "P&KU3b": null,
     "CCBC17": null
   }

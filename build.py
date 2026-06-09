@@ -424,15 +424,15 @@ function isMerged(teamName,compId){return !!mergedMap[teamName+'_'+compId];}
 
 function rankCls(r){var n=parseInt(r,10);if(isNaN(n))return'cr-mid';if(n===1)return'cr-1';if(n<=3)return'cr-2';if(n<=6)return'cr-4';if(n<=10)return'cr-7';return'cr-mid';}
 
-function computeScores(tr){
+function computeScores(tr,tname){
   var fs=0,sv=[];
-  for(var i=0;i<comps.length;i++){var c=comps[i],r=tr[c.id],rs=rankScore(r);if(r!==null&&r!==undefined&&r!=='')sv.push(rs);fs+=decayCoeff(c.id,compWeight(c.id))*rs;}
+  for(var i=0;i<comps.length;i++){var c=comps[i],r=tr[c.id],rs=rankScore(r);if(tname&&isMerged(tname,c.id))rs/=2;if(r!==null&&r!==undefined&&r!=='')sv.push(rs);fs+=decayCoeff(c.id,compWeight(c.id))*rs;}
   var sa=sv.length>0?sv.reduce(function(a,b){return a+b;},0)/sv.length:0;
   return{total:fs*2+sa*3,frontSum:fs,stableAvg:sa};
 }
 
 var teams=TEAMS.map(function(t){
-  var s=computeScores(rankings[t.name]||{});
+  var s=computeScores(rankings[t.name]||{},t.name);
   return{name:t.name.replace('\uFF08\u89E3\u6563\uFF09',''),origName:t.name,total:s.total,frontSum:s.frontSum,stableAvg:s.stableAvg};
 });
 teams.sort(function(a,b){return b.total-a.total;});
