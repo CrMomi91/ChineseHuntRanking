@@ -1,0 +1,3236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>中华 Puzzle Hunt 队伍数据统计</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: #f5f5f7; color: #1a1a1a; line-height: 1.4; -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #ccc; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #aaa; }
+
+.wrap { padding: 48px 36px 60px; }
+.center-col { display: flex; flex-direction: column; align-items: center; }
+
+.page-header { margin-bottom: 20px; text-align: center; }
+.page-header h1 { font-size: 30px; font-weight: 600; color: #111; }
+.page-header .subtitle { font-size: 14px; color: #ccc; margin-top: 4px; }
+
+.tab-bar { display: flex; gap: 0; margin-bottom: 28px; }
+.tab-btn {
+  padding: 8px 24px; font-size: 15px; font-weight: 500; font-family: inherit;
+  border: none; background: transparent; color: #999; cursor: pointer;
+  border-bottom: 2px solid transparent; transition: all 0.15s;
+}
+.tab-btn:hover { color: #555; }
+.tab-btn.active { color: #111; border-bottom-color: #333; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Leaderboard */
+.col-heads {
+  display: inline-flex; align-items: flex-end;
+  padding: 0 0 10px 0; font-size: 14px; color: #aaa; font-weight: 500;
+}
+.col-heads .ch-spacer { width: 6px; flex-shrink: 0; }
+.col-heads .ch-rank   { width: 54px; flex-shrink: 0; text-align: center; }
+.col-heads .ch-name   { width: 231px; flex-shrink: 0; text-align: center; }
+.col-heads .ch-total  { width: 102px; flex-shrink: 0; text-align: center; }
+.col-heads .ch-front  { width: 102px; flex-shrink: 0; text-align: center; }
+.col-heads .ch-stable { width: 102px; flex-shrink: 0; text-align: center; }
+
+.comp-heads {
+  display: flex; gap: 10px; overflow-x: auto; flex-shrink: 0; padding: 0 10px;
+}
+.comp-link {
+  display: block; width: 40px; min-width: 40px; text-align: center;
+  font-size: 12px; color: #aaa; text-decoration: none; cursor: pointer;
+  transition: color 0.15s; font-weight: 500;
+}
+.comp-link.bold-link { font-weight: 700; }
+.comp-link:hover { color: #555; }
+
+.card {
+  display: inline-flex; align-items: stretch; height: 60px;
+  background: #fff; border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  margin-bottom: 4px; overflow: hidden; transition: box-shadow 0.15s;
+}
+.card:hover { box-shadow: 0 3px 10px rgba(0,0,0,0.10); }
+
+.card-strip { width: 6px; flex-shrink: 0; }
+.t0 .card-strip { background: #9B7CB8; }
+.t1 .card-strip { background: #E8943A; }
+.t2 .card-strip { background: #C4A832; }
+.t3 .card-strip { background: #5DA85D; }
+.tsim .card-strip { background: #bbb; }
+
+.card-info { display: flex; align-items: stretch; flex-shrink: 0; }
+.t0 .card-info { background: #F4EEF8; }
+.t1 .card-info { background: #FEF4EA; }
+.t2 .card-info { background: #FEF9E8; }
+.t3 .card-info { background: #EEF5EE; }
+.tsim .card-info { background: #f5f5f5; }
+
+.card-info span { display: flex; align-items: center; justify-content: center; }
+.card-rank  { width: 54px; font-size: 19px; font-weight: 700; color: #333; }
+.card-name  { width: 231px; font-size: 17px; font-weight: 500; color: #1a1a1a;
+              overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0 8px; }
+.card-total { width: 102px; font-size: 17px; font-weight: 600; color: #111; }
+.card-front { width: 102px; font-size: 17px; font-weight: 500; color: #999; }
+.card-stable{ width: 102px; font-size: 17px; font-weight: 500; color: #999; }
+
+.card-badges {
+  display: flex; align-items: center; gap: 10px; flex-shrink: 0; padding: 0 10px;
+  overflow-x: auto;
+}
+
+.badge {
+  width: 40px; height: 40px; min-width: 40px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 5px; font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums;
+  cursor: pointer; transition: transform 0.12s, box-shadow 0.12s; position: relative;
+}
+.badge:hover { transform: scale(1.12); box-shadow: 0 2px 8px rgba(0,0,0,0.18); z-index: 5; }
+.badge.merged { font-style: italic; font-weight: 400; }
+
+.bg-1  { background: #E8D8F0; color: #6B3FA0; }
+.bg-2  { background: #FDE4CC; color: #CC7A2A; }
+.bg-3  { background: #FDE4CC; color: #CC7A2A; }
+.bg-4  { background: #FDF5CC; color: #8A7B18; }
+.bg-5  { background: #FDF5CC; color: #8A7B18; }
+.bg-6  { background: #FDF5CC; color: #8A7B18; }
+.bg-7  { background: #DCF0DC; color: #3A7D3A; }
+.bg-8  { background: #DCF0DC; color: #3A7D3A; }
+.bg-9  { background: #DCF0DC; color: #3A7D3A; }
+.bg-10 { background: #DCF0DC; color: #3A7D3A; }
+.bg-11 { background: #D8E8F8; color: #3A6EA5; }
+.bg-12 { background: #D8E8F8; color: #3A6EA5; }
+.bg-13 { background: #D8E8F8; color: #3A6EA5; }
+.bg-14 { background: #D8E8F8; color: #3A6EA5; }
+.bg-15 { background: #D8E8F8; color: #3A6EA5; }
+.bg-16 { background: #D8E8F8; color: #3A6EA5; }
+.bg-17 { background: #D8E8F8; color: #3A6EA5; }
+.bg-18 { background: #D8E8F8; color: #3A6EA5; }
+.bg-19 { background: #D8E8F8; color: #3A6EA5; }
+.bg-20 { background: #D8E8F8; color: #3A6EA5; }
+.bg-mid  { background: #fff; color: #333; font-weight: 400; border: 1px solid #eee; }
+.bg-mid.merged { font-weight: 400; }
+.bg-null { background: #f5f5f5; color: #ccc; font-weight: 400; }
+
+#tooltip {
+  position: fixed; pointer-events: none; z-index: 1000;
+  background: #333; color: #fff; font-size: 13px; font-weight: 400;
+  padding: 5px 12px; border-radius: 5px; white-space: nowrap;
+  opacity: 0; transition: opacity 0.12s; top: 0; left: 0;
+}
+#tooltip.show { opacity: 1; }
+
+/* Floating panel */
+.fab {
+  position: fixed; bottom: 28px; right: 28px; z-index: 100;
+  width: 48px; height: 48px; border-radius: 50%; background: #333; color: #fff;
+  border: none; font-size: 22px; cursor: pointer; box-shadow: 0 3px 12px rgba(0,0,0,0.18);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.fab:hover { transform: scale(1.08); box-shadow: 0 5px 16px rgba(0,0,0,0.22); }
+
+.sim-panel {
+  position: fixed; bottom: 90px; right: 28px; z-index: 99;
+  width: 400px; max-height: 70vh; background: #fff; border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12); overflow: hidden;
+  display: none; flex-direction: column;
+}
+.sim-panel.show { display: flex; }
+
+.sim-panel-header {
+  padding: 14px 18px; border-bottom: 1px solid #eee;
+  font-size: 16px; font-weight: 600; color: #111;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.sim-panel-close { background: none; border: none; font-size: 18px; color: #aaa; cursor: pointer; }
+.sim-panel-close:hover { color: #333; }
+
+.sim-panel-body { padding: 14px 18px; overflow-y: auto; flex: 1; }
+
+.sim-team-card {
+  background: #f9f9f9; border-radius: 6px; padding: 10px 14px; margin-bottom: 8px;
+}
+.sim-team-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.sim-team-name { font-weight: 600; font-size: 15px; }
+.sim-team-del { background: none; border: none; color: #ccc; cursor: pointer; font-size: 16px; }
+.sim-team-del:hover { color: #e55; }
+
+.sim-result-row {
+  display: flex; align-items: center; gap: 6px; margin-bottom: 4px; font-size: 13px;
+}
+.sim-result-row .sr-comp { width: 65px; color: #888; }
+.sim-result-row .sr-rank { width: 36px; text-align: center; font-weight: 600; color: #333; }
+.sim-result-row .sr-del { background: none; border: none; color: #ddd; cursor: pointer; font-size: 12px; padding: 2px; }
+.sim-result-row .sr-del:hover { color: #e55; }
+
+.sim-add-row { display: flex; gap: 6px; align-items: center; margin-top: 6px; }
+.sim-add-row select, .sim-add-row input {
+  font-size: 12px; padding: 3px 6px; border: 1px solid #ddd; border-radius: 3px;
+  background: #fff; font-family: inherit; outline: none;
+}
+.sim-add-row select { width: 75px; }
+.sim-add-row input { width: 48px; }
+.sim-add-row button {
+  font-size: 12px; padding: 3px 10px; border: 1px solid #ccc; border-radius: 3px;
+  background: #fff; cursor: pointer; color: #555;
+}
+.sim-add-row button:hover { border-color: #333; color: #333; }
+
+.sim-add-team-btn {
+  display: block; width: 100%; padding: 8px; margin-top: 8px; border: 1px dashed #ddd;
+  border-radius: 6px; background: transparent; color: #aaa; font-size: 14px; cursor: pointer;
+}
+.sim-add-team-btn:hover { border-color: #999; color: #555; }
+
+.sim-add-team-form { margin-top: 8px; display: flex; gap: 6px; display: none; }
+.sim-add-team-form.show { display: flex; }
+.sim-add-team-form input { flex: 1; font-size: 13px; padding: 5px 10px; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; outline: none; }
+.sim-add-team-form button { font-size: 13px; padding: 5px 14px; border: 1px solid #333; border-radius: 4px; background: #333; color: #fff; cursor: pointer; }
+
+/* Tab 2 */
+.tab2-wrap, .tab3-wrap { max-width: 900px; margin: 0 auto; }
+.sel-row { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+.sel-row label { font-size: 15px; color: #666; white-space: nowrap; }
+.sel-row select {
+  font-size: 15px; padding: 6px 12px; border: 1px solid #ddd; border-radius: 5px;
+  background: #fff; font-family: inherit; min-width: 200px; outline: none;
+}
+.info-bar { font-size: 14px; color: #888; margin-bottom: 16px; }
+.info-bar span { margin-right: 20px; }
+.info-bar strong { color: #555; }
+
+.history-header {
+  display: flex; align-items: center; padding: 0 18px 6px; font-size: 12px; color: #bbb; font-weight: 500;
+}
+.history-header .hh-spacer { width: 4px; flex-shrink: 0; }
+.history-header span { flex-shrink: 0; }
+.hh-name { width: 130px; }
+.hh-date { width: 90px; }
+.hh-rank { width: 60px; text-align: center; }
+.hh-score { width: 55px; text-align: right; }
+.hh-weight{ width: 62px; text-align: right; }
+.hh-integral { width: 62px; text-align: right; }
+
+.history-card {
+  background: #fff; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  margin-bottom: 4px; overflow: hidden;
+  display: flex; align-items: stretch; min-height: 46px;
+  transition: box-shadow 0.15s;
+}
+.history-card:hover { box-shadow: 0 2px 6px rgba(0,0,0,0.10); }
+.hcard-strip { width: 4px; flex-shrink: 0; }
+.hcard-strip.s-1 { background: #6B3FA0; }
+.hcard-strip.s-2 { background: #CC7A2A; }
+.hcard-strip.s-3 { background: #CC7A2A; }
+.hcard-strip.s-top10 { background: #3A7D3A; }
+.hcard-strip.s-mid { background: #3A6EA5; }
+.hcard-strip.s-low { background: #ccc; }
+
+.hcard-body { display: flex; align-items: center; flex: 1; padding: 0 14px; gap: 0; }
+.hcard-name { width: 130px; font-size: 15px; font-weight: 500; }
+.hcard-name b { font-weight: 700; }
+.hcard-date { width: 90px; font-size: 13px; color: #888; }
+.hcard-rank { width: 48px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 4px; font-size: 13px; font-weight: 700; margin: 0 6px; }
+.hcard-rank.sr-1 { background: #E8D8F0; color: #6B3FA0; }
+.hcard-rank.sr-2 { background: #FDE4CC; color: #CC7A2A; }
+.hcard-rank.sr-3 { background: #FDE4CC; color: #CC7A2A; }
+.hcard-rank.sr-4, .hcard-rank.sr-5, .hcard-rank.sr-6 { background: #FDF5CC; color: #8A7B18; }
+.hcard-rank.sr-7, .hcard-rank.sr-8, .hcard-rank.sr-9, .hcard-rank.sr-10 { background: #DCF0DC; color: #3A7D3A; }
+.hcard-rank.sr-mid { background: #D8E8F8; color: #3A6EA5; }
+.hcard-rank.sr-low { background: #f5f5f5; color: #999; font-weight: 400; }
+.hcard-rank.sr-merged { font-style: italic; font-weight: 400; }
+.hcard-score { width: 55px; text-align: right; font-size: 14px; font-weight: 500; color: #555; }
+.hcard-weight{ width: 62px; text-align: right; font-size: 13px; color: #999; font-weight: 400; }
+.hcard-integral { width: 62px; text-align: right; font-size: 14px; font-weight: 500; color: #333; }
+
+.comp-card {
+  background: #fff; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  margin-bottom: 4px; overflow: hidden; padding: 14px 20px;
+}
+.comp-card h3 { font-size: 17px; font-weight: 600; margin-bottom: 4px; }
+.comp-card h3 a:hover { color: #3A6EA5; }
+.comp-card .cmeta { font-size: 13px; color: #888; margin-bottom: 12px; }
+
+.comp-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.comp-table th { background: #f3f3f3; padding: 8px 10px; text-align: center; font-weight: 500; color: #666; border-bottom: 2px solid #e0e0e0; }
+.comp-table td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee; }
+.comp-table td:nth-child(3) { text-align: left; font-weight: 500; }
+.comp-table td:nth-child(4) { text-align: left; font-size: 12px; color: #888; max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.comp-table td.cr-1 { color: #6B3FA0; background: #E8D8F0; font-weight: 700; }
+.comp-table td.cr-2, .comp-table td.cr-3 { color: #CC7A2A; background: #FDE4CC; font-weight: 700; }
+.comp-table td.cr-4, .comp-table td.cr-5, .comp-table td.cr-6 { color: #8A7B18; background: #FDF5CC; font-weight: 700; }
+.comp-table td.cr-7, .comp-table td.cr-8, .comp-table td.cr-9, .comp-table td.cr-10 { color: #3A7D3A; background: #DCF0DC; font-weight: 700; }
+.comp-table td.cr-mid { font-weight: 400; }
+.comp-table td.merged { font-style: italic; font-weight: 400 !important; }
+
+.tab4-wrap { max-width: 700px; margin: 0 auto; }
+.readme { font-size: 15px; line-height: 1.8; color: #555; }
+.readme p { margin-bottom: 12px; }
+.readme a { color: #3A6EA5; text-decoration: none; }
+.readme a:hover { text-decoration: underline; }
+.readme b { color: #333; }
+
+#app { display: flex; flex-direction: column; align-items: center; }
+
+.sim-switch { position: relative; display: inline-block; width: 28px; height: 16px; }
+.sim-switch input { opacity: 0; width: 0; height: 0; }
+.sim-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: #ccc; border-radius: 16px; transition: 0.2s; }
+.sim-slider::before { content: ''; position: absolute; height: 12px; width: 12px; left: 2px; bottom: 2px; background: #fff; border-radius: 50%; transition: 0.2s; }
+.sim-switch input:checked + .sim-slider { background: #555; }
+.sim-switch input:checked + .sim-slider::before { transform: translateX(12px); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="center-col">
+    <div class="page-header"><h1>中华 Puzzle Hunt 队伍数据统计</h1><div class="subtitle">野榜，纯属娱乐</div></div>
+
+    <div class="tab-bar">
+      <button class="tab-btn active" data-tab="tab1">总榜</button>
+      <button class="tab-btn" data-tab="tab2">队伍</button>
+      <button class="tab-btn" data-tab="tab3">比赛</button>
+      <button class="tab-btn" data-tab="tab4">说明</button>
+    </div>
+
+    <div class="tab-content active" id="tab1">
+      <div class="col-heads">
+        <span class="ch-spacer"></span>
+        <span class="ch-rank">排名</span><span class="ch-name">队伍</span>
+        <span class="ch-total">总分</span><span class="ch-front">累积分</span><span class="ch-stable">稳定分</span>
+        <div class="comp-heads" id="compHeads"></div>
+      </div>
+      <div id="app"></div>
+    </div>
+
+    <div class="tab-content" id="tab2">
+      <div class="tab2-wrap">
+        <div class="sel-row"><label>选择队伍：</label><select id="teamSelect"></select></div>
+        <div class="info-bar" id="teamInfo"></div>
+        <div class="history-header"><span class="hh-spacer"></span><span class="hh-name">比赛</span><span class="hh-date">日期</span><span class="hh-rank">名次</span><span class="hh-score">得分</span><span class="hh-weight">权重</span><span class="hh-integral">积分</span></div>
+        <div id="teamHistory"></div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab3">
+      <div class="tab3-wrap">
+        <div class="sel-row"><label>选择比赛：</label><select id="compSelect"></select></div>
+        <div id="compDetail"></div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab4">
+      <div class="tab4-wrap"><div class="readme"><p>本网页由 <a href="https://space.bilibili.com/3663104" target="_blank">@榆木华</a> 维护，所有数据均为手动记录，参考自各 hunt 公开排行榜及与队伍成员的沟通，如有信息纠正或补充请联系本人。</p><p>本榜单仅供<b>个人娱乐</b>，比赛与队伍的登记和分数计算标准由本人设计，并<b>无科学依据</b>。目前主动收集了对应比赛中多次参赛、且获得过前十的所有队伍，如果希望加入您的队伍，可以联系本人并提供历届比赛的排名数据。</p><p>为获得较佳体验，建议使用电脑端浏览器。</p><p>如果您想获得更丰富的信息，可以移步 <a href="https://stats.voilern.cn/" target="_blank">voilern 的网站</a>。</p></div></div>
+    </div>
+  </div>
+  <div id="tooltip"></div>
+</div>
+
+<!-- Floating panel -->
+<button class="fab" id="fabBtn" title="管理自建队伍">+</button>
+<div class="sim-panel" id="simPanel">
+  <div class="sim-panel-header">
+    <span>自建队伍</span>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <label class="sim-switch" title="显示自建队伍">
+        <input type="checkbox" id="simToggle" checked>
+        <span class="sim-slider"></span>
+      </label>
+      <button class="sim-panel-close" id="simPanelClose">&times;</button>
+    </div>
+  </div>
+  <div class="sim-panel-body" id="simPanelBody"></div>
+</div>
+
+<script>
+var TEAMS = [
+  {
+    "name": "simplicissimus",
+    "tier": "T0",
+    "rank": "1",
+    "score": 460.23
+  },
+  {
+    "name": "灵境TES",
+    "tier": "",
+    "rank": "2",
+    "score": 360.94
+  },
+  {
+    "name": "识文解意的追迹者",
+    "tier": "T1",
+    "rank": "3",
+    "score": 289.52
+  },
+  {
+    "name": "鸡",
+    "tier": "",
+    "rank": "4",
+    "score": 254.14
+  },
+  {
+    "name": "杂鱼",
+    "tier": "",
+    "rank": "5",
+    "score": 213.19
+  },
+  {
+    "name": "Anonymous",
+    "tier": "T2",
+    "rank": "6",
+    "score": 193.22
+  },
+  {
+    "name": "Reviver Team",
+    "tier": "",
+    "rank": "7",
+    "score": 189.46
+  },
+  {
+    "name": "解谜怪盗团",
+    "tier": "",
+    "rank": "8",
+    "score": 185.21
+  },
+  {
+    "name": "海拉鲁野炊组",
+    "tier": "",
+    "rank": "9",
+    "score": 165.65
+  },
+  {
+    "name": "金牌线",
+    "tier": "",
+    "rank": "10",
+    "score": 164.85
+  },
+  {
+    "name": "闲散解谜！",
+    "tier": "",
+    "rank": "11",
+    "score": 159.64
+  },
+  {
+    "name": "喵喵喵",
+    "tier": "",
+    "rank": "12",
+    "score": 136.2
+  },
+  {
+    "name": "zitmen",
+    "tier": "",
+    "rank": "13",
+    "score": 135.9
+  },
+  {
+    "name": "谜途旅人（解散）",
+    "tier": "",
+    "rank": "14",
+    "score": 118.04
+  },
+  {
+    "name": "JUSTeam",
+    "tier": "",
+    "rank": "15",
+    "score": 104.77
+  },
+  {
+    "name": "幼稚园的小猫咪",
+    "tier": "T3",
+    "rank": "16",
+    "score": 72.88
+  },
+  {
+    "name": "世界美食official",
+    "tier": "",
+    "rank": "17",
+    "score": 67.59
+  },
+  {
+    "name": "rusty lake rambler",
+    "tier": "",
+    "rank": "18",
+    "score": 67.17
+  },
+  {
+    "name": "天翔战队ZOO连者！",
+    "tier": "",
+    "rank": "19",
+    "score": 52.07
+  },
+  {
+    "name": "看看题",
+    "tier": "",
+    "rank": "20",
+    "score": 37.86
+  },
+  {
+    "name": "反卷",
+    "tier": "",
+    "rank": "不分上下",
+    "score": 20.0
+  },
+  {
+    "name": "何以为我",
+    "tier": "",
+    "rank": "",
+    "score": 17.69
+  },
+  {
+    "name": "凑不出",
+    "tier": "",
+    "rank": "",
+    "score": 16.43
+  },
+  {
+    "name": "深色墨点",
+    "tier": "",
+    "rank": "",
+    "score": 14.31
+  },
+  {
+    "name": "绿色圆圈",
+    "tier": "",
+    "rank": "",
+    "score": 11.94
+  },
+  {
+    "name": "Puzzlesweeper",
+    "tier": "",
+    "rank": "",
+    "score": 11.39
+  },
+  {
+    "name": "Not A Hunter",
+    "tier": "",
+    "rank": "",
+    "score": 6.25
+  },
+  {
+    "name": "Cyfur",
+    "tier": "",
+    "rank": "",
+    "score": 5.22
+  }
+];
+var COMPETITIONS = [
+  {
+    "id": "P&KU1",
+    "date": "2022-06-24"
+  },
+  {
+    "id": "CCBC12",
+    "date": "2022-08-12"
+  },
+  {
+    "id": "P&KU2",
+    "date": "2023-04-28"
+  },
+  {
+    "id": "CCBCBA",
+    "date": "2023-08-11"
+  },
+  {
+    "id": "MH2023",
+    "date": "2023-12-29"
+  },
+  {
+    "id": "JH2024",
+    "date": "2024-02-23"
+  },
+  {
+    "id": "P&KU3a",
+    "date": "2024-07-19"
+  },
+  {
+    "id": "CCBC15",
+    "date": "2024-08-09"
+  },
+  {
+    "id": "JUST1",
+    "date": "2024-09-06"
+  },
+  {
+    "id": "GnPH",
+    "date": "2025-07-18"
+  },
+  {
+    "id": "CCBC16",
+    "date": "2025-08-08"
+  },
+  {
+    "id": "US-TC",
+    "date": "2025-10-06"
+  },
+  {
+    "id": "ZJUPH1",
+    "date": "2025-11-21"
+  },
+  {
+    "id": "SECO2",
+    "date": "2026-01-31"
+  },
+  {
+    "id": "P&KU3b",
+    "date": "2026-07-10"
+  },
+  {
+    "id": "CCBC17",
+    "date": "2026-08-14"
+  }
+];
+var RANKINGS = {
+  "simplicissimus": {
+    "P&KU1": 4,
+    "CCBC12": 1,
+    "P&KU2": 2,
+    "CCBCBA": null,
+    "MH2023": 2,
+    "JH2024": 2,
+    "P&KU3a": 1,
+    "CCBC15": 1,
+    "JUST1": 6,
+    "GnPH": null,
+    "CCBC16": null,
+    "US-TC": 1,
+    "ZJUPH1": 1,
+    "SECO2": null,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "灵境TES": {
+    "P&KU1": null,
+    "CCBC12": 5,
+    "P&KU2": 4,
+    "CCBCBA": 6,
+    "MH2023": 3,
+    "JH2024": 6,
+    "P&KU3a": 3,
+    "CCBC15": 2,
+    "JUST1": 2,
+    "GnPH": 4,
+    "CCBC16": 5,
+    "US-TC": 3,
+    "ZJUPH1": 7,
+    "SECO2": 14,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "识文解意的追迹者": {
+    "P&KU1": 9,
+    "CCBC12": 8,
+    "P&KU2": 9,
+    "CCBCBA": 7,
+    "MH2023": 8,
+    "JH2024": 12,
+    "P&KU3a": 19,
+    "CCBC15": 3,
+    "JUST1": 5,
+    "GnPH": 19,
+    "CCBC16": 1,
+    "US-TC": "50+",
+    "ZJUPH1": 2,
+    "SECO2": 3,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "鸡": {
+    "P&KU1": null,
+    "CCBC12": 7,
+    "P&KU2": 1,
+    "CCBCBA": 3,
+    "MH2023": 1,
+    "JH2024": 3,
+    "P&KU3a": 4,
+    "CCBC15": 7,
+    "JUST1": null,
+    "GnPH": 6,
+    "CCBC16": 13,
+    "US-TC": null,
+    "ZJUPH1": null,
+    "SECO2": null,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "杂鱼": {
+    "P&KU1": null,
+    "CCBC12": null,
+    "P&KU2": null,
+    "CCBCBA": null,
+    "MH2023": null,
+    "JH2024": null,
+    "P&KU3a": null,
+    "CCBC15": null,
+    "JUST1": null,
+    "GnPH": 1,
+    "CCBC16": 2,
+    "US-TC": 6,
+    "ZJUPH1": 9,
+    "SECO2": null,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "Anonymous": {
+    "P&KU1": null,
+    "CCBC12": null,
+    "P&KU2": null,
+    "CCBCBA": 16,
+    "MH2023": 6,
+    "JH2024": 4,
+    "P&KU3a": null,
+    "CCBC15": 5,
+    "JUST1": 11,
+    "GnPH": 2,
+    "CCBC16": null,
+    "US-TC": null,
+    "ZJUPH1": null,
+    "SECO2": 2,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "Reviver Team": {
+    "P&KU1": null,
+    "CCBC12": null,
+    "P&KU2": null,
+    "CCBCBA": null,
+    "MH2023": null,
+    "JH2024": null,
+    "P&KU3a": 22,
+    "CCBC15": 22,
+    "JUST1": 10,
+    "GnPH": 5,
+    "CCBC16": 6,
+    "US-TC": 4,
+    "ZJUPH1": 4,
+    "SECO2": 1,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "解谜怪盗团": {
+    "P&KU1": 2,
+    "CCBC12": 4,
+    "P&KU2": 25,
+    "CCBCBA": "50+",
+    "MH2023": 4,
+    "JH2024": 1,
+    "P&KU3a": 2,
+    "CCBC15": 37,
+    "JUST1": 12,
+    "GnPH": "50+",
+    "CCBC16": 7,
+    "US-TC": "50+",
+    "ZJUPH1": "50+",
+    "SECO2": null,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "海拉鲁野炊组": {
+    "P&KU1": 8,
+    "CCBC12": null,
+    "P&KU2": 3,
+    "CCBCBA": 9,
+    "MH2023": 7,
+    "JH2024": 7,
+    "P&KU3a": 5,
+    "CCBC15": 11,
+    "JUST1": 3,
+    "GnPH": 8,
+    "CCBC16": 9,
+    "US-TC": 15,
+    "ZJUPH1": 11,
+    "SECO2": 23,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "金牌线": {
+    "P&KU1": null,
+    "CCBC12": null,
+    "P&KU2": 10,
+    "CCBCBA": 12,
+    "MH2023": 9,
+    "JH2024": 10,
+    "P&KU3a": 10,
+    "CCBC15": 4,
+    "JUST1": null,
+    "GnPH": null,
+    "CCBC16": 3,
+    "US-TC": null,
+    "ZJUPH1": 5,
+    "SECO2": null,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "闲散解谜！": {
+    "P&KU1": 17,
+    "CCBC12": 13,
+    "P&KU2": 5,
+    "CCBCBA": 1,
+    "MH2023": null,
+    "JH2024": 8,
+    "P&KU3a": 9,
+    "CCBC15": null,
+    "JUST1": null,
+    "GnPH": 3,
+    "CCBC16": 8,
+    "US-TC": null,
+    "ZJUPH1": null,
+    "SECO2": 49,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "喵喵喵": {
+    "P&KU1": 1,
+    "CCBC12": 6,
+    "P&KU2": null,
+    "CCBCBA": 2,
+    "MH2023": null,
+    "JH2024": null,
+    "P&KU3a": null,
+    "CCBC15": 12,
+    "JUST1": null,
+    "GnPH": null,
+    "CCBC16": 14,
+    "US-TC": null,
+    "ZJUPH1": 10,
+    "SECO2": null,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "zitmen": {
+    "P&KU1": 19,
+    "CCBC12": 40,
+    "P&KU2": 13,
+    "CCBCBA": 8,
+    "MH2023": 5,
+    "JH2024": 26,
+    "P&KU3a": 8,
+    "CCBC15": 9,
+    "JUST1": null,
+    "GnPH": 11,
+    "CCBC16": 4,
+    "US-TC": 7,
+    "ZJUPH1": 3,
+    "SECO2": null,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "谜途旅人（解散）": {
+    "P&KU1": null,
+    "CCBC12": null,
+    "P&KU2": 6,
+    "CCBCBA": 13,
+    "MH2023": 10,
+    "JH2024": 5,
+    "P&KU3a": 5,
+    "CCBC15": 10,
+    "JUST1": 4,
+    "GnPH": null,
+    "CCBC16": null,
+    "US-TC": null,
+    "ZJUPH1": null,
+    "SECO2": null,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "JUSTeam": {
+    "P&KU1": null,
+    "CCBC12": null,
+    "P&KU2": 7,
+    "CCBCBA": 15,
+    "MH2023": 11,
+    "JH2024": 9,
+    "P&KU3a": 11,
+    "CCBC15": 6,
+    "JUST1": null,
+    "GnPH": 9,
+    "CCBC16": 20,
+    "US-TC": 5,
+    "ZJUPH1": 8,
+    "SECO2": null,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "幼稚园的小猫咪": {
+    "P&KU1": null,
+    "CCBC12": null,
+    "P&KU2": null,
+    "CCBCBA": "50+",
+    "MH2023": 34,
+    "JH2024": 19,
+    "P&KU3a": 29,
+    "CCBC15": 43,
+    "JUST1": 35,
+    "GnPH": 7,
+    "CCBC16": 47,
+    "US-TC": 2,
+    "ZJUPH1": 4,
+    "SECO2": 27,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "世界美食official": {
+    "P&KU1": null,
+    "CCBC12": 18,
+    "P&KU2": 8,
+    "CCBCBA": 18,
+    "MH2023": 17,
+    "JH2024": 11,
+    "P&KU3a": 7,
+    "CCBC15": 8,
+    "JUST1": "50+",
+    "GnPH": 10,
+    "CCBC16": 12,
+    "US-TC": null,
+    "ZJUPH1": null,
+    "SECO2": 10,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "rusty lake rambler": {
+    "P&KU1": null,
+    "CCBC12": null,
+    "P&KU2": null,
+    "CCBCBA": null,
+    "MH2023": null,
+    "JH2024": null,
+    "P&KU3a": null,
+    "CCBC15": null,
+    "JUST1": null,
+    "GnPH": 25,
+    "CCBC16": 50,
+    "US-TC": 10,
+    "ZJUPH1": 6,
+    "SECO2": 5,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "天翔战队ZOO连者！": {
+    "P&KU1": null,
+    "CCBC12": null,
+    "P&KU2": null,
+    "CCBCBA": null,
+    "MH2023": null,
+    "JH2024": null,
+    "P&KU3a": null,
+    "CCBC15": null,
+    "JUST1": null,
+    "GnPH": 13,
+    "CCBC16": 17,
+    "US-TC": 11,
+    "ZJUPH1": 43,
+    "SECO2": 4,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "看看题": {
+    "P&KU1": null,
+    "CCBC12": null,
+    "P&KU2": null,
+    "CCBCBA": null,
+    "MH2023": null,
+    "JH2024": null,
+    "P&KU3a": null,
+    "CCBC15": null,
+    "JUST1": null,
+    "GnPH": 37,
+    "CCBC16": 16,
+    "US-TC": 7,
+    "ZJUPH1": 3,
+    "SECO2": null,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "反卷": {
+    "P&KU1": null,
+    "CCBC12": null,
+    "P&KU2": "50+",
+    "CCBCBA": "50+",
+    "MH2023": 24,
+    "JH2024": 16,
+    "P&KU3a": 6,
+    "CCBC15": null,
+    "JUST1": 19,
+    "GnPH": 46,
+    "CCBC16": 15,
+    "US-TC": null,
+    "ZJUPH1": null,
+    "SECO2": null,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "何以为我": {
+    "P&KU1": null,
+    "CCBC12": null,
+    "P&KU2": null,
+    "CCBCBA": null,
+    "MH2023": null,
+    "JH2024": null,
+    "P&KU3a": null,
+    "CCBC15": null,
+    "JUST1": 30,
+    "GnPH": 48,
+    "CCBC16": 22,
+    "US-TC": 43,
+    "ZJUPH1": 26,
+    "SECO2": 6,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "凑不出": {
+    "P&KU1": null,
+    "CCBC12": null,
+    "P&KU2": null,
+    "CCBCBA": null,
+    "MH2023": null,
+    "JH2024": null,
+    "P&KU3a": null,
+    "CCBC15": null,
+    "JUST1": 45,
+    "GnPH": 12,
+    "CCBC16": 33,
+    "US-TC": 8,
+    "ZJUPH1": 16,
+    "SECO2": 17,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "深色墨点": {
+    "P&KU1": null,
+    "CCBC12": null,
+    "P&KU2": null,
+    "CCBCBA": null,
+    "MH2023": null,
+    "JH2024": null,
+    "P&KU3a": null,
+    "CCBC15": null,
+    "JUST1": null,
+    "GnPH": 22,
+    "CCBC16": 34,
+    "US-TC": 42,
+    "ZJUPH1": 55,
+    "SECO2": 7,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "绿色圆圈": {
+    "P&KU1": null,
+    "CCBC12": null,
+    "P&KU2": null,
+    "CCBCBA": null,
+    "MH2023": null,
+    "JH2024": null,
+    "P&KU3a": null,
+    "CCBC15": null,
+    "JUST1": null,
+    "GnPH": null,
+    "CCBC16": null,
+    "US-TC": 37,
+    "ZJUPH1": 30,
+    "SECO2": 9,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "Puzzlesweeper": {
+    "P&KU1": null,
+    "CCBC12": null,
+    "P&KU2": 12,
+    "CCBCBA": 11,
+    "MH2023": 12,
+    "JH2024": 25,
+    "P&KU3a": 33,
+    "CCBC15": 17,
+    "JUST1": 9,
+    "GnPH": "50+",
+    "CCBC16": 39,
+    "US-TC": null,
+    "ZJUPH1": 51,
+    "SECO2": null,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "Not A Hunter": {
+    "P&KU1": null,
+    "CCBC12": null,
+    "P&KU2": null,
+    "CCBCBA": null,
+    "MH2023": 21,
+    "JH2024": null,
+    "P&KU3a": 18,
+    "CCBC15": 30,
+    "JUST1": 13,
+    "GnPH": 30,
+    "CCBC16": 10,
+    "US-TC": null,
+    "ZJUPH1": 29,
+    "SECO2": 24,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "Cyfur": {
+    "P&KU1": null,
+    "CCBC12": null,
+    "P&KU2": null,
+    "CCBCBA": 50,
+    "MH2023": 37,
+    "JH2024": 23,
+    "P&KU3a": 16,
+    "CCBC15": 15,
+    "JUST1": 21,
+    "GnPH": 20,
+    "CCBC16": "50+",
+    "US-TC": 22,
+    "ZJUPH1": 25,
+    "SECO2": 8,
+    "P&KU3b": null,
+    "CCBC17": null
+  }
+};
+var COMP_RESULTS = {
+  "P&KU1": [
+    {
+      "rank": 1,
+      "rawName": "MiaoMiaoMeowe",
+      "cleanName": "喵喵喵",
+      "time": "21.22",
+      "members": []
+    },
+    {
+      "rank": 2,
+      "rawName": "解谜怪盗团",
+      "cleanName": "解谜怪盗团",
+      "time": "22.57",
+      "members": []
+    },
+    {
+      "rank": 3,
+      "rawName": "有道法体育慕课答案",
+      "cleanName": "有道法体育慕课答案",
+      "time": "47.04",
+      "members": []
+    },
+    {
+      "rank": 4,
+      "rawName": "simplicissimus",
+      "cleanName": "simplicissimus",
+      "time": "49.57",
+      "members": []
+    },
+    {
+      "rank": 5,
+      "rawName": "ㅤ",
+      "cleanName": "ㅤ",
+      "time": "51.19",
+      "members": []
+    },
+    {
+      "rank": 6,
+      "rawName": "普雷菲尔议员后勤部",
+      "cleanName": "耗",
+      "time": "52.99",
+      "members": []
+    },
+    {
+      "rank": 7,
+      "rawName": "龟兔喵雨中爬",
+      "cleanName": "龟兔喵雨中爬",
+      "time": "53.56",
+      "members": []
+    },
+    {
+      "rank": 8,
+      "rawName": "【变】啥也观测不到队",
+      "cleanName": "【变】啥也观测不到队",
+      "time": "60.20",
+      "members": []
+    },
+    {
+      "rank": 9,
+      "rawName": "识文解意的追迹者",
+      "cleanName": "识文解意的追迹者",
+      "time": "64.50",
+      "members": []
+    },
+    {
+      "rank": 10,
+      "rawName": "一壶奶油",
+      "cleanName": "一壶奶油",
+      "time": "66.09",
+      "members": []
+    }
+  ],
+  "CCBC12": [
+    {
+      "rank": 1,
+      "rawName": "simplicissimus",
+      "cleanName": "simplicissimus",
+      "time": "15.93",
+      "members": [
+        "ES8730",
+        "sevenkplus",
+        "温",
+        "jjhdj",
+        "落葉子"
+      ]
+    },
+    {
+      "rank": 2,
+      "rawName": "Central Ocean Hotel",
+      "cleanName": "耗",
+      "time": "46.13",
+      "members": [
+        "迟墨哲",
+        "耗子",
+        "blackhistory"
+      ]
+    },
+    {
+      "rank": 3,
+      "rawName": "卡在那個題",
+      "cleanName": "卡在那個題",
+      "time": "46.53",
+      "members": [
+        "InvalidD",
+        "benji",
+        "Dan",
+        "sushi322"
+      ]
+    },
+    {
+      "rank": 4,
+      "rawName": "年轻人不讲武德",
+      "cleanName": "解谜怪盗团",
+      "time": "49.51",
+      "members": [
+        "Winfrid"
+      ]
+    },
+    {
+      "rank": 5,
+      "rawName": "5A级双星【郭兰双星】",
+      "cleanName": "灵境TES",
+      "time": "51.08",
+      "members": [
+        "五月",
+        "友人A",
+        "希希",
+        "兰儿",
+        "八卦郭嘉"
+      ]
+    },
+    {
+      "rank": 6,
+      "rawName": "喵喵喵",
+      "cleanName": "喵喵喵",
+      "time": "55.8",
+      "members": [
+        "美恒",
+        "秋水仙素",
+        "TCF",
+        "恩特",
+        "雪儿"
+      ]
+    },
+    {
+      "rank": 7,
+      "rawName": "418 I'm a teapot",
+      "cleanName": "418 I'm a teapot",
+      "time": "56.5",
+      "members": [
+        "星星",
+        "mutsuki"
+      ]
+    },
+    {
+      "rank": 8,
+      "rawName": "识文解意的追迹者",
+      "cleanName": "识文解意的追迹者",
+      "time": "56.68",
+      "members": [
+        "榆木华",
+        "D3D4",
+        "古明地上的彗星",
+        "Te",
+        "5tyu6f"
+      ]
+    },
+    {
+      "rank": 9,
+      "rawName": "一壶奶油",
+      "cleanName": "一壶奶油",
+      "time": "60.12",
+      "members": [
+        "ifyou",
+        "奶油酱",
+        "tangjqjq",
+        "深渊的侦探"
+      ]
+    },
+    {
+      "rank": 10,
+      "rawName": "🐔✅",
+      "cleanName": "🐔✅",
+      "time": "65.97",
+      "members": []
+    }
+  ],
+  "P&KU2": [
+    {
+      "rank": 1,
+      "rawName": "呜呜呜",
+      "cleanName": "鸡",
+      "time": "30:42:40",
+      "members": [
+        "美恒",
+        "yyao",
+        "秋水仙素",
+        "mutsuki",
+        "xsj",
+        "星星"
+      ]
+    },
+    {
+      "rank": 2,
+      "rawName": "simplicissimus",
+      "cleanName": "simplicissimus",
+      "time": "30:55:43",
+      "members": [
+        "ES",
+        "落葉子",
+        "sevenkplus",
+        "jjhdj",
+        "温",
+        "xxxigua"
+      ]
+    },
+    {
+      "rank": 3,
+      "rawName": "海拉鲁野炊组",
+      "cleanName": "海拉鲁野炊组",
+      "time": "54:33:28",
+      "members": []
+    },
+    {
+      "rank": 4,
+      "rawName": "E希友嘉圆",
+      "cleanName": "灵境TES",
+      "time": "55:50:19",
+      "members": [
+        "八卦郭嘉",
+        "小汤圆",
+        "/",
+        "希希",
+        "友人A",
+        "Havelieyu"
+      ]
+    },
+    {
+      "rank": 5,
+      "rawName": "闲散解谜！",
+      "cleanName": "闲散解谜！",
+      "time": "55:57:11",
+      "members": [
+        "COL",
+        "CallMeMushroom",
+        "Fivero",
+        "小白狐九月",
+        "piggy2503",
+        "数一"
+      ]
+    },
+    {
+      "rank": 6,
+      "rawName": "谜途旅人",
+      "cleanName": "谜途旅人",
+      "time": "55:58:34",
+      "members": [
+        "Ender_nor",
+        "空气新人",
+        "Atheist",
+        "屑abandon",
+        "阿妍",
+        "明夜"
+      ]
+    },
+    {
+      "rank": 7,
+      "rawName": "SJTU推理协会吧大概",
+      "cleanName": "JUSTeam",
+      "time": "64:17:04",
+      "members": [
+        "日常的癫狂",
+        "esc",
+        "Arya",
+        "Cheney"
+      ]
+    },
+    {
+      "rank": 8,
+      "rawName": "世界美食official",
+      "cleanName": "世界美食official",
+      "time": "66:40:49",
+      "members": [
+        "Rivekon",
+        "creeperqwq",
+        "茶唱星",
+        "肥鱼",
+        "Kizuna",
+        "kks"
+      ]
+    },
+    {
+      "rank": 9,
+      "rawName": "识文解意的追迹者",
+      "cleanName": "识文解意的追迹者",
+      "time": "68:52:59",
+      "members": [
+        "D3D4",
+        "VinstaG173",
+        "YQ",
+        "xysdd",
+        "5tyu6f",
+        "古明地上的彗星"
+      ]
+    },
+    {
+      "rank": 10,
+      "rawName": "public_team_name",
+      "cleanName": "金牌线",
+      "time": "69:00:03",
+      "members": [
+        "Etaoin"
+      ]
+    }
+  ],
+  "CCBCBA": [
+    {
+      "rank": 1,
+      "rawName": "闲散解谜！",
+      "cleanName": "闲散解谜！",
+      "time": "46.52",
+      "members": [
+        "Fivero",
+        "COL",
+        "piggy2503",
+        "CallMeMushroom",
+        "小白狐九月"
+      ]
+    },
+    {
+      "rank": 2,
+      "rawName": "喵喵喵",
+      "cleanName": "喵喵喵",
+      "time": "52.23",
+      "members": [
+        "美恒",
+        "恩特",
+        "TCF",
+        "秋水仙素",
+        "Jalapeno"
+      ]
+    },
+    {
+      "rank": 3,
+      "rawName": "simplicissimus",
+      "cleanName": "鸡",
+      "time": "52.45",
+      "members": [
+        "各种",
+        "mutsuki",
+        "xsj",
+        "kinami",
+        "星星"
+      ]
+    },
+    {
+      "rank": 4,
+      "rawName": "幼齒",
+      "cleanName": "幼齒",
+      "time": "57.01",
+      "members": [
+        "InvalidD",
+        "katian",
+        "thamblurr",
+        "Felix",
+        "stuts"
+      ]
+    },
+    {
+      "rank": 5,
+      "rawName": "特级山芋",
+      "cleanName": "特级山芋",
+      "time": "62.43",
+      "members": [
+        "薯仔",
+        "友人A",
+        "五月",
+        "Eva",
+        "Winfrid"
+      ]
+    },
+    {
+      "rank": 6,
+      "rawName": "哈希马嘉圆",
+      "cleanName": "灵境TES",
+      "time": "62.99",
+      "members": [
+        "Havelieyu",
+        "天马",
+        "希希",
+        "八卦郭嘉",
+        "小汤圆"
+      ]
+    },
+    {
+      "rank": 7,
+      "rawName": "识文解意的追迹者",
+      "cleanName": "识文解意的追迹者",
+      "time": "65.16",
+      "members": [
+        "榆木华",
+        "D3D4",
+        "YQ",
+        "古明地上的彗星",
+        "5tyu6f"
+      ]
+    },
+    {
+      "rank": 8,
+      "rawName": "zitmen",
+      "cleanName": "zitmen",
+      "time": "67.14",
+      "members": [
+        "Euphonium",
+        "粉",
+        "Daviscartes",
+        "Selenium",
+        "zitman"
+      ]
+    },
+    {
+      "rank": 9,
+      "rawName": "海拉鲁野炊组",
+      "cleanName": "海拉鲁野炊组",
+      "time": "69.32",
+      "members": [
+        "水帝",
+        "深渊的侦探",
+        "奶油酱",
+        "WJ"
+      ]
+    },
+    {
+      "rank": 10,
+      "rawName": "卡在那個題",
+      "cleanName": "卡在那個題",
+      "time": "69.77",
+      "members": [
+        "sushi322",
+        "benji",
+        "Dan",
+        "Buck",
+        "ayy"
+      ]
+    }
+  ],
+  "MH2023": [
+    {
+      "rank": 1,
+      "rawName": "我是最神奇的猫咪！",
+      "cleanName": "鸡",
+      "time": "28:12:41",
+      "members": [
+        "星星",
+        "xsj",
+        "宽容",
+        "Rivekon",
+        "mutsuki"
+      ]
+    },
+    {
+      "rank": 2,
+      "rawName": "夕阳红",
+      "cleanName": "simplicissimus",
+      "time": "28:35:42",
+      "members": [
+        "sevenkplus",
+        "温",
+        "落葉子",
+        "荠菜",
+        "火冬"
+      ]
+    },
+    {
+      "rank": 3,
+      "rawName": "Superboys Utopia",
+      "cleanName": "灵境TES",
+      "time": "33:32:36",
+      "members": [
+        "希希",
+        "Havelieyu",
+        "小汤圆",
+        "友人A"
+      ]
+    },
+    {
+      "rank": 4,
+      "rawName": "今天也想当第一名",
+      "cleanName": "解谜怪盗团",
+      "time": "40:06:47",
+      "members": [
+        "yyao"
+      ]
+    },
+    {
+      "rank": 5,
+      "rawName": "ZitMeow",
+      "cleanName": "Zitmen",
+      "time": "44:12:11",
+      "members": [
+        "Euphonium",
+        "Selenium",
+        "zitman",
+        "Daviscartes",
+        "粉"
+      ]
+    },
+    {
+      "rank": 6,
+      "rawName": "suomynonA",
+      "cleanName": "Anonymous",
+      "time": "48:45:02",
+      "members": [
+        "MyriadL",
+        "Brightly_",
+        "xxuurruuii",
+        "小大圣"
+      ]
+    },
+    {
+      "rank": 7,
+      "rawName": "提瓦特野炊组",
+      "cleanName": "海拉鲁野炊组",
+      "time": "48:54:46",
+      "members": [
+        "WJ"
+      ]
+    },
+    {
+      "rank": 8,
+      "rawName": "识文解意的追迹者",
+      "cleanName": "识文解意的追迹者",
+      "time": "49:40:32",
+      "members": [
+        "榆木华",
+        "Winfrid",
+        "D3D4",
+        "VinstaG173",
+        "YQ"
+      ]
+    },
+    {
+      "rank": 9,
+      "rawName": "-------🥇🥇🥇-------",
+      "cleanName": "金牌线",
+      "time": "51:28:27",
+      "members": [
+        "Inferno",
+        "skyline",
+        "WYXkk",
+        "Starxcc",
+        "Suika_predator"
+      ]
+    },
+    {
+      "rank": 10,
+      "rawName": "谜途旅人",
+      "cleanName": "谜途旅人",
+      "time": "51:42:57",
+      "members": [
+        "Ender_nor",
+        "明夜",
+        "屑abandon",
+        "阿妍",
+        "空气新人"
+      ]
+    }
+  ],
+  "JH2024": [
+    {
+      "rank": 1,
+      "rawName": "怪盗解谜团",
+      "cleanName": "解谜怪盗团",
+      "time": "41:29",
+      "members": [
+        "方伯",
+        "兰扎特",
+        "大灰狼",
+        "yyao",
+        "风怒大汉堡"
+      ]
+    },
+    {
+      "rank": 2,
+      "rawName": "十步杀一题，千里不留行",
+      "cleanName": "simplicissimus",
+      "time": "41:41",
+      "members": [
+        "ES8730",
+        "温",
+        "落葉子",
+        "Jalapeno",
+        "火冬"
+      ]
+    },
+    {
+      "rank": 3,
+      "rawName": "花田水划吃江次通发超普鱼踢侠是拉里会群惹包队果娃谜宝桶谜吧睡汪观卷会育等先芳多赏论逻觉午配题行小腹队一无江野留红选巡格普林只如天法许旅偶剑环的到力杀小开狗千天全轶唯小不级但是择偷餐体特菇十饼宗今独罚谜吃题人手点题想反客课就死月恶案朗光一风芋在象混天弱敢人一湖组孤雀不军通岛的华仙盟丹唯解道第杂答如称打尔孬有鸡案跑你不花武辈了之长级你我将笑积对尊山上菜谜队分什合汪队兽潜主闲有善呃菜套出棉文队是算组探独",
+      "cleanName": "鸡",
+      "time": "48:16",
+      "members": []
+    },
+    {
+      "rank": 4,
+      "rawName": "Anonymous",
+      "cleanName": "Anonymous",
+      "time": "48:17",
+      "members": [
+        "MyriadL",
+        "xxuurruuii",
+        "Brightly_",
+        "CAT-FISH",
+        "J.R."
+      ]
+    },
+    {
+      "rank": 5,
+      "rawName": "谜途旅人",
+      "cleanName": "谜途旅人",
+      "time": "48:28",
+      "members": []
+    },
+    {
+      "rank": 6,
+      "rawName": "华山论剑",
+      "cleanName": "灵境TES",
+      "time": "54:14",
+      "members": []
+    },
+    {
+      "rank": 7,
+      "rawName": "武当山野炊组",
+      "cleanName": "海拉鲁野炊组",
+      "time": "60:45",
+      "members": [
+        "WJ",
+        "奶油酱",
+        "只是路过",
+        "zyx",
+        "水帝WaterKing"
+      ]
+    },
+    {
+      "rank": 8,
+      "rawName": "闲散解谜！",
+      "cleanName": "闲散解谜！",
+      "time": "63:11",
+      "members": [
+        "Fivero",
+        "五月",
+        "CallMeMushroom",
+        "COL",
+        "Sonic"
+      ]
+    },
+    {
+      "rank": 9,
+      "rawName": "Bacteriophage University",
+      "cleanName": "JUSTeam",
+      "time": "70:18",
+      "members": [
+        "dailycrazy",
+        "Logistick",
+        "Cheney",
+        "Arya",
+        "hahahaHAha"
+      ]
+    },
+    {
+      "rank": 10,
+      "rawName": "-------🥇🥇🥇-------",
+      "cleanName": "金牌线",
+      "time": "70:57",
+      "members": [
+        "skyline",
+        "WYXkk",
+        "Inferno",
+        "Suika_predator",
+        "Starxcc"
+      ]
+    }
+  ],
+  "P&KU3上": [
+    {
+      "rank": 1,
+      "rawName": "simplicissimus",
+      "cleanName": "simplicissimus",
+      "time": "25:26:15",
+      "members": [
+        "温",
+        "inequality",
+        "落葉子",
+        "sevenkplus",
+        "荠菜",
+        "ES8730"
+      ]
+    },
+    {
+      "rank": 2,
+      "rawName": "焖肉面不配姜丝醋不好吃",
+      "cleanName": "解谜怪盗团",
+      "time": "31:27:37",
+      "members": [
+        "方伯",
+        "兰扎特",
+        "大灰狼",
+        "yyao",
+        "风怒大汉堡"
+      ]
+    },
+    {
+      "rank": 3,
+      "rawName": "A hAsh ArcAdiA",
+      "cleanName": "灵境TES",
+      "time": "40:27:49",
+      "members": [
+        "八卦郭嘉",
+        "Havelieyu",
+        "五月fy",
+        "友人A",
+        "希希",
+        "小汤圆"
+      ]
+    },
+    {
+      "rank": 4,
+      "rawName": "睡眠不足互联网技术有限公司",
+      "cleanName": "鸡",
+      "time": "41:59:18",
+      "members": [
+        "星星",
+        "xsj"
+      ]
+    },
+    {
+      "rank": 5,
+      "rawName": "野炊旅人",
+      "cleanName": "海拉鲁野炊组",
+      "time": "45:56:43",
+      "members": [
+        "WJ",
+        "Ender_nor",
+        "凌风cold",
+        "tangjqjq",
+        "水帝WaterKing",
+        "奶油酱"
+      ]
+    },
+    {
+      "rank": 6,
+      "rawName": "ZJU反卷猫猫桶",
+      "cleanName": "反卷",
+      "time": "50:51:52",
+      "members": [
+        "npl",
+        "Star",
+        "林中及时雨",
+        "Satori5",
+        "Seekr",
+        "alaya"
+      ]
+    },
+    {
+      "rank": 7,
+      "rawName": "世界美食official",
+      "cleanName": "世界美食official",
+      "time": "51:26:06",
+      "members": [
+        "Rivekon",
+        "Kizuna",
+        "肥鱼",
+        "Blackey",
+        "creeperqwq",
+        "Aurora"
+      ]
+    },
+    {
+      "rank": 8,
+      "rawName": "zitmen",
+      "cleanName": "zitmen",
+      "time": "52:14:59",
+      "members": [
+        "Euphonium",
+        "粉",
+        "Daviscartes",
+        "Selenium",
+        "四方巡",
+        "zitman"
+      ]
+    },
+    {
+      "rank": 9,
+      "rawName": "龙小组解谜！",
+      "cleanName": "闲散解谜！",
+      "time": "54:37:57",
+      "members": [
+        "小白狐九月",
+        "兔子古",
+        "Terry",
+        "Fivero",
+        "CallMeMushroom",
+        "piggy2503"
+      ]
+    },
+    {
+      "rank": 10,
+      "rawName": "--------金牌线--------",
+      "cleanName": "金牌线",
+      "time": "57:59:40",
+      "members": [
+        "skyline",
+        "Inferno",
+        "Starxcc",
+        "Etaoin",
+        "Suika_predator",
+        "FR"
+      ]
+    }
+  ],
+  "CCBC15": [
+    {
+      "rank": 1,
+      "rawName": "simplicissimus",
+      "cleanName": "simplicissimus",
+      "time": "30.98",
+      "members": [
+        "ES8730",
+        "sevenkplus",
+        "温",
+        "落葉子",
+        "荠菜"
+      ]
+    },
+    {
+      "rank": 2,
+      "rawName": "Beginners' Utopia",
+      "cleanName": "灵境TES",
+      "time": "32.25",
+      "members": [
+        "八卦郭嘉",
+        "Havelieyu",
+        "希希",
+        "小汤圆",
+        "whiteqwq"
+      ]
+    },
+    {
+      "rank": 3,
+      "rawName": "识文解意的追迹者",
+      "cleanName": "识文解意的追迹者",
+      "time": "41.62",
+      "members": [
+        "榆木华",
+        "Winfrid",
+        "D3D4",
+        "VinstaG173",
+        "LA"
+      ]
+    },
+    {
+      "rank": 4,
+      "rawName": "--------------金牌线--------------",
+      "cleanName": "金牌线",
+      "time": "43.12",
+      "members": [
+        "Inferno",
+        "skyline",
+        "Suika_predator",
+        "Starxcc",
+        "FR"
+      ]
+    },
+    {
+      "rank": 5,
+      "rawName": "Anonymous.PPTx",
+      "cleanName": "Anonymous",
+      "time": "43.6",
+      "members": [
+        "MyriadL",
+        "CAT-FISH",
+        "Ender_nor",
+        "xxuurruuii",
+        "Brightly_"
+      ]
+    },
+    {
+      "rank": 6,
+      "rawName": "Sr./Jr. Talented Undergrads",
+      "cleanName": "JUSTeam",
+      "time": "48.44",
+      "members": [
+        "Logistick",
+        "dailycrazy",
+        "hahahaHAha",
+        "Arya",
+        "yux"
+      ]
+    },
+    {
+      "rank": 7,
+      "rawName": "愚公单推人",
+      "cleanName": "鸡",
+      "time": "50.1",
+      "members": [
+        "星星",
+        "mutsuki",
+        "kinami",
+        "各种",
+        "xsj"
+      ]
+    },
+    {
+      "rank": 8,
+      "rawName": "世界美食official",
+      "cleanName": "世界美食official",
+      "time": "50.42",
+      "members": [
+        "kizuna",
+        "肥鱼",
+        "Rivekon",
+        "creeperqwq",
+        "Blackey"
+      ]
+    },
+    {
+      "rank": 9,
+      "rawName": "zitmen",
+      "cleanName": "zitmen",
+      "time": "50.45",
+      "members": [
+        "Euphonium",
+        "粉",
+        "Daviscartes",
+        "小大圣",
+        "Selenium"
+      ]
+    },
+    {
+      "rank": 10,
+      "rawName": "谜途旅人",
+      "cleanName": "谜途旅人",
+      "time": "50.88",
+      "members": [
+        "空气新人",
+        "屑abandon",
+        "凌风cold",
+        "琳奈",
+        "Atheist"
+      ]
+    }
+  ],
+  "JUST1": [
+    {
+      "rank": 1,
+      "rawName": "🫡",
+      "cleanName": "拼团",
+      "time": "21.56",
+      "members": [
+        "美恒",
+        "wilsey",
+        "xsj",
+        "Brightly_"
+      ]
+    },
+    {
+      "rank": 2,
+      "rawName": "An UltrA ArcAdiA",
+      "cleanName": "灵境TES",
+      "time": "22.01",
+      "members": [
+        "五月",
+        "八卦郭嘉",
+        "小汤圆",
+        "友人A",
+        "希希"
+      ]
+    },
+    {
+      "rank": 3,
+      "rawName": "JUST野炊组",
+      "cleanName": "海拉鲁野炊组",
+      "time": "24.86",
+      "members": [
+        "WJ",
+        "奶油酱",
+        "水帝WaterKing"
+      ]
+    },
+    {
+      "rank": 4,
+      "rawName": "谜途旅人 pro版",
+      "cleanName": "谜途旅人",
+      "time": "27.89",
+      "members": [
+        "空气新人",
+        "Atheist",
+        "CALS",
+        "Fivero",
+        "明夜"
+      ]
+    },
+    {
+      "rank": 5,
+      "rawName": "识文解意的追迹者",
+      "cleanName": "识文解意的追迹者",
+      "time": "30.26",
+      "members": [
+        "YQ",
+        "D3D4",
+        "Te",
+        "LA",
+        "榆木华"
+      ]
+    },
+    {
+      "rank": 6,
+      "rawName": "Five Stages of Grief",
+      "cleanName": "simplicissimus",
+      "time": "36.50",
+      "members": []
+    },
+    {
+      "rank": 7,
+      "rawName": "黑解谜·卡题",
+      "cleanName": "拼团",
+      "time": "37.22",
+      "members": [
+        "Ender_nor",
+        "kinami",
+        "星星",
+        "卡布"
+      ]
+    },
+    {
+      "rank": 8,
+      "rawName": "奇妙狮雨炫狂少女团，夜音见。",
+      "cleanName": "拼团",
+      "time": "41.21",
+      "members": [
+        "mutsuki",
+        "Inferno",
+        "Winfrid",
+        "小大圣",
+        "COL"
+      ]
+    },
+    {
+      "rank": 9,
+      "rawName": "Puzzlesweeper",
+      "cleanName": "Puzzlesweeper",
+      "time": "44.93",
+      "members": [
+        "zyy",
+        "鸡肉卷",
+        "生煎",
+        "tonyXFY"
+      ]
+    },
+    {
+      "rank": 10,
+      "rawName": "Reviver Team",
+      "cleanName": "Reviver Team",
+      "time": "46.20",
+      "members": [
+        "Lazy_Labs",
+        "SpadeA261",
+        "孔明七星"
+      ]
+    }
+  ],
+  "SECO1": [
+    {
+      "rank": 1,
+      "rawName": "🖖Unsaluted Speculation",
+      "cleanName": "",
+      "time": "4:46",
+      "members": []
+    },
+    {
+      "rank": 2,
+      "rawName": "反卷月牙湾",
+      "cleanName": "反卷",
+      "time": "5:03",
+      "members": [
+        "npl",
+        "林中及时雨",
+        "myy",
+        "天火同人"
+      ]
+    },
+    {
+      "rank": 3,
+      "rawName": "A hAsh ArcAdiA",
+      "cleanName": "灵境TES",
+      "time": "5:35",
+      "members": [
+        "五月",
+        "友人A",
+        "希希",
+        "小汤圆"
+      ]
+    },
+    {
+      "rank": 4,
+      "rawName": "识文解意的追迹者",
+      "cleanName": "识文解意的追迹者",
+      "time": "5:52",
+      "members": [
+        "榆木华",
+        "D3D4",
+        "LA",
+        "Inferno",
+        "YQ",
+        "Te"
+      ]
+    },
+    {
+      "rank": 5,
+      "rawName": "RWBY",
+      "cleanName": "",
+      "time": "6:23",
+      "members": []
+    },
+    {
+      "rank": 6,
+      "rawName": "海拉鲁野炊组",
+      "cleanName": "海拉鲁野炊组",
+      "time": "7:03",
+      "members": [
+        "tangjqjq",
+        "WJ"
+      ]
+    },
+    {
+      "rank": 7,
+      "rawName": "爆宗门",
+      "cleanName": "",
+      "time": "7:09",
+      "members": [
+        "alaya",
+        "mutsuki"
+      ]
+    },
+    {
+      "rank": 8,
+      "rawName": "🐺🦊🐱CyFur🐟🐶🐺",
+      "cleanName": "CyFur",
+      "time": "7:23",
+      "members": []
+    },
+    {
+      "rank": 9,
+      "rawName": "ЯƎTИUH A TOИ",
+      "cleanName": "Not A Hunter",
+      "time": "7:25",
+      "members": [
+        "驯龙高手"
+      ]
+    },
+    {
+      "rank": 10,
+      "rawName": "story teller",
+      "cleanName": "",
+      "time": "7:32",
+      "members": []
+    }
+  ],
+  "FDUPH": [
+    {
+      "rank": 1,
+      "rawName": "New York City",
+      "cleanName": "拼团",
+      "time": "15:46",
+      "members": [
+        "JP",
+        "Brightly",
+        "TCF",
+        "温",
+        "小白狐九月",
+        "-",
+        "-"
+      ]
+    },
+    {
+      "rank": 2,
+      "rawName": "Reviver Team",
+      "cleanName": "Reviver Team",
+      "time": "19:59",
+      "members": [
+        "SpadeA261",
+        "孔明七星",
+        "Winfrid",
+        "[ds]",
+        "meli",
+        "Lazy_Labs",
+        "cff"
+      ]
+    },
+    {
+      "rank": 3,
+      "rawName": "-------🥇🥇🥇-------",
+      "cleanName": "金牌线",
+      "time": "23:54",
+      "members": [
+        "skyline",
+        "Wildfire",
+        "Inferno",
+        "oscar",
+        "Starxcc",
+        "-",
+        "-"
+      ]
+    },
+    {
+      "rank": 4,
+      "rawName": "Alteleid",
+      "cleanName": "杂鱼",
+      "time": "26:39",
+      "members": [
+        "Remi",
+        "Acetyl",
+        "dodomos",
+        "布莱斯恩",
+        "-",
+        "-"
+      ]
+    },
+    {
+      "rank": 5,
+      "rawName": "超酷贝斯手出场",
+      "cleanName": "凑不出",
+      "time": "28:55",
+      "members": [
+        "夜莺厨",
+        "无色魁",
+        "STELLAR",
+        "-SIG-",
+        "pancake",
+        "HENG天痕"
+      ]
+    },
+    {
+      "rank": 6,
+      "rawName": "反卷没破轮",
+      "cleanName": "反卷",
+      "time": "29:58",
+      "members": [
+        "Star",
+        "Satori5",
+        "alaya",
+        "林中及时雨",
+        "Seekr",
+        "-",
+        "-"
+      ]
+    },
+    {
+      "rank": 7,
+      "rawName": "FloorOfLava",
+      "cleanName": "FloorOfLava",
+      "time": "30:00",
+      "members": [
+        "LargoDream",
+        "cl1694",
+        "Mr.Raindrop",
+        "Aqua Cat",
+        "-",
+        "-"
+      ]
+    },
+    {
+      "rank": 8,
+      "rawName": "R.W.B.Y.",
+      "cleanName": "RWBY",
+      "time": "32:27",
+      "members": [
+        "Flâneur.",
+        "Sierra",
+        "星海",
+        "GraviCe",
+        "普通的解谜人",
+        "-",
+        "-"
+      ]
+    },
+    {
+      "rank": 9,
+      "rawName": "求求你让我看一眼题吧我什么都会做的",
+      "cleanName": "看看题",
+      "time": "33:59",
+      "members": [
+        "磐绿薄绒荷",
+        "神经菇",
+        "Light",
+        "Garadox7",
+        "半次获释者",
+        "-",
+        "-"
+      ]
+    },
+    {
+      "rank": 10,
+      "rawName": "闲散解谜！",
+      "cleanName": "闲散解谜！",
+      "time": "34:25",
+      "members": [
+        "Fivero",
+        "CallMeMushroom",
+        "esc",
+        "COL",
+        "sonic",
+        "-",
+        "-"
+      ]
+    }
+  ],
+  "GnPH": [
+    {
+      "rank": 1,
+      "rawName": "玉牌解谜",
+      "cleanName": "杂鱼",
+      "time": "12:06:51",
+      "members": [
+        "布莱斯恩",
+        "nightmeow",
+        "Remi",
+        "Clash",
+        "Acetyl"
+      ]
+    },
+    {
+      "rank": 2,
+      "rawName": "Anonymous",
+      "cleanName": "Anonymous",
+      "time": "13:47:26",
+      "members": [
+        "Brightly_",
+        "小大圣",
+        "xxuurruuii"
+      ]
+    },
+    {
+      "rank": 3,
+      "rawName": "Cézanne解谜",
+      "cleanName": "闲散解谜",
+      "time": "16:00:39",
+      "members": [
+        "COL",
+        "esc",
+        "HENG天痕",
+        "CallMeMushroom",
+        "Seter"
+      ]
+    },
+    {
+      "rank": 4,
+      "rawName": "灵境TES",
+      "cleanName": "灵境TES",
+      "time": "16:06:37",
+      "members": [
+        "Havelieyu",
+        "八卦郭嘉",
+        "小汤圆",
+        "希希"
+      ]
+    },
+    {
+      "rank": 5,
+      "rawName": "Reviver Team",
+      "cleanName": "Reviver Team",
+      "time": "17:05:16",
+      "members": [
+        "孔明七星",
+        "cff_0102",
+        "Lazy_Labs",
+        "Daiari",
+        "SpadeA261"
+      ]
+    },
+    {
+      "rank": 6,
+      "rawName": "已被强制修改、封禁账号或追究责任",
+      "cleanName": "鸡",
+      "time": "20:16:59",
+      "members": []
+    },
+    {
+      "rank": 7,
+      "rawName": "子时四又三分之十二刻，幼稚园的小猫咪见、",
+      "cleanName": "幼稚园的小猫咪",
+      "time": "20:50:41",
+      "members": [
+        "Tom22l",
+        "nov",
+        "Zeldaxlove64ever"
+      ]
+    },
+    {
+      "rank": 8,
+      "rawName": "鸡排野炊组",
+      "cleanName": "海拉鲁野炊组",
+      "time": "20:50:43",
+      "members": [
+        "奶油酱",
+        "tangjqjq",
+        "WJ",
+        "水帝WaterKing"
+      ]
+    },
+    {
+      "rank": 9,
+      "rawName": "JUSTeam",
+      "cleanName": "JUSTeam",
+      "time": "21:20:11",
+      "members": [
+        "dailycrazy",
+        "Logistick",
+        "Andantino",
+        "hahahaHAha",
+        "Arya"
+      ]
+    },
+    {
+      "rank": 10,
+      "rawName": "世界美食欧肥show",
+      "cleanName": "世界美食official",
+      "time": "21:44:25",
+      "members": [
+        "Kizuna",
+        "肥鱼",
+        "薯仔",
+        "creeperqwq",
+        "杨"
+      ]
+    }
+  ],
+  "CCBC16": [
+    {
+      "rank": 1,
+      "rawName": "沉向空中的追迹者",
+      "cleanName": "识文解意的追迹者",
+      "time": "33.87",
+      "members": [
+        "Winfrid",
+        "榆木华",
+        "D3D4",
+        "小白狐九月",
+        "LA"
+      ]
+    },
+    {
+      "rank": 2,
+      "rawName": "杂鱼薯条",
+      "cleanName": "杂鱼",
+      "time": "38.12",
+      "members": [
+        "布莱斯恩",
+        "nightmeow",
+        "Acetyl",
+        "Clash",
+        "Remi"
+      ]
+    },
+    {
+      "rank": 3,
+      "rawName": "-------------金牌线-------------",
+      "cleanName": "金牌线",
+      "time": "41.27",
+      "members": [
+        "Inferno",
+        "skyline",
+        "Suika_predator",
+        "Starxcc",
+        "Wildfire"
+      ]
+    },
+    {
+      "rank": 4,
+      "rawName": "zitmen",
+      "cleanName": "zitmen",
+      "time": "41.45",
+      "members": [
+        "Euphonium",
+        "粉",
+        "Ender_nor",
+        "Selenium",
+        "Seleclipse"
+      ]
+    },
+    {
+      "rank": 5,
+      "rawName": "灵境TES",
+      "cleanName": "灵境TES",
+      "time": "43.73",
+      "members": [
+        "Havelieyu",
+        "希希",
+        "八卦郭嘉",
+        "小汤圆",
+        "whiteqwq"
+      ]
+    },
+    {
+      "rank": 6,
+      "rawName": "Reviver Team",
+      "cleanName": "Reviver Team",
+      "time": "48.6",
+      "members": [
+        "SpadeA261",
+        "cff_0102",
+        "WYXkk",
+        "孔明七星",
+        "Lazy_Labs"
+      ]
+    },
+    {
+      "rank": 7,
+      "rawName": "鲍师傅家今天吃什么？",
+      "cleanName": "解谜怪盗团",
+      "time": "50.21",
+      "members": [
+        "兰扎特",
+        "方伯",
+        "yyao",
+        "yuwr",
+        "大灰狼"
+      ]
+    },
+    {
+      "rank": 8,
+      "rawName": "闲散解谜！- 副本 (自动保存的) (已恢复) (兼容模式)",
+      "cleanName": "闲散解谜",
+      "time": "51.25",
+      "members": [
+        "COL",
+        "CallMeMushroom",
+        "esc",
+        "空气新人",
+        "HENG天痕"
+      ]
+    },
+    {
+      "rank": 9,
+      "rawName": "吸石榴野炊组",
+      "cleanName": "海拉鲁野炊组",
+      "time": "51.89",
+      "members": [
+        "水帝WaterKing",
+        "tangjqjq",
+        "深渊的侦探",
+        "奶油酱",
+        "WJ"
+      ]
+    },
+    {
+      "rank": 10,
+      "rawName": "Not A Hunter",
+      "cleanName": "Not A Hunter",
+      "time": "52.25",
+      "members": [
+        "Not A Number"
+      ]
+    }
+  ],
+  "US-TC": [
+    {
+      "rank": 1,
+      "rawName": "San Francisco",
+      "cleanName": "simplicissimus",
+      "time": "26:02:23",
+      "members": []
+    },
+    {
+      "rank": 2,
+      "rawName": "反卷的小猫咪",
+      "cleanName": "幼稚园的小猫咪",
+      "time": "30:32:29",
+      "members": [
+        "Tom22l",
+        "Kagami",
+        "一叶知秋",
+        "mutsuki",
+        "肆月"
+      ]
+    },
+    {
+      "rank": 3,
+      "rawName": "灵境TES",
+      "cleanName": "灵境TES",
+      "time": "32:13:51",
+      "members": []
+    },
+    {
+      "rank": 4,
+      "rawName": "Reviver Team",
+      "cleanName": "Reviver Team",
+      "time": "33:00:23",
+      "members": []
+    },
+    {
+      "rank": 5,
+      "rawName": "JUSTeam",
+      "cleanName": "JUSTeam",
+      "time": "34:10:26",
+      "members": []
+    },
+    {
+      "rank": 6,
+      "rawName": "切香蕉比赛 (4)",
+      "cleanName": "杂鱼",
+      "time": "35:30:14",
+      "members": []
+    },
+    {
+      "rank": 7,
+      "rawName": "看看题US-TC肉鸽联合寻访分队开局（吗",
+      "cleanName": "zitmen + 看看题",
+      "time": "42:04:33",
+      "members": []
+    },
+    {
+      "rank": 8,
+      "rawName": "凑不出 any - sure case",
+      "cleanName": "凑不出",
+      "time": "44:57:31",
+      "members": []
+    },
+    {
+      "rank": 9,
+      "rawName": "魔法少女ノ魔女裁判",
+      "cleanName": "魔女裁判",
+      "time": "45:58:56",
+      "members": []
+    },
+    {
+      "rank": 10,
+      "rawName": "rusty lake rambler",
+      "cleanName": "rusty lake rambler",
+      "time": "46:16:47",
+      "members": []
+    }
+  ],
+  "ZJUPH1": [
+    {
+      "rank": 1,
+      "rawName": "满船清梦",
+      "cleanName": "simplicissimus",
+      "time": "41:46:59",
+      "members": [
+        "温",
+        "Inferno",
+        "落葉子",
+        "selenium",
+        "ES8730",
+        "荠菜"
+      ]
+    },
+    {
+      "rank": 2,
+      "rawName": "小小欲望的追迹者",
+      "cleanName": "识文解意的追迹者",
+      "time": "45:38:49",
+      "members": [
+        "榆木华",
+        "D3D4",
+        "Zaimey",
+        "Te",
+        "LA",
+        "Aphasia"
+      ]
+    },
+    {
+      "rank": 3,
+      "rawName": "zitmen看看题ZJUPH卫戍协议（吗",
+      "cleanName": "zitmen + 看看题",
+      "time": "46:50:47",
+      "members": [
+        "Daviscartes",
+        "廃棄物",
+        "Euphonium",
+        "磬绿薄绒荷",
+        "粉",
+        "半次获释者"
+      ]
+    },
+    {
+      "rank": 4,
+      "rawName": "ohno猫咪河EV",
+      "cleanName": "幼稚园的小猫咪 + Reviver Team",
+      "time": "50:03:33",
+      "members": [
+        "孔明七星",
+        "Tom22l",
+        "一叶知秋",
+        "Kagami",
+        "鑫森淼焱垚",
+        "Lazy_Labs"
+      ]
+    },
+    {
+      "rank": 5,
+      "rawName": "Flashback",
+      "cleanName": "金牌线",
+      "time": "52:06:29",
+      "members": [
+        "skyline",
+        "Wildfire",
+        "小白狐九月",
+        "空气新人",
+        "oscar",
+        "tiger2005"
+      ]
+    },
+    {
+      "rank": 6,
+      "rawName": "RustyLakeTrailblazer",
+      "cleanName": "rusty lake rambler",
+      "time": "54:25:34",
+      "members": [
+        "明月何曾是两乡",
+        "Cy_ExH",
+        "Kown",
+        "迟墨哲",
+        "kartal",
+        "Remi"
+      ]
+    },
+    {
+      "rank": 7,
+      "rawName": "灵境TES",
+      "cleanName": "灵境TES",
+      "time": "56:51:43",
+      "members": [
+        "Havelieyu",
+        "五月",
+        "小汤圆",
+        "八卦郭嘉",
+        "希希"
+      ]
+    },
+    {
+      "rank": 8,
+      "rawName": "JUSTeam",
+      "cleanName": "JUSTeam",
+      "time": "58:08:46",
+      "members": [
+        "Logistick",
+        "hahahaHAha",
+        "Cheney",
+        "dailycrazy",
+        "yux",
+        "Fluittene"
+      ]
+    },
+    {
+      "rank": 9,
+      "rawName": "西溪觅鱼杂",
+      "cleanName": "杂鱼",
+      "time": "60:56:32",
+      "members": [
+        "Clash",
+        "布莱斯恩",
+        "Acetyl",
+        "nightmeow",
+        "-"
+      ]
+    },
+    {
+      "rank": 10,
+      "rawName": "喵好奇质检组",
+      "cleanName": "喵喵喵",
+      "time": "61:41:53",
+      "members": [
+        "TCF",
+        "秋水仙素",
+        "HileMeow",
+        "上弦之月"
+      ]
+    }
+  ],
+  "SECO2": [
+    {
+      "rank": 1,
+      "rawName": "Reviver Team",
+      "cleanName": "Reviver Team",
+      "time": "23:48",
+      "members": [
+        "孔明七星",
+        "skyline",
+        "Daiari",
+        "鑫森淼焱垚",
+        "WYXkk",
+        "cff_0102"
+      ]
+    },
+    {
+      "rank": 2,
+      "rawName": "Unsaluted Dehydration",
+      "cleanName": "Anonymous",
+      "time": "25:56",
+      "members": [
+        "Brightly_",
+        "JP",
+        "xxuurruuii",
+        "Blackhistory",
+        "xsj",
+        "mutsuki"
+      ]
+    },
+    {
+      "rank": 3,
+      "rawName": "含苞待放的追迹者",
+      "cleanName": "识文解意的追迹者",
+      "time": "27:22",
+      "members": [
+        "榆木华",
+        "D3D4",
+        "LA",
+        "Te",
+        "0jacky0",
+        "驯龙高手"
+      ]
+    },
+    {
+      "rank": 4,
+      "rawName": "商业战队卖货连者！",
+      "cleanName": "天翔战队ZOO连者！",
+      "time": "32:01",
+      "members": [
+        "风怒大汉堡",
+        "救赎F-D",
+        "Ender_hz",
+        "钇钒"
+      ]
+    },
+    {
+      "rank": 5,
+      "rawName": "Rusty Lake Meta-stucker",
+      "cleanName": "rusty lake rambler",
+      "time": "36:44",
+      "members": [
+        "Kown",
+        "Cy_ExH",
+        "DriKe",
+        "HakabaRemi",
+        "Partico",
+        "Selena"
+      ]
+    },
+    {
+      "rank": 6,
+      "rawName": "何以为我",
+      "cleanName": "何以为我",
+      "time": "42:56",
+      "members": [
+        "Alez",
+        "Krain",
+        "wymcaT"
+      ]
+    },
+    {
+      "rank": 7,
+      "rawName": "深色墨点",
+      "cleanName": "深色墨点",
+      "time": "43:44",
+      "members": [
+        "135_Morisummer",
+        "Rosmarinus",
+        "爬爬",
+        "Sand"
+      ]
+    },
+    {
+      "rank": 8,
+      "rawName": "CyFur",
+      "cleanName": "CyFur",
+      "time": "48:39",
+      "members": [
+        "COlDAiR",
+        "HanaNeko",
+        "柏律木星",
+        "3708",
+        "UrsaKUMA15",
+        "Yuge0w0"
+      ]
+    },
+    {
+      "rank": 9,
+      "rawName": "绿色圆圈",
+      "cleanName": "绿色圆圈",
+      "time": "49:16",
+      "members": [
+        "mianTzQwQ",
+        "阳光",
+        "liyufish",
+        "Leafy",
+        "rikimaruyyds",
+        "VerictBBB"
+      ]
+    },
+    {
+      "rank": 10,
+      "rawName": "狮姐妹是凹肥瘦",
+      "cleanName": "世界美食official",
+      "time": "50:25",
+      "members": [
+        "Rivekon",
+        "kizuna",
+        "肥鱼",
+        "creeperqwq",
+        "Seter",
+        "凡才肌"
+      ]
+    }
+  ]
+};
+var LINKS = {"P&KU1": "https://pnku1.pkupuzzle.art/", "CCBC12": "https://ccbc12.cipherpuzzles.com/", "P&KU2": "https://pnku2.pkupuzzle.art/", "CCBCBA": "https://ccbc13.cipherpuzzles.com/", "MH2023": "https://mh2023.puzzlehunt.cn/", "JH2024": "https://jh2024.jianghujiemi.fun/", "P&KU3a": "https://pnku3.pkupuzzle.art/", "CCBC15": "https://ccbc15.cipherpuzzles.com/", "JUST1": "https://justhunt.cn/archive/just-one/", "GnPH": "https://goldenph.art/", "CCBC16": "https://ccbc16.cipherpuzzles.com/", "US-TC": "http://us-tc.top/", "ZJUPH1": "https://2025.zjuph.fun/", "SECO2": "https://archive.secopuzzle.com/#/main/seco2", "P&KU3b": "https://pnku3.pkupuzzle.art/", "CCBC17": "https://ccbc17.cipherpuzzles.com/"};
+var COMP_EPOCHS = {"P&KU1": 1656072000000, "CCBC12": 1660305600000, "P&KU2": 1682683200000, "CCBCBA": 1691755200000, "MH2023": 1703851200000, "JH2024": 1708689600000, "P&KU3a": 1721390400000, "CCBC15": 1723204800000, "JUST1": 1725624000000, "GnPH": 1752840000000, "CCBC16": 1754654400000, "US-TC": 1759752000000, "ZJUPH1": 1763726400000, "SECO2": 1769860800000, "P&KU3b": 1783684800000, "CCBC17": 1786708800000};
+
+(function() {
+var comps=COMPETITIONS,rankings=RANKINGS,links=LINKS,compResults=COMP_RESULTS,epochs=COMP_EPOCHS;
+
+function compWeight(id){if(id.indexOf('P&KU')===0||id.indexOf('CCBC')===0)return 1.25;return 0.75;}
+function isMajor(id){return id.indexOf('P&KU')===0||id.indexOf('CCBC')===0;}
+function esc(s){if(!s)return'';return s.replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+function boldComp(id){return isMajor(id)?'<b>'+esc(id)+'</b>':esc(id);}
+function decayCoeff(compId,w){var days=(epochs[compId]-Date.now())/86400000;return Math.exp(days/365/3)*w;}
+function rankScore(r){
+  if(r===null||r===undefined||r==='')return 0;
+  var n=parseInt(r,10);if(isNaN(n))return-1;
+  if(n>=1&&n<=20)return Math.exp((20-n)/5)-2;return-1;
+}
+
+var mergedMap={},rankBuckets={};
+for(var tn in rankings){for(var cid in rankings[tn]){var r=rankings[tn][cid];if(r!==null&&r!==undefined&&r!==''&&typeof r==='number'){var key=cid+'_'+r;if(!rankBuckets[key])rankBuckets[key]=[];rankBuckets[key].push(tn);}}}
+for(var key in rankBuckets){if(rankBuckets[key].length>1){var cid=key.split('_')[0];rankBuckets[key].forEach(function(tn){mergedMap[tn+'_'+cid]=true;});}}
+function isMerged(teamName,compId){return !!mergedMap[teamName+'_'+compId];}
+
+function rankCls(r){var n=parseInt(r,10);if(isNaN(n))return'cr-mid';if(n===1)return'cr-1';if(n<=3)return'cr-2';if(n<=6)return'cr-4';if(n<=10)return'cr-7';return'cr-mid';}
+
+function computeScores(tr){
+  var fs=0,sv=[];
+  for(var i=0;i<comps.length;i++){var c=comps[i],r=tr[c.id],rs=rankScore(r);if(r!==null&&r!==undefined&&r!=='')sv.push(rs);fs+=decayCoeff(c.id,compWeight(c.id))*rs;}
+  var sa=sv.length>0?sv.reduce(function(a,b){return a+b;},0)/sv.length:0;
+  return{total:fs*2+sa*3,frontSum:fs,stableAvg:sa};
+}
+
+var teams=TEAMS.map(function(t){
+  var s=computeScores(rankings[t.name]||{});
+  return{name:t.name.replace('\uFF08\u89E3\u6563\uFF09',''),origName:t.name,total:s.total,frontSum:s.frontSum,stableAvg:s.stableAvg};
+});
+teams.sort(function(a,b){return b.total-a.total;});
+teams.forEach(function(t,i){t.rank=i+1;t.tier=t.total>=300?'t0':t.total>=200?'t1':t.total>=100?'t2':'t3';});
+
+var tooltip=document.getElementById('tooltip');
+function showTT(e,text){tooltip.textContent=text;var x=e.clientX+12,y=e.clientY-30;tooltip.style.left='-999px';tooltip.classList.add('show');var tw=tooltip.offsetWidth;if(x+tw>window.innerWidth-10)x=e.clientX-tw-12;tooltip.style.left=x+'px';tooltip.style.top=y+'px';}
+function hideTT(){tooltip.classList.remove('show');}
+
+document.querySelectorAll('.tab-btn').forEach(function(btn){btn.addEventListener('click',function(){
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+  document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active');});
+  btn.classList.add('active');document.getElementById(btn.dataset.tab).classList.add('active');
+});});
+
+// TAB 1
+var chead=document.getElementById('compHeads');
+comps.forEach(function(c){
+  var a=document.createElement('a');a.className='comp-link'+(isMajor(c.id)?' bold-link':'');
+  a.textContent=c.id;a.href=links[c.id]||'#';a.target='_blank';a.rel='noopener';
+  var dc=decayCoeff(c.id,compWeight(c.id));
+  a.addEventListener('mouseenter',function(e){showTT(e,c.id+' | '+c.date+' | \u6743\u91CD '+dc.toFixed(2));});
+  a.addEventListener('mouseleave',hideTT);chead.appendChild(a);
+});
+
+function badgeCls(r){if(r===null||r===undefined||r==='')return'bg-null';var n=parseInt(r,10);if(isNaN(n))return'bg-mid';if(n>=1&&n<=20)return'bg-'+n;return'bg-mid';}
+function badgeText(r){if(r===null||r===undefined||r==='')return'-';if(typeof r==='number'&&r>50)return'50+';return typeof r==='string'?r:String(r);}
+
+var app=document.getElementById('app');
+var simTeams=[];
+// Load from localStorage
+try{var saved=localStorage.getItem('hunt_sim_teams');if(saved)simTeams=JSON.parse(saved);}catch(e){}
+function saveSimTeams(){try{localStorage.setItem('hunt_sim_teams',JSON.stringify(simTeams));}catch(e){}}
+
+function simRanksToObj(ranks){var o={};ranks.forEach(function(e){o[e.c]=e.r;});return o;}
+function simObjToRanks(obj){var a=[];for(var cid in obj){a.push({c:cid,r:obj[cid]});}return a;}
+
+function renderLeaderboard(){
+  app.innerHTML='';
+  var showSim=document.getElementById('simToggle').checked;
+  var all=(showSim?simTeams.map(function(st){
+    var tr=simRanksToObj(st.ranks||[]),s=computeScores(tr);
+    return{name:st.name,total:s.total,frontSum:s.frontSum,stableAvg:s.stableAvg,_ranks:tr,_sim:true,rank:0,tier:'tsim'};
+  }).concat(teams):teams);
+  all.sort(function(a,b){return b.total-a.total;});
+  all.forEach(function(t,i){t.rank=i+1;});
+  all.forEach(function(t){renderCard(t);});
+}
+
+function renderCard(team){
+  var tr2=team._ranks||rankings[team.origName]||{},isSim=!!team._sim;
+  var card=document.createElement('div');card.className='card '+(isSim?'tsim':team.tier||'t3');
+  var strip=document.createElement('div');strip.className='card-strip';card.appendChild(strip);
+  var info=document.createElement('div');info.className='card-info';
+  [{c:'card-rank',v:team.rank},{c:'card-name',v:team.name},{c:'card-total',v:team.total.toFixed(1)},{c:'card-front',v:team.frontSum.toFixed(1)},{c:'card-stable',v:team.stableAvg.toFixed(1)}].forEach(function(it){var s=document.createElement('span');s.className=it.c;s.textContent=it.v;info.appendChild(s);});
+  card.appendChild(info);
+  var badges=document.createElement('div');badges.className='card-badges';
+  for(var k=0;k<comps.length;k++){(function(c){
+    var r=tr2[c.id],b=document.createElement('span');
+    var cls=badgeCls(r),merged=!isSim&&isMerged(team.origName||'',c.id);
+    b.className='badge '+cls+(merged?' merged':'');
+    b.textContent=badgeText(r);
+    if(r!==null&&r!==undefined&&r!==''){
+      var rs=rankScore(r);if(merged)rs/=2;var dc=decayCoeff(c.id,compWeight(c.id)),contrib=dc*rs;
+      b.addEventListener('mouseenter',function(e){showTT(e,c.id+' | \u5F97\u5206 '+rs.toFixed(1)+' | \u79EF\u5206 '+contrib.toFixed(1)+(merged?' | \u5E76\u961F':''));});
+      b.addEventListener('mouseleave',hideTT);
+    }
+    b.addEventListener('click',function(){if(links[c.id])window.open(links[c.id],'_blank');});
+    badges.appendChild(b);
+  })(comps[k]);}
+  card.appendChild(badges);app.appendChild(card);
+}
+renderLeaderboard();
+
+// TAB 2
+var tsel=document.getElementById('teamSelect');
+teams.forEach(function(t){var o=document.createElement('option');o.value=t.origName;o.textContent=t.name;tsel.appendChild(o);});
+var tinfo=document.getElementById('teamInfo'),thist=document.getElementById('teamHistory');
+function buildTeamHistory(tname){
+  var tr=rankings[tname]||{};var parts=0,frontSum=0,stableVals=[];thist.innerHTML='';
+  comps.forEach(function(c){var r=tr[c.id];if(r===null||r===undefined||r==='')return;parts++;var rs=rankScore(r),merged=isMerged(tname,c.id);if(merged)rs/=2;var dc=decayCoeff(c.id,compWeight(c.id)),integral=dc*rs;stableVals.push(rs);frontSum+=integral;
+    var card=document.createElement('div');card.className='history-card';var strip=document.createElement('div');strip.className='hcard-strip';
+    var n=parseInt(r,10);if(n===1)strip.className+=' s-1';else if(n<=3)strip.className+=' s-2';else if(n<=10)strip.className+=' s-top10';else if(n<=20)strip.className+=' s-mid';else strip.className+=' s-low';
+    if(merged)strip.className+=' sr-merged';
+    card.appendChild(strip);var body=document.createElement('div');body.className='hcard-body';
+    var nm=document.createElement('span');nm.className='hcard-name';nm.innerHTML=boldComp(c.id);
+    var dt=document.createElement('span');dt.className='hcard-date';dt.textContent=c.date;
+    var rk=document.createElement('span');rk.className='hcard-rank';var rn=parseInt(r,10);
+    if(rn===1)rk.className+=' sr-1';else if(rn<=3)rk.className+=' sr-2';else if(rn<=6)rk.className+=' sr-4';else if(rn<=10)rk.className+=' sr-7';else if(rn<=20)rk.className+=' sr-mid';else rk.className+=' sr-low';
+    if(merged)rk.className+=' sr-merged';rk.textContent='#'+badgeText(r);
+    var sc=document.createElement('span');sc.className='hcard-score';sc.textContent=rs.toFixed(1);
+    var wt=document.createElement('span');wt.className='hcard-weight';wt.textContent=dc.toFixed(2);
+    var it=document.createElement('span');it.className='hcard-integral';it.textContent=integral.toFixed(1);
+    body.appendChild(nm);body.appendChild(dt);body.appendChild(rk);body.appendChild(sc);body.appendChild(wt);body.appendChild(it);card.appendChild(body);thist.appendChild(card);
+  });
+  var sa=stableVals.length>0?stableVals.reduce(function(a,b){return a+b;},0)/stableVals.length:0;
+  tinfo.innerHTML='\u53C2\u8D5B <strong>'+parts+'</strong> / '+comps.length+' \u573A &nbsp;|&nbsp; \u603B\u5206 <strong>'+(frontSum*2+sa*3).toFixed(1)+'</strong> &nbsp;|&nbsp; \u7D2F\u79EF\u5206 <strong>'+frontSum.toFixed(1)+'</strong> &nbsp;|&nbsp; \u7A33\u5B9A\u5206 <strong>'+sa.toFixed(1)+'</strong>';
+}
+tsel.addEventListener('change',function(){buildTeamHistory(tsel.value);});buildTeamHistory(tsel.value);
+
+// TAB 3
+var csel=document.getElementById('compSelect');
+comps.forEach(function(c){var o=document.createElement('option');o.value=c.id;o.textContent=c.id;csel.appendChild(o);});
+var cdetail=document.getElementById('compDetail');
+function buildCompDetail(cid){
+  var c=null;for(var i=0;i<comps.length;i++){if(comps[i].id===cid){c=comps[i];break;}}if(!c)return;
+  var data=compResults[cid]||[];data.sort(function(a,b){var ra=typeof a.rank==='number'?a.rank:999,rb=typeof b.rank==='number'?b.rank:999;return ra-rb;});
+  var dc=decayCoeff(cid,compWeight(cid)),rawDecay=dc/compWeight(cid),w=compWeight(cid);
+  var compRanks={};for(var i=0;i<data.length;i++){var rk=data[i].rank;if(typeof rk==='number'){if(!compRanks[rk])compRanks[rk]=[];compRanks[rk].push(i);}}
+  var compMerged={};for(var rk in compRanks){if(compRanks[rk].length>1)compRanks[rk].forEach(function(idx){compMerged[idx]=true;});}
+  var html='<div class="comp-card"><h3><a href="'+(links[cid]||'#')+'" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">'+cid+'</a></h3>';
+  html+='<div class="cmeta">\u5F00\u8D5B\u65F6\u95F4\uff1a'+c.date+' &nbsp;|&nbsp; \u65F6\u5EF6\u7CFB\u6570 '+rawDecay.toFixed(2)+' \u00D7 '+w.toFixed(2)+' = \u6743\u91CD '+dc.toFixed(2)+'</div>';
+  html+='<table class="comp-table"><thead><tr><th>\u540D\u6B21</th><th>\u961F\u4F0D</th><th>\u961F\u5458</th><th>\u7528\u65F6</th><th>\u5F97\u5206</th><th>\u79EF\u5206</th></tr></thead><tbody>';
+  for(var i=0;i<Math.min(data.length,10);i++){var d=data[i],rs=rankScore(d.rank),integral=dc*rs,mrg=compMerged[i];if(mrg){rs/=2;integral/=2;}
+    html+='<tr><td class="'+rankCls(d.rank)+(mrg?' merged':'')+'">#'+d.rank+(mrg?'\u5E76':'')+'</td><td>'+esc(d.cleanName)+'</td><td>'+esc(d.members.join(', '))+'</td><td>'+esc(d.time)+'</td><td>'+rs.toFixed(1)+'</td><td>'+integral.toFixed(1)+'</td></tr>';}
+  html+='</tbody></table><p style="font-size:12px;color:#bbb;margin-top:12px;text-align:center;">\u961F\u5458\u7559\u7A7A\u4EE3\u8868\u4FE1\u606F\u7F3A\u5931\uFF0C\u4E0D\u4EE3\u8868\u771F\u5B9E\u6210\u5458\u6570\u91CF\u3002\u524D\u5341\u540D\u4EE5\u5916\u7684\u8BE6\u7EC6\u4FE1\u606F\u6682\u4E0D\u6536\u5F55\u3002</p></div>';cdetail.innerHTML=html;
+}
+csel.addEventListener('change',function(){buildCompDetail(csel.value);});buildCompDetail(csel.value);
+
+document.getElementById('simToggle').addEventListener('change',renderLeaderboard);
+// ---- SIMULATION PANEL ----
+document.getElementById('fabBtn').addEventListener('click',function(){
+  document.getElementById('simPanel').classList.toggle('show');
+  if(document.getElementById('simPanel').classList.contains('show'))renderSimPanel();
+});
+document.getElementById('simPanelClose').addEventListener('click',function(){
+  document.getElementById('simPanel').classList.remove('show');
+});
+
+function renderSimPanel(){
+  var body=document.getElementById('simPanelBody');body.innerHTML='';
+  simTeams.forEach(function(st,i){
+    var card=document.createElement('div');card.className='sim-team-card';
+    var hdr=document.createElement('div');hdr.className='sim-team-header';
+    var nm=document.createElement('span');nm.className='sim-team-name';nm.textContent=st.name;
+    var del=document.createElement('button');del.className='sim-team-del';del.textContent='\u2715';
+    del.addEventListener('click',function(){simTeams.splice(i,1);saveSimTeams();renderSimPanel();renderLeaderboard();});
+    hdr.appendChild(nm);hdr.appendChild(del);card.appendChild(hdr);
+
+    (st.ranks||[]).forEach(function(e,j){
+      var row=document.createElement('div');row.className='sim-result-row';
+      row.innerHTML='<span class="sr-comp">'+e.c+'</span><span class="sr-rank">#'+badgeText(e.r)+'</span>';
+      var rd=document.createElement('button');rd.className='sr-del';rd.textContent='\u2715';
+      rd.addEventListener('click',function(){simTeams[i].ranks.splice(j,1);saveSimTeams();renderSimPanel();renderLeaderboard();});
+      row.appendChild(rd);card.appendChild(row);
+    });
+
+    var addRow=document.createElement('div');addRow.className='sim-add-row';
+    var sel=document.createElement('select');
+    sel.innerHTML='<option value="">+</option>';
+    comps.forEach(function(c){sel.innerHTML+='<option value="'+c.id+'">'+c.id+'</option>';});
+    var inp=document.createElement('input');inp.type='text';inp.placeholder='名次';inp.style.width='48px';
+    inp.addEventListener('input',function(){this.value=this.value.replace(/[^0-9]/g,'');});
+    var btn=document.createElement('button');btn.textContent='\u6DFB\u52A0';
+    btn.addEventListener('click',function(){
+      var cid=sel.value,rn=parseInt(inp.value,10);if(!cid||isNaN(rn))return;
+      if(!simTeams[i].ranks)simTeams[i].ranks=[];
+      simTeams[i].ranks=simTeams[i].ranks.filter(function(e){return e.c!==cid;});
+      simTeams[i].ranks.push({c:cid,r:rn});saveSimTeams();renderSimPanel();renderLeaderboard();
+    });
+    addRow.appendChild(sel);addRow.appendChild(inp);addRow.appendChild(btn);card.appendChild(addRow);
+    body.appendChild(card);
+  });
+
+  var addTeamBtn=document.createElement('button');addTeamBtn.className='sim-add-team-btn';addTeamBtn.textContent='+ \u6DFB\u52A0\u961F\u4F0D';
+  var addTeamForm=document.createElement('div');addTeamForm.className='sim-add-team-form';
+  var addTeamInp=document.createElement('input');addTeamInp.placeholder='\u961F\u540D';
+  var addTeamSubmit=document.createElement('button');addTeamSubmit.textContent='\u521B\u5EFA';
+  addTeamSubmit.addEventListener('click',function(){
+    var nm=addTeamInp.value.trim();if(!nm)return;
+    simTeams.push({name:nm,ranks:[]});saveSimTeams();
+    addTeamInp.value='';addTeamForm.classList.remove('show');addTeamBtn.style.display='';
+    renderSimPanel();renderLeaderboard();
+  });
+  addTeamForm.appendChild(addTeamInp);addTeamForm.appendChild(addTeamSubmit);
+  addTeamBtn.addEventListener('click',function(){
+    addTeamBtn.style.display='none';addTeamForm.classList.add('show');addTeamInp.focus();
+  });
+  body.appendChild(addTeamBtn);
+  body.appendChild(addTeamForm);
+}
+})();
+</script>
+</body>
+</html>
