@@ -4,7 +4,6 @@ import datetime
 
 DATA_DIR = r'D:\工作\华Hunt队伍强度表\华hunt-ranking\data'
 HTML_PATH = r'D:\工作\华Hunt队伍强度表\华hunt-ranking\index.html'
-LINKS_PATH = r'D:\工作\华Hunt队伍强度表\链接.txt'
 README_PATH = r'D:\工作\华Hunt队伍强度表\说明.txt'
 
 with open(f'{DATA_DIR}/teams.json', 'r', encoding='utf-8') as f: teams_json = f.read()
@@ -12,13 +11,7 @@ with open(f'{DATA_DIR}/competitions.json', 'r', encoding='utf-8') as f: comps_js
 with open(f'{DATA_DIR}/rankings.json', 'r', encoding='utf-8') as f: rankings_json = f.read()
 with open(f'{DATA_DIR}/comp_results.json', 'r', encoding='utf-8') as f: comp_results_json = f.read()
 
-links = {}
-with open(LINKS_PATH, 'r', encoding='utf-8') as f:
-    for line in f:
-        line = line.strip()
-        if not line: continue
-        p = line.split('\t')
-        if len(p) >= 2: links[p[0].strip()] = p[1].strip()
+links = {c['id']: c.get('url', '') for c in json.loads(comps_json)}
 links_json = json.dumps(links, ensure_ascii=False)
 
 comps = json.loads(comps_json)
@@ -46,9 +39,12 @@ HTML = r'''<!DOCTYPE html>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+html { overflow-y: scroll; }
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   background: #f5f5f7; color: #1a1a1a; line-height: 1.4; -webkit-font-smoothing: antialiased;
+  scrollbar-gutter: stable;
 }
 
 ::-webkit-scrollbar { width: 4px; height: 4px; }
@@ -262,8 +258,8 @@ body {
 .info-bar span { margin-right: 20px; }
 .info-bar strong { color: #555; }
 
-.chart-wrap { margin-bottom: 20px; background: #fff; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 16px 10px 10px; overflow-x: auto; }
-.chart-wrap canvas { display: block; min-width: 800px; }
+.chart-wrap { margin-bottom: 20px; background: #fff; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 16px 10px 10px; }
+.chart-wrap canvas { display: block; width: 100%; }
 
 .history-header {
   display: flex; align-items: center; padding: 0 18px 6px; font-size: 12px; color: #bbb; font-weight: 500;
@@ -392,7 +388,7 @@ body {
     <span>自建队伍</span>
     <div style="display:flex;align-items:center;gap:10px;">
       <label class="sim-switch" title="显示自建队伍">
-        <input type="checkbox" id="simToggle" checked>
+        <input type="checkbox" id="simToggle">
         <span class="sim-slider"></span>
       </label>
       <button class="sim-panel-close" id="simPanelClose">&times;</button>
@@ -439,7 +435,7 @@ function computeScores(tr,tname){
 
 var teams=TEAMS.map(function(t){
   var s=computeScores(rankings[t.name]||{},t.name);
-  return{name:t.name.replace('\uFF08\u89E3\u6563\uFF09',''),origName:t.name,total:s.total,frontSum:s.frontSum,stableAvg:s.stableAvg};
+  return{name:t.name,origName:t.name,total:s.total,frontSum:s.frontSum,stableAvg:s.stableAvg};
 });
 teams.sort(function(a,b){return b.total-a.total;});
 teams.forEach(function(t,i){t.rank=i+1;t.tier=t.total>=300?'t0':t.total>=200?'t1':t.total>=100?'t2':'t3';});
@@ -452,6 +448,8 @@ document.querySelectorAll('.tab-btn').forEach(function(btn){btn.addEventListener
   document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
   document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active');});
   btn.classList.add('active');document.getElementById(btn.dataset.tab).classList.add('active');
+  document.getElementById('fabBtn').style.display=btn.dataset.tab==='tab1'?'':'none';
+  var panel=document.getElementById('simPanel');if(btn.dataset.tab!=='tab1')panel.classList.remove('show');
 });});
 
 // TAB 1
@@ -510,7 +508,11 @@ function renderCard(team){
   })(comps[k]);}
   card.appendChild(badges);app.appendChild(card);
 }
+// Restore toggle + initial render
+(function(){var v=localStorage.getItem('hunt_sim_show');document.getElementById('simToggle').checked=v==='true';})();
 renderLeaderboard();
+var simToggleEl=document.getElementById('simToggle');
+simToggleEl.addEventListener('change',function(){renderLeaderboard();try{localStorage.setItem('hunt_sim_show',simToggleEl.checked);}catch(e){}});
 
 // TAB 2
 var tsel=document.getElementById('teamSelect');
@@ -523,10 +525,11 @@ function chartY(r,ph,pad){return pad.top+ph*Math.pow((r-1)/49,0.4);}
 
 function drawChart(tname){
   var canvas=tchart,ctx=canvas.getContext('2d'),dpr=window.devicePixelRatio||1;
-  var cssW=Math.max(canvas.parentElement.clientWidth-20,800),cssH=220;
+  var cssW=canvas.parentElement.clientWidth-20,cssH=220;
+  if(cssW<500)cssW=500;
   canvas.style.width=cssW+'px';canvas.style.height=cssH+'px';
   canvas.width=cssW*dpr;canvas.height=cssH*dpr;ctx.scale(dpr,dpr);
-  var tr=rankings[tname]||{},pad={top:16,right:20,bottom:40,left:34};
+  var tr=rankings[tname]||{},pad={top:22,right:16,bottom:40,left:34};
   var pw=cssW-pad.left-pad.right,ph=cssH-pad.top-pad.bottom,stepX=pw/15,maxR=50;
 
   ctx.clearRect(0,0,cssW,cssH);
@@ -566,7 +569,8 @@ function drawChart(tname){
     ctx.beginPath();ctx.arc(p.x,p.y,4,0,Math.PI*2);
     if(n===1)ctx.fillStyle='#9B59B6';else if(n<=3)ctx.fillStyle='#E67E22';else if(n<=6)ctx.fillStyle='#D4AC0D';else if(n<=10)ctx.fillStyle='#27AE60';else if(n<=20)ctx.fillStyle='#2980B9';else ctx.fillStyle='#7F8C8D';
     ctx.fill();
-    ctx.fillStyle='#333';ctx.fillText(lbl,p.x,p.y-10);
+    var ly=n<=3?p.y+14:p.y-10;
+    ctx.fillStyle='#333';ctx.fillText(lbl,p.x,ly);
   }
 }
 
@@ -611,8 +615,6 @@ function buildCompDetail(cid){
   html+='</tbody></table><p style="font-size:12px;color:#bbb;margin-top:12px;text-align:center;">\u961F\u5458\u7559\u7A7A\u4EE3\u8868\u4FE1\u606F\u7F3A\u5931\uFF0C\u4E0D\u4EE3\u8868\u771F\u5B9E\u6210\u5458\u6570\u91CF\u3002\u524D\u5341\u540D\u4EE5\u5916\u7684\u8BE6\u7EC6\u4FE1\u606F\u6682\u4E0D\u6536\u5F55\u3002</p></div>';cdetail.innerHTML=html;
 }
 csel.addEventListener('change',function(){buildCompDetail(csel.value);});buildCompDetail(csel.value);
-
-document.getElementById('simToggle').addEventListener('change',renderLeaderboard);
 
 // SIM PANEL
 document.getElementById('fabBtn').addEventListener('click',function(){

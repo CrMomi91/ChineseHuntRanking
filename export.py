@@ -19,7 +19,7 @@ for r in range(2, 30):
     if not name:
         continue
     teams.append({
-        'name': str(name).strip(),
+        'name': str(name).strip().replace('（解散）', ''),
         'tier': str(tier).strip() if tier else '',
         'rank': str(rank).strip() if rank else '',
         'score': round(score, 2) if isinstance(score, (int, float)) else score,
@@ -51,6 +51,19 @@ for r in range(3, 19):
         'id': str(b.value).strip(),
         'date': normalize_date(date_val)
     })
+
+# Load URLs
+links = {}
+try:
+    with open(r'D:\工作\华Hunt队伍强度表\链接.txt', 'r', encoding='utf-8') as f:
+        for line in f:
+            line = line.strip()
+            if not line: continue
+            p = line.split('\t')
+            if len(p) >= 2: links[p[0].strip()] = p[1].strip()
+except: pass
+for c in competitions:
+    c['url'] = links.get(c['id'], '')
 
 name_mapping = {
     'simplicissimus': '4s', '灵境TES': '灵境TES',

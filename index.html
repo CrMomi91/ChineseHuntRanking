@@ -7,9 +7,12 @@
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+html { overflow-y: scroll; }
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   background: #f5f5f7; color: #1a1a1a; line-height: 1.4; -webkit-font-smoothing: antialiased;
+  scrollbar-gutter: stable;
 }
 
 ::-webkit-scrollbar { width: 4px; height: 4px; }
@@ -223,8 +226,8 @@ body {
 .info-bar span { margin-right: 20px; }
 .info-bar strong { color: #555; }
 
-.chart-wrap { margin-bottom: 20px; background: #fff; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 16px 10px 10px; overflow-x: auto; }
-.chart-wrap canvas { display: block; min-width: 800px; }
+.chart-wrap { margin-bottom: 20px; background: #fff; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 16px 10px 10px; }
+.chart-wrap canvas { display: block; width: 100%; }
 
 .history-header {
   display: flex; align-items: center; padding: 0 18px 6px; font-size: 12px; color: #bbb; font-weight: 500;
@@ -353,7 +356,7 @@ body {
     <span>自建队伍</span>
     <div style="display:flex;align-items:center;gap:10px;">
       <label class="sim-switch" title="显示自建队伍">
-        <input type="checkbox" id="simToggle" checked>
+        <input type="checkbox" id="simToggle">
         <span class="sim-slider"></span>
       </label>
       <button class="sim-panel-close" id="simPanelClose">&times;</button>
@@ -443,7 +446,7 @@ var TEAMS = [
     "score": 135.9
   },
   {
-    "name": "谜途旅人（解散）",
+    "name": "谜途旅人",
     "tier": "",
     "rank": "14",
     "score": 118.04
@@ -542,67 +545,83 @@ var TEAMS = [
 var COMPETITIONS = [
   {
     "id": "P&KU1",
-    "date": "2022-06-24"
+    "date": "2022-06-24",
+    "url": "https://pnku1.pkupuzzle.art/"
   },
   {
     "id": "CCBC12",
-    "date": "2022-08-12"
+    "date": "2022-08-12",
+    "url": "https://ccbc12.cipherpuzzles.com/"
   },
   {
     "id": "P&KU2",
-    "date": "2023-04-28"
+    "date": "2023-04-28",
+    "url": "https://pnku2.pkupuzzle.art/"
   },
   {
     "id": "CCBCBA",
-    "date": "2023-08-11"
+    "date": "2023-08-11",
+    "url": "https://ccbc13.cipherpuzzles.com/"
   },
   {
     "id": "MH2023",
-    "date": "2023-12-29"
+    "date": "2023-12-29",
+    "url": "https://mh2023.puzzlehunt.cn/"
   },
   {
     "id": "JH2024",
-    "date": "2024-02-23"
+    "date": "2024-02-23",
+    "url": "https://jh2024.jianghujiemi.fun/"
   },
   {
     "id": "P&KU3a",
-    "date": "2024-07-19"
+    "date": "2024-07-19",
+    "url": "https://pnku3.pkupuzzle.art/"
   },
   {
     "id": "CCBC15",
-    "date": "2024-08-09"
+    "date": "2024-08-09",
+    "url": "https://ccbc15.cipherpuzzles.com/"
   },
   {
     "id": "JUST1",
-    "date": "2024-09-06"
+    "date": "2024-09-06",
+    "url": "https://justhunt.cn/archive/just-one/"
   },
   {
     "id": "GnPH",
-    "date": "2025-07-18"
+    "date": "2025-07-18",
+    "url": "https://goldenph.art/"
   },
   {
     "id": "CCBC16",
-    "date": "2025-08-08"
+    "date": "2025-08-08",
+    "url": "https://ccbc16.cipherpuzzles.com/"
   },
   {
     "id": "US-TC",
-    "date": "2025-10-06"
+    "date": "2025-10-06",
+    "url": "http://us-tc.top/"
   },
   {
     "id": "ZJUPH1",
-    "date": "2025-11-21"
+    "date": "2025-11-21",
+    "url": "https://2025.zjuph.fun/"
   },
   {
     "id": "SECO2",
-    "date": "2026-01-31"
+    "date": "2026-01-31",
+    "url": "https://archive.secopuzzle.com/#/main/seco2"
   },
   {
     "id": "P&KU3b",
-    "date": "2026-07-10"
+    "date": "2026-07-10",
+    "url": "https://pnku3.pkupuzzle.art/"
   },
   {
     "id": "CCBC17",
-    "date": "2026-08-14"
+    "date": "2026-08-14",
+    "url": "https://ccbc17.cipherpuzzles.com/"
   }
 ];
 var RANKINGS = {
@@ -654,7 +673,7 @@ var RANKINGS = {
     "JUST1": 5,
     "GnPH": 19,
     "CCBC16": 1,
-    "US-TC": "50+",
+    "US-TC": 69,
     "ZJUPH1": 2,
     "SECO2": 3,
     "P&KU3b": null,
@@ -800,7 +819,7 @@ var RANKINGS = {
     "CCBC16": 8,
     "US-TC": null,
     "ZJUPH1": null,
-    "SECO2": 49,
+    "SECO2": null,
     "P&KU3b": null,
     "CCBC17": null
   },
@@ -840,14 +859,14 @@ var RANKINGS = {
     "P&KU3b": null,
     "CCBC17": null
   },
-  "谜途旅人（解散）": {
+  "谜途旅人": {
     "P&KU1": null,
     "CCBC12": null,
     "P&KU2": 6,
     "CCBCBA": 13,
     "MH2023": 10,
     "JH2024": 5,
-    "P&KU3a": 5,
+    "P&KU3a": null,
     "CCBC15": 10,
     "JUST1": 4,
     "GnPH": null,
@@ -880,7 +899,7 @@ var RANKINGS = {
     "P&KU1": null,
     "CCBC12": null,
     "P&KU2": null,
-    "CCBCBA": "50+",
+    "CCBCBA": null,
     "MH2023": 34,
     "JH2024": 19,
     "P&KU3a": 29,
@@ -903,7 +922,7 @@ var RANKINGS = {
     "JH2024": 11,
     "P&KU3a": 7,
     "CCBC15": 8,
-    "JUST1": "50+",
+    "JUST1": null,
     "GnPH": 10,
     "CCBC16": 12,
     "US-TC": null,
@@ -969,8 +988,8 @@ var RANKINGS = {
   "反卷": {
     "P&KU1": null,
     "CCBC12": null,
-    "P&KU2": "50+",
-    "CCBCBA": "50+",
+    "P&KU2": null,
+    "CCBCBA": null,
     "MH2023": 24,
     "JH2024": 16,
     "P&KU3a": 6,
@@ -1066,7 +1085,7 @@ var RANKINGS = {
     "P&KU3a": 33,
     "CCBC15": 17,
     "JUST1": 9,
-    "GnPH": "50+",
+    "GnPH": 63,
     "CCBC16": 39,
     "US-TC": null,
     "ZJUPH1": 51,
@@ -1103,7 +1122,7 @@ var RANKINGS = {
     "CCBC15": 15,
     "JUST1": 21,
     "GnPH": 20,
-    "CCBC16": "50+",
+    "CCBC16": 69,
     "US-TC": 22,
     "ZJUPH1": 25,
     "SECO2": 8,
@@ -3079,7 +3098,7 @@ function computeScores(tr,tname){
 
 var teams=TEAMS.map(function(t){
   var s=computeScores(rankings[t.name]||{},t.name);
-  return{name:t.name.replace('\uFF08\u89E3\u6563\uFF09',''),origName:t.name,total:s.total,frontSum:s.frontSum,stableAvg:s.stableAvg};
+  return{name:t.name,origName:t.name,total:s.total,frontSum:s.frontSum,stableAvg:s.stableAvg};
 });
 teams.sort(function(a,b){return b.total-a.total;});
 teams.forEach(function(t,i){t.rank=i+1;t.tier=t.total>=300?'t0':t.total>=200?'t1':t.total>=100?'t2':'t3';});
@@ -3092,6 +3111,8 @@ document.querySelectorAll('.tab-btn').forEach(function(btn){btn.addEventListener
   document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
   document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active');});
   btn.classList.add('active');document.getElementById(btn.dataset.tab).classList.add('active');
+  document.getElementById('fabBtn').style.display=btn.dataset.tab==='tab1'?'':'none';
+  var panel=document.getElementById('simPanel');if(btn.dataset.tab!=='tab1')panel.classList.remove('show');
 });});
 
 // TAB 1
@@ -3150,7 +3171,11 @@ function renderCard(team){
   })(comps[k]);}
   card.appendChild(badges);app.appendChild(card);
 }
+// Restore toggle + initial render
+(function(){var v=localStorage.getItem('hunt_sim_show');document.getElementById('simToggle').checked=v==='true';})();
 renderLeaderboard();
+var simToggleEl=document.getElementById('simToggle');
+simToggleEl.addEventListener('change',function(){renderLeaderboard();try{localStorage.setItem('hunt_sim_show',simToggleEl.checked);}catch(e){}});
 
 // TAB 2
 var tsel=document.getElementById('teamSelect');
@@ -3163,10 +3188,11 @@ function chartY(r,ph,pad){return pad.top+ph*Math.pow((r-1)/49,0.4);}
 
 function drawChart(tname){
   var canvas=tchart,ctx=canvas.getContext('2d'),dpr=window.devicePixelRatio||1;
-  var cssW=Math.max(canvas.parentElement.clientWidth-20,800),cssH=220;
+  var cssW=canvas.parentElement.clientWidth-20,cssH=220;
+  if(cssW<500)cssW=500;
   canvas.style.width=cssW+'px';canvas.style.height=cssH+'px';
   canvas.width=cssW*dpr;canvas.height=cssH*dpr;ctx.scale(dpr,dpr);
-  var tr=rankings[tname]||{},pad={top:16,right:20,bottom:40,left:34};
+  var tr=rankings[tname]||{},pad={top:22,right:16,bottom:40,left:34};
   var pw=cssW-pad.left-pad.right,ph=cssH-pad.top-pad.bottom,stepX=pw/15,maxR=50;
 
   ctx.clearRect(0,0,cssW,cssH);
@@ -3206,7 +3232,8 @@ function drawChart(tname){
     ctx.beginPath();ctx.arc(p.x,p.y,4,0,Math.PI*2);
     if(n===1)ctx.fillStyle='#9B59B6';else if(n<=3)ctx.fillStyle='#E67E22';else if(n<=6)ctx.fillStyle='#D4AC0D';else if(n<=10)ctx.fillStyle='#27AE60';else if(n<=20)ctx.fillStyle='#2980B9';else ctx.fillStyle='#7F8C8D';
     ctx.fill();
-    ctx.fillStyle='#333';ctx.fillText(lbl,p.x,p.y-10);
+    var ly=n<=3?p.y+14:p.y-10;
+    ctx.fillStyle='#333';ctx.fillText(lbl,p.x,ly);
   }
 }
 
@@ -3251,8 +3278,6 @@ function buildCompDetail(cid){
   html+='</tbody></table><p style="font-size:12px;color:#bbb;margin-top:12px;text-align:center;">\u961F\u5458\u7559\u7A7A\u4EE3\u8868\u4FE1\u606F\u7F3A\u5931\uFF0C\u4E0D\u4EE3\u8868\u771F\u5B9E\u6210\u5458\u6570\u91CF\u3002\u524D\u5341\u540D\u4EE5\u5916\u7684\u8BE6\u7EC6\u4FE1\u606F\u6682\u4E0D\u6536\u5F55\u3002</p></div>';cdetail.innerHTML=html;
 }
 csel.addEventListener('change',function(){buildCompDetail(csel.value);});buildCompDetail(csel.value);
-
-document.getElementById('simToggle').addEventListener('change',renderLeaderboard);
 
 // SIM PANEL
 document.getElementById('fabBtn').addEventListener('click',function(){

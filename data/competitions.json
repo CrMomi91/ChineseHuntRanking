@@ -1,66 +1,82 @@
 [
   {
     "id": "P&KU1",
-    "date": "2022-06-24"
+    "date": "2022-06-24",
+    "url": "https://pnku1.pkupuzzle.art/"
   },
   {
     "id": "CCBC12",
-    "date": "2022-08-12"
+    "date": "2022-08-12",
+    "url": "https://ccbc12.cipherpuzzles.com/"
   },
   {
     "id": "P&KU2",
-    "date": "2023-04-28"
+    "date": "2023-04-28",
+    "url": "https://pnku2.pkupuzzle.art/"
   },
   {
     "id": "CCBCBA",
-    "date": "2023-08-11"
+    "date": "2023-08-11",
+    "url": "https://ccbc13.cipherpuzzles.com/"
   },
   {
     "id": "MH2023",
-    "date": "2023-12-29"
+    "date": "2023-12-29",
+    "url": "https://mh2023.puzzlehunt.cn/"
   },
   {
     "id": "JH2024",
-    "date": "2024-02-23"
+    "date": "2024-02-23",
+    "url": "https://jh2024.jianghujiemi.fun/"
   },
   {
     "id": "P&KU3a",
-    "date": "2024-07-19"
+    "date": "2024-07-19",
+    "url": "https://pnku3.pkupuzzle.art/"
   },
   {
     "id": "CCBC15",
-    "date": "2024-08-09"
+    "date": "2024-08-09",
+    "url": "https://ccbc15.cipherpuzzles.com/"
   },
   {
     "id": "JUST1",
-    "date": "2024-09-06"
+    "date": "2024-09-06",
+    "url": "https://justhunt.cn/archive/just-one/"
   },
   {
     "id": "GnPH",
-    "date": "2025-07-18"
+    "date": "2025-07-18",
+    "url": "https://goldenph.art/"
   },
   {
     "id": "CCBC16",
-    "date": "2025-08-08"
+    "date": "2025-08-08",
+    "url": "https://ccbc16.cipherpuzzles.com/"
   },
   {
     "id": "US-TC",
-    "date": "2025-10-06"
+    "date": "2025-10-06",
+    "url": "http://us-tc.top/"
   },
   {
     "id": "ZJUPH1",
-    "date": "2025-11-21"
+    "date": "2025-11-21",
+    "url": "https://2025.zjuph.fun/"
   },
   {
     "id": "SECO2",
-    "date": "2026-01-31"
+    "date": "2026-01-31",
+    "url": "https://archive.secopuzzle.com/#/main/seco2"
   },
   {
     "id": "P&KU3b",
-    "date": "2026-07-10"
+    "date": "2026-07-10",
+    "url": "https://pnku3.pkupuzzle.art/"
   },
   {
     "id": "CCBC17",
-    "date": "2026-08-14"
+    "date": "2026-08-14",
+    "url": "https://ccbc17.cipherpuzzles.com/"
   }
 ]
