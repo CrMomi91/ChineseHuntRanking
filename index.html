@@ -166,7 +166,9 @@ body {
   background: #f9f9f9; border-radius: 6px; padding: 10px 14px; margin-bottom: 8px;
 }
 .sim-team-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-.sim-team-name { font-weight: 600; font-size: 15px; }
+.sim-team-name { font-weight: 600; font-size: 15px; cursor: pointer; }
+.sim-team-name:hover { color: #3A6EA5; }
+.sim-team-name-edit { font-size: 14px; padding: 2px 6px; border: 1px solid #ddd; border-radius: 3px; font-family: inherit; width: 120px; outline: none; }
 .sim-team-del { background: none; border: none; color: #ccc; cursor: pointer; font-size: 16px; }
 .sim-team-del:hover { color: #e55; }
 
@@ -202,6 +204,13 @@ body {
 .sim-add-team-form input { flex: 1; font-size: 13px; padding: 5px 10px; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; outline: none; }
 .sim-add-team-form button { font-size: 13px; padding: 5px 14px; border: 1px solid #333; border-radius: 4px; background: #333; color: #fff; cursor: pointer; }
 
+.sim-switch { position: relative; display: inline-block; width: 28px; height: 16px; }
+.sim-switch input { opacity: 0; width: 0; height: 0; }
+.sim-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: #ccc; border-radius: 16px; transition: 0.2s; }
+.sim-slider::before { content: ''; position: absolute; height: 12px; width: 12px; left: 2px; bottom: 2px; background: #fff; border-radius: 50%; transition: 0.2s; }
+.sim-switch input:checked + .sim-slider { background: #555; }
+.sim-switch input:checked + .sim-slider::before { transform: translateX(12px); }
+
 /* Tab 2 */
 .tab2-wrap, .tab3-wrap { max-width: 900px; margin: 0 auto; }
 .sel-row { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
@@ -213,6 +222,9 @@ body {
 .info-bar { font-size: 14px; color: #888; margin-bottom: 16px; }
 .info-bar span { margin-right: 20px; }
 .info-bar strong { color: #555; }
+
+.chart-wrap { margin-bottom: 20px; background: #fff; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 16px 10px 10px; overflow-x: auto; }
+.chart-wrap canvas { display: block; min-width: 800px; }
 
 .history-header {
   display: flex; align-items: center; padding: 0 18px 6px; font-size: 12px; color: #bbb; font-weight: 500;
@@ -242,7 +254,8 @@ body {
 .hcard-strip.s-low { background: #ccc; }
 
 .hcard-body { display: flex; align-items: center; flex: 1; padding: 0 14px; gap: 0; }
-.hcard-name { width: 130px; font-size: 15px; font-weight: 500; }
+.hcard-name { width: 130px; font-size: 15px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hcard-name:hover { color: #3A6EA5 !important; }
 .hcard-name b { font-weight: 700; }
 .hcard-date { width: 90px; font-size: 13px; color: #888; }
 .hcard-rank { width: 48px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 4px; font-size: 13px; font-weight: 700; margin: 0 6px; }
@@ -286,19 +299,12 @@ body {
 .readme b { color: #333; }
 
 #app { display: flex; flex-direction: column; align-items: center; }
-
-.sim-switch { position: relative; display: inline-block; width: 28px; height: 16px; }
-.sim-switch input { opacity: 0; width: 0; height: 0; }
-.sim-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: #ccc; border-radius: 16px; transition: 0.2s; }
-.sim-slider::before { content: ''; position: absolute; height: 12px; width: 12px; left: 2px; bottom: 2px; background: #fff; border-radius: 50%; transition: 0.2s; }
-.sim-switch input:checked + .sim-slider { background: #555; }
-.sim-switch input:checked + .sim-slider::before { transform: translateX(12px); }
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="center-col">
-    <div class="page-header"><h1>中华 Puzzle Hunt 队伍数据统计</h1><div class="subtitle">野榜，纯属娱乐</div></div>
+    <div class="page-header"><h1>中华 Puzzle Hunt 队伍数据统计</h1><div class="subtitle">野榜，纯属娱乐，可能存在误导</div></div>
 
     <div class="tab-bar">
       <button class="tab-btn active" data-tab="tab1">总榜</button>
@@ -321,6 +327,7 @@ body {
       <div class="tab2-wrap">
         <div class="sel-row"><label>选择队伍：</label><select id="teamSelect"></select></div>
         <div class="info-bar" id="teamInfo"></div>
+        <div class="chart-wrap"><canvas id="teamChart" height="200"></canvas></div>
         <div class="history-header"><span class="hh-spacer"></span><span class="hh-name">比赛</span><span class="hh-date">日期</span><span class="hh-rank">名次</span><span class="hh-score">得分</span><span class="hh-weight">权重</span><span class="hh-integral">积分</span></div>
         <div id="teamHistory"></div>
       </div>
@@ -340,7 +347,6 @@ body {
   <div id="tooltip"></div>
 </div>
 
-<!-- Floating panel -->
 <button class="fab" id="fabBtn" title="管理自建队伍">+</button>
 <div class="sim-panel" id="simPanel">
   <div class="sim-panel-header">
@@ -3103,7 +3109,6 @@ function badgeText(r){if(r===null||r===undefined||r==='')return'-';if(typeof r==
 
 var app=document.getElementById('app');
 var simTeams=[];
-// Load from localStorage
 try{var saved=localStorage.getItem('hunt_sim_teams');if(saved)simTeams=JSON.parse(saved);}catch(e){}
 function saveSimTeams(){try{localStorage.setItem('hunt_sim_teams',JSON.stringify(simTeams));}catch(e){}}
 
@@ -3151,6 +3156,60 @@ renderLeaderboard();
 var tsel=document.getElementById('teamSelect');
 teams.forEach(function(t){var o=document.createElement('option');o.value=t.origName;o.textContent=t.name;tsel.appendChild(o);});
 var tinfo=document.getElementById('teamInfo'),thist=document.getElementById('teamHistory');
+
+var tchart=document.getElementById('teamChart');
+
+function chartY(r,ph,pad){return pad.top+ph*Math.pow((r-1)/49,0.4);}
+
+function drawChart(tname){
+  var canvas=tchart,ctx=canvas.getContext('2d'),dpr=window.devicePixelRatio||1;
+  var cssW=Math.max(canvas.parentElement.clientWidth-20,800),cssH=220;
+  canvas.style.width=cssW+'px';canvas.style.height=cssH+'px';
+  canvas.width=cssW*dpr;canvas.height=cssH*dpr;ctx.scale(dpr,dpr);
+  var tr=rankings[tname]||{},pad={top:16,right:20,bottom:40,left:34};
+  var pw=cssW-pad.left-pad.right,ph=cssH-pad.top-pad.bottom,stepX=pw/15,maxR=50;
+
+  ctx.clearRect(0,0,cssW,cssH);
+  // Grid
+  ctx.strokeStyle='#eee';ctx.lineWidth=1;
+  [1,10,20,30,40,50].forEach(function(r){var gy=chartY(r,ph,pad);ctx.beginPath();ctx.moveTo(pad.left,gy);ctx.lineTo(cssW-pad.right,gy);ctx.stroke();});
+  ctx.strokeStyle='#ccc';ctx.beginPath();ctx.moveTo(pad.left,pad.top);ctx.lineTo(pad.left,cssH-pad.bottom);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(pad.left,cssH-pad.bottom);ctx.lineTo(cssW-pad.right,cssH-pad.bottom);ctx.stroke();
+  // Y labels
+  ctx.fillStyle='#bbb';ctx.font='11px sans-serif';ctx.textAlign='right';
+  [1,10,20,30,40,50].forEach(function(r){ctx.fillText(r,pad.left-4,chartY(r,ph,pad)+4);});
+  // X labels
+  ctx.textAlign='right';ctx.fillStyle='#bbb';ctx.font='10px sans-serif';
+  comps.forEach(function(c,i){ctx.save();ctx.translate(pad.left+i*stepX,cssH-pad.bottom+8);ctx.rotate(-0.6);ctx.fillText(c.id,0,0);ctx.restore();});
+
+  // Collect points
+  var pts=[];
+  comps.forEach(function(c,i){
+    var r=tr[c.id];if(r===null||r===undefined||r==='')return;
+    var raw=r,is50=typeof r==='string'&&r.indexOf('50')!==-1;
+    var n=is50?50:parseInt(r,10);if(isNaN(n))return;
+    if(n>maxR)n=maxR;pts.push({x:pad.left+i*stepX,y:chartY(n,ph,pad),r:n,raw:raw,is50:is50,i:i});
+  });
+
+  // Line connecting all points
+  if(pts.length>1){
+    ctx.strokeStyle='#3A6EA5';ctx.lineWidth=2;ctx.lineJoin='round';ctx.lineCap='round';
+    ctx.beginPath();ctx.moveTo(pts[0].x,pts[0].y);
+    for(var i=1;i<pts.length;i++)ctx.lineTo(pts[i].x,pts[i].y);
+    ctx.stroke();
+  }
+
+  // Dots + labels
+  ctx.font='bold 10px sans-serif';ctx.textAlign='center';
+  for(var i=0;i<pts.length;i++){
+    var p=pts[i],n=p.r,lbl=p.is50?'50+':String(n);
+    ctx.beginPath();ctx.arc(p.x,p.y,4,0,Math.PI*2);
+    if(n===1)ctx.fillStyle='#9B59B6';else if(n<=3)ctx.fillStyle='#E67E22';else if(n<=6)ctx.fillStyle='#D4AC0D';else if(n<=10)ctx.fillStyle='#27AE60';else if(n<=20)ctx.fillStyle='#2980B9';else ctx.fillStyle='#7F8C8D';
+    ctx.fill();
+    ctx.fillStyle='#333';ctx.fillText(lbl,p.x,p.y-10);
+  }
+}
+
 function buildTeamHistory(tname){
   var tr=rankings[tname]||{};var parts=0,frontSum=0,stableVals=[];thist.innerHTML='';
   comps.forEach(function(c){var r=tr[c.id];if(r===null||r===undefined||r==='')return;parts++;var rs=rankScore(r),merged=isMerged(tname,c.id);if(merged)rs/=2;var dc=decayCoeff(c.id,compWeight(c.id)),integral=dc*rs;stableVals.push(rs);frontSum+=integral;
@@ -3158,7 +3217,7 @@ function buildTeamHistory(tname){
     var n=parseInt(r,10);if(n===1)strip.className+=' s-1';else if(n<=3)strip.className+=' s-2';else if(n<=10)strip.className+=' s-top10';else if(n<=20)strip.className+=' s-mid';else strip.className+=' s-low';
     if(merged)strip.className+=' sr-merged';
     card.appendChild(strip);var body=document.createElement('div');body.className='hcard-body';
-    var nm=document.createElement('span');nm.className='hcard-name';nm.innerHTML=boldComp(c.id);
+    var nm=document.createElement('a');nm.className='hcard-name';nm.innerHTML=boldComp(c.id);nm.href=links[c.id]||'#';nm.target='_blank';nm.rel='noopener';nm.style.cssText='text-decoration:none;color:inherit;';
     var dt=document.createElement('span');dt.className='hcard-date';dt.textContent=c.date;
     var rk=document.createElement('span');rk.className='hcard-rank';var rn=parseInt(r,10);
     if(rn===1)rk.className+=' sr-1';else if(rn<=3)rk.className+=' sr-2';else if(rn<=6)rk.className+=' sr-4';else if(rn<=10)rk.className+=' sr-7';else if(rn<=20)rk.className+=' sr-mid';else rk.className+=' sr-low';
@@ -3170,8 +3229,9 @@ function buildTeamHistory(tname){
   });
   var sa=stableVals.length>0?stableVals.reduce(function(a,b){return a+b;},0)/stableVals.length:0;
   tinfo.innerHTML='\u53C2\u8D5B <strong>'+parts+'</strong> / '+comps.length+' \u573A &nbsp;|&nbsp; \u603B\u5206 <strong>'+(frontSum*2+sa*3).toFixed(1)+'</strong> &nbsp;|&nbsp; \u7D2F\u79EF\u5206 <strong>'+frontSum.toFixed(1)+'</strong> &nbsp;|&nbsp; \u7A33\u5B9A\u5206 <strong>'+sa.toFixed(1)+'</strong>';
+  drawChart(tname);
 }
-tsel.addEventListener('change',function(){buildTeamHistory(tsel.value);});buildTeamHistory(tsel.value);
+tsel.addEventListener('change',function(){buildTeamHistory(tsel.value);});setTimeout(function(){buildTeamHistory(tsel.value);},100);
 
 // TAB 3
 var csel=document.getElementById('compSelect');
@@ -3193,7 +3253,8 @@ function buildCompDetail(cid){
 csel.addEventListener('change',function(){buildCompDetail(csel.value);});buildCompDetail(csel.value);
 
 document.getElementById('simToggle').addEventListener('change',renderLeaderboard);
-// ---- SIMULATION PANEL ----
+
+// SIM PANEL
 document.getElementById('fabBtn').addEventListener('click',function(){
   document.getElementById('simPanel').classList.toggle('show');
   if(document.getElementById('simPanel').classList.contains('show'))renderSimPanel();
@@ -3207,7 +3268,14 @@ function renderSimPanel(){
   simTeams.forEach(function(st,i){
     var card=document.createElement('div');card.className='sim-team-card';
     var hdr=document.createElement('div');hdr.className='sim-team-header';
-    var nm=document.createElement('span');nm.className='sim-team-name';nm.textContent=st.name;
+    var nm=document.createElement('span');nm.className='sim-team-name';nm.textContent=st.name||'\u672A\u547D\u540D';
+    nm.addEventListener('click',function(){
+      var inp=document.createElement('input');inp.className='sim-team-name-edit';inp.value=st.name;
+      nm.replaceWith(inp);inp.focus();inp.select();
+      inp.addEventListener('blur',function(){saveName();});
+      inp.addEventListener('keydown',function(e){if(e.key==='Enter')saveName();});
+      function saveName(){var v=inp.value.trim();if(v)st.name=v;saveSimTeams();renderSimPanel();renderLeaderboard();}
+    });
     var del=document.createElement('button');del.className='sim-team-del';del.textContent='\u2715';
     del.addEventListener('click',function(){simTeams.splice(i,1);saveSimTeams();renderSimPanel();renderLeaderboard();});
     hdr.appendChild(nm);hdr.appendChild(del);card.appendChild(hdr);
@@ -3251,8 +3319,7 @@ function renderSimPanel(){
   addTeamBtn.addEventListener('click',function(){
     addTeamBtn.style.display='none';addTeamForm.classList.add('show');addTeamInp.focus();
   });
-  body.appendChild(addTeamBtn);
-  body.appendChild(addTeamForm);
+  body.appendChild(addTeamBtn);body.appendChild(addTeamForm);
 }
 })();
 </script>
