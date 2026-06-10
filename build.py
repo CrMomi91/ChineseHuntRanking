@@ -11,7 +11,11 @@ with open(f'{DATA_DIR}/competitions.json', 'r', encoding='utf-8') as f: comps_js
 with open(f'{DATA_DIR}/rankings.json', 'r', encoding='utf-8') as f: rankings_json = f.read()
 with open(f'{DATA_DIR}/comp_results.json', 'r', encoding='utf-8') as f: comp_results_json = f.read()
 
-links = {c['id']: c.get('url', '') for c in json.loads(comps_json)}
+links = {}
+for c in json.loads(comps_json):
+    links[c['id']] = c.get('url', '')
+    if c.get('rankingUrl'):
+        links[c['id']+'_rank'] = c['rankingUrl']
 links_json = json.dumps(links, ensure_ascii=False)
 
 comps = json.loads(comps_json)
@@ -35,13 +39,13 @@ score_doc = r'''
 
 <p><b class="sub-title">排名得分</b></p>
 <p>排名得分由指数公式给出，名次越靠前得分越高，靠后平滑趋近于 0。未参赛为 0。若同一比赛出现重复名次（并队），得分减半。</p>
-<p class="formula" data-latex="\text{得分} = \frac{100}{e^{\frac{\text{rank} - 1}{5}}}"></p>
-<p>例：#1 → <b>100.00</b>，#3 → <b>67.03</b>，#10 → <b>16.53</b>，#20 → <b>2.24</b>，#50 → <b>0.006</b></p>
+<p class="formula" data-latex="\text{得分} = \frac{100}{e^{\frac{\text{rank} - 1}{6}}}"></p>
+<p>例：#1 → <b>100.00</b>，#3 → <b>71.65</b>，#10 → <b>22.31</b>，#20 → <b>4.21</b>，#50 → <b>0.03</b></p>
 
 <p><b class="sub-title">比赛权重</b></p>
 <p>每场比赛有一个随时间衰减的权重：</p>
 <p class="formula" data-latex="\text{时延系数} = e^{\frac{\text{开赛日期} - \text{今天}}{365 \times 2}}"></p>
-<p class="formula" data-latex="\text{比赛系数} = \begin{cases} 1.2 & \text{PKU / CCBC} \\ 0.8 & \text{其余赛事} \end{cases}"></p>
+<p class="formula" data-latex="\text{比赛系数} = \begin{cases} 1 & \text{PKU / CCBC} \\ 0.8 & \text{其余赛事} \end{cases}"></p>
 <p class="formula" data-latex="\text{权重} = \text{时延系数} \times \text{比赛系数}"></p>
 <p>越新的比赛权重越大。距今 2 年 → 时延系数 ≈ <b>0.37</b>，1 年 → <b>0.61</b>，6 个月 → <b>0.78</b>。</p>
 
@@ -49,7 +53,7 @@ score_doc = r'''
 <p class="formula" data-latex="\text{累积分} = \sum (\text{权重} \times \text{排名得分})"></p>
 <p class="formula" data-latex="\text{稳定分} = \frac{\sum (\text{时延系数} \times \text{得分})}{\sum \text{时延系数}}"></p>
 <p class="formula" data-latex="\text{总分} = \text{累积分} + \text{稳定分}"></p>
-<p>按总分降序排名。梯队：≥300 → T0，≥200 → T1，≥100 → T2，其余 → T3。</p>
+<p>按总分降序排名。梯队：≥500 → 论外，≥300 → T0，≥200 → T1，≥100 → T2，≥25 → T3。</p>
 '''
 readme_html = readme_html + score_doc
 
@@ -69,7 +73,6 @@ html { overflow-y: scroll; }
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   background: #f5f5f7; color: #1a1a1a; line-height: 1.4; -webkit-font-smoothing: antialiased;
-  scrollbar-gutter: stable;
 }
 
 ::-webkit-scrollbar { width: 4px; height: 4px; }
@@ -94,6 +97,10 @@ body {
 .tab-btn.active { color: #111; border-bottom-color: #333; }
 .tab-content { display: none; }
 .tab-content.active { display: block; }
+
+/* Bar chart */
+.bar-chart-wrap { margin-bottom: 20px; background: #fff; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 16px 10px 10px; overflow: visible; }
+.bar-chart-wrap canvas { display: block; }
 
 /* Leaderboard */
 .col-heads {
@@ -136,6 +143,7 @@ body {
 .t2 .card-strip { background: #D4AC0D; }
 .t3 .card-strip { background: #5DA85D; }
 .t4 .card-strip { background: #5B9BD5; }
+.tw .card-strip { background: #222; }
 .tsim .card-strip { background: #bbb; }
 
 .card-info { display: flex; align-items: stretch; flex-shrink: 0; }
@@ -144,9 +152,15 @@ body {
 .t2 .card-info { background: #FEFBE4; }
 .t3 .card-info { background: #EEF5EE; }
 .t4 .card-info { background: #EEF2F8; }
+.tw .card-info { background: #333; }
 .tsim .card-info { background: #f5f5f5; }
 
 .card-info span { display: flex; align-items: center; justify-content: center; }
+.tw .card-rank,
+.tw .card-name,
+.tw .card-total { color: #fff; }
+.tw .card-front { color: #ccc; }
+.tw .card-stable { color: #ccc; }
 .card-rank  { width: 54px; font-size: 19px; font-weight: 700; color: #333; }
 .card-name  { width: 231px; font-size: 17px; font-weight: 500; color: #1a1a1a;
               overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0 8px; }
@@ -384,6 +398,7 @@ body {
     </div>
 
     <div class="tab-content active" id="tab1">
+      <div class="bar-chart-wrap"><canvas id="barChart"></canvas></div>
       <div class="col-heads">
         <span class="ch-spacer"></span>
         <span class="ch-rank">排名</span><span class="ch-name">队伍</span>
@@ -397,7 +412,7 @@ body {
       <div class="tab2-wrap">
         <div class="sel-row"><label>选择队伍：</label><select id="teamSelect"></select></div>
         <div class="info-bar" id="teamInfo"></div>
-        <div class="chart-wrap"><canvas id="teamChart" height="200"></canvas></div>
+        <div class="chart-wrap"><canvas id="teamChart"></canvas></div>
         <div class="history-header"><span class="hh-spacer"></span><span class="hh-name">比赛</span><span class="hh-date">日期</span><span class="hh-rank">名次</span><span class="hh-score">得分</span><span class="hh-weight">权重</span><span class="hh-integral">积分</span></div>
         <div id="teamHistory"></div>
       </div>
@@ -443,7 +458,7 @@ var COMP_EPOCHS = __EPOCHS__;
 (function() {
 var comps=COMPETITIONS,rankings=RANKINGS,links=LINKS,compResults=COMP_RESULTS,epochs=COMP_EPOCHS;
 
-function compWeight(id){if(id.indexOf('P&KU')===0||id.indexOf('CCBC')===0)return 1.2;return 0.8;}
+function compWeight(id){if(id.indexOf('P&KU')===0||id.indexOf('CCBC')===0)return 1;return 0.8;}
 function isMajor(id){return id.indexOf('P&KU')===0||id.indexOf('CCBC')===0;}
 function esc(s){if(!s)return'';return s.replace(/&/g,'&amp;').replace(/</g,'&lt;');}
 function boldComp(id){return isMajor(id)?'<b>'+esc(id)+'</b>':esc(id);}
@@ -451,7 +466,7 @@ function decayCoeff(compId,w){var days=(epochs[compId]-Date.now())/86400000;retu
 function rankScore(r){
   if(r===null||r===undefined||r==='')return 0;
   var n=parseInt(r,10);if(isNaN(n))return 0;
-  return 100/Math.exp((n-1)/5);
+  return 100/Math.exp((n-1)/6);
 }
 
 var mergedMap={},rankBuckets={};
@@ -473,10 +488,10 @@ var teams=TEAMS.map(function(t){
   return{name:t.name,origName:t.name,total:s.total,frontSum:s.frontSum,stableAvg:s.stableAvg};
 });
 teams.sort(function(a,b){return b.total-a.total;});
-teams.forEach(function(t,i){t.rank=i+1;t.tier=t.total>=300?'t0':t.total>=200?'t1':t.total>=100?'t2':'t3';});
+teams.forEach(function(t,i){t.rank=i+1;t.tier=t.total>=500?'tw':t.total>=300?'t0':t.total>=200?'t1':t.total>=100?'t2':t.total>=25?'t3':'t4';});
 
 var tooltip=document.getElementById('tooltip');
-function showTT(e,text){tooltip.textContent=text;var x=e.clientX+12,y=e.clientY-30;tooltip.style.left='-999px';tooltip.classList.add('show');var tw=tooltip.offsetWidth;if(x+tw>window.innerWidth-10)x=e.clientX-tw-12;tooltip.style.left=x+'px';tooltip.style.top=y+'px';}
+function showTT(e,text,el){tooltip.textContent=text;tooltip.style.left='-999px';tooltip.classList.add('show');var tw=tooltip.offsetWidth,th=tooltip.offsetHeight;var rect=el.getBoundingClientRect();var x=rect.left+rect.width/2-tw/2;var y=rect.top-th-6;if(y<0)y=rect.bottom+6;if(x<4)x=4;if(x+tw>window.innerWidth-4)x=window.innerWidth-tw-4;tooltip.style.left=x+'px';tooltip.style.top=y+'px';}
 function hideTT(){tooltip.classList.remove('show');}
 
 document.querySelectorAll('.tab-btn').forEach(function(btn){btn.addEventListener('click',function(){
@@ -491,9 +506,9 @@ document.querySelectorAll('.tab-btn').forEach(function(btn){btn.addEventListener
 var chead=document.getElementById('compHeads');
 comps.forEach(function(c){
   var a=document.createElement('a');a.className='comp-link'+(isMajor(c.id)?' bold-link':'');
-  a.textContent=c.id;a.href=links[c.id]||'#';a.target='_blank';a.rel='noopener';
+  a.textContent=c.id;a.href=links[c.id+'_rank']||links[c.id]||'#';a.target='_blank';a.rel='noopener';
   var dc=decayCoeff(c.id,compWeight(c.id));
-  a.addEventListener('mouseenter',function(e){showTT(e,c.id+' | '+c.date+' | \u6743\u91CD '+dc.toFixed(2));});
+  a.addEventListener('mouseenter',function(e){showTT(e,c.id+' | '+c.date+' | \u6743\u91CD '+dc.toFixed(2),this);});
   a.addEventListener('mouseleave',hideTT);chead.appendChild(a);
 });
 
@@ -506,15 +521,92 @@ try{var saved=localStorage.getItem('hunt_sim_teams');if(saved)simTeams=JSON.pars
 function saveSimTeams(){try{localStorage.setItem('hunt_sim_teams',JSON.stringify(simTeams));}catch(e){}}
 
 function simRanksToObj(ranks){var o={};ranks.forEach(function(e){o[e.c]=e.r;});return o;}
-function simObjToRanks(obj){var a=[];for(var cid in obj){a.push({c:cid,r:obj[cid]});}return a;}
+
+var sortBy='total';
+function setSort(metric,el){
+  sortBy=metric;
+  document.querySelectorAll('.ch-total,.ch-front,.ch-stable').forEach(function(e){e.classList.remove('sort-active');});
+  el.classList.add('sort-active');
+  renderAll();
+}
+
+function renderAll(){
+  renderLeaderboard();
+  drawBarChart();
+}
+
+// Bar chart
+var barCanvas=document.getElementById('barChart');
+
+function drawBarChart(){
+  var showSim=document.getElementById('simToggle').checked;
+  var all=(showSim?simTeams.map(function(st){var tr=simRanksToObj(st.ranks||[]),s=computeScores(tr);return{name:st.name,total:s.total,frontSum:s.frontSum,stableAvg:s.stableAvg,_ranks:tr,_sim:true,rank:0,tier:'tsim'};}).concat(teams):teams);
+  all.sort(function(a,b){return b[sortBy]-a[sortBy];});
+  all.forEach(function(t,i){t.rank=i+1;});
+
+  var canvas=barCanvas,ctx=canvas.getContext('2d'),dpr=window.devicePixelRatio||1;
+  var cssW=Math.max(canvas.parentElement.clientWidth-20,520),cssH=250;
+  canvas.style.width=cssW+'px';canvas.style.height=cssH+'px';
+  canvas.width=cssW*dpr;canvas.height=cssH*dpr;ctx.scale(dpr,dpr);
+
+  var ceilY=sortBy==='stableAvg'?100:500;
+  var pad={top:44,right:16,bottom:50,left:40};
+  var pw=cssW-pad.left-pad.right,ph=cssH-pad.top-pad.bottom;
+  var n=all.length,colW=20,gap=(pw-colW*n)/(n+1);
+
+  ctx.clearRect(0,0,cssW,cssH);
+
+  // Title
+  var labels={total:'\u603B\u5206',frontSum:'\u7D2F\u79EF\u5206',stableAvg:'\u7A33\u5B9A\u5206'};
+  ctx.fillStyle='#888';ctx.font='12px sans-serif';ctx.textAlign='left';
+  ctx.fillText(labels[sortBy]||'',8,18);
+
+  // Grid lines at 100 (or 20 for stable)
+  var step=sortBy==='stableAvg'?20:100;
+  ctx.setLineDash([4,3]);ctx.strokeStyle='#e0e0e0';ctx.lineWidth=1;
+  for(var v=step;v<=ceilY;v+=step){
+    var gy=pad.top+ph*(1-v/ceilY);
+    ctx.beginPath();ctx.moveTo(pad.left,gy);ctx.lineTo(cssW-pad.right,gy);ctx.stroke();
+    ctx.fillStyle='#ccc';ctx.font='10px sans-serif';ctx.textAlign='right';
+    ctx.fillText(v,pad.left-4,gy+4);
+  }
+  ctx.setLineDash([]);
+
+  ctx.strokeStyle='#ccc';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(pad.left,pad.top-8);ctx.lineTo(pad.left,cssH-pad.bottom);ctx.stroke();
+
+  all.forEach(function(t,i){
+    var x=pad.left+gap+i*(colW+gap);
+    var val=t[sortBy]||0;
+    var h=Math.max(2,val/ceilY*ph);
+    var isSim=!!t._sim;
+    var color;if(isSim)color='#ccc';else if(t.tier==='tw')color='#333';else if(t.tier==='t0')color='#9B7CB8';else if(t.tier==='t1')color='#E67E22';else if(t.tier==='t2')color='#D4AC0D';else if(t.tier==='t3')color='#5DA85D';else color='#5B9BD5';
+    ctx.fillStyle=color;ctx.fillRect(x,pad.top+ph-h,colW,h);
+
+    // Number above bar
+    ctx.fillStyle='#444';ctx.font='bold 10px sans-serif';ctx.textAlign='center';
+    var ny=pad.top+ph-h-4;if(ny<pad.top-8)ny=pad.top-8;
+    ctx.fillText(val.toFixed(1),x+colW/2,ny);
+
+    // Label below - more horizontal
+  ctx.fillStyle='#333';ctx.font='10px sans-serif';ctx.textAlign='right';
+    ctx.save();ctx.translate(x+colW/2+2,cssH-pad.bottom+10);ctx.rotate(-0.4);
+  ctx.fillText(t.name||'',0,0);ctx.restore();
+  });
+}
+
+var sortTotal=document.querySelector('.ch-total');
+var sortFront=document.querySelector('.ch-front');
+var sortStable=document.querySelector('.ch-stable');
+sortTotal.classList.add('sort-active');
+sortTotal.addEventListener('click',function(){setSort('total',this);});
+sortFront.addEventListener('click',function(){setSort('frontSum',this);});
+sortStable.addEventListener('click',function(){setSort('stableAvg',this);});
 
 function renderLeaderboard(){
   app.innerHTML='';
   var showSim=document.getElementById('simToggle').checked;
-  var all=(showSim?simTeams.map(function(st){
-    var tr=simRanksToObj(st.ranks||[]),s=computeScores(tr);
-    return{name:st.name,total:s.total,frontSum:s.frontSum,stableAvg:s.stableAvg,_ranks:tr,_sim:true,rank:0,tier:'tsim'};
-  }).concat(teams):teams);
+  var all=(showSim?simTeams.map(function(st){var tr=simRanksToObj(st.ranks||[]),s=computeScores(tr);return{name:st.name,total:s.total,frontSum:s.frontSum,stableAvg:s.stableAvg,_ranks:tr,_sim:true,rank:0,tier:'tsim'};}).concat(teams):teams);
   all.sort(function(a,b){return b[sortBy]-a[sortBy];});
   all.forEach(function(t,i){t.rank=i+1;});
   all.forEach(function(t){renderCard(t);});
@@ -522,7 +614,7 @@ function renderLeaderboard(){
 
 function renderCard(team){
   var tr2=team._ranks||rankings[team.origName]||{},isSim=!!team._sim;
-  var card=document.createElement('div');card.className='card '+(isSim?'tsim':team.tier||'t3');
+  var card=document.createElement('div');  card.className='card '+(isSim?'tsim':team.tier||'t4');
   var strip=document.createElement('div');strip.className='card-strip';card.appendChild(strip);
   var info=document.createElement('div');info.className='card-info';
   [{c:'card-rank',v:team.rank},{c:'card-name',v:team.name},{c:'card-total',v:team.total.toFixed(1)},{c:'card-front',v:team.frontSum.toFixed(1)},{c:'card-stable',v:team.stableAvg.toFixed(1)}].forEach(function(it){var s=document.createElement('span');s.className=it.c;s.textContent=it.v;info.appendChild(s);});
@@ -540,37 +632,23 @@ function renderCard(team){
     b.addEventListener('mouseleave',function(){this.style.opacity=alpha;});
     if(r!==null&&r!==undefined&&r!==''){
       var rs=rankScore(r);if(merged)rs/=2;var contrib=dc*rs;
-      b.addEventListener('mouseenter',function(e){showTT(e,c.id+' | \u5F97\u5206 '+rs.toFixed(1)+' | \u79EF\u5206 '+contrib.toFixed(1)+(merged?' | \u5E76\u961F':''));});
+      b.addEventListener('mouseenter',function(e){showTT(e,c.id+' | \u5F97\u5206 '+rs.toFixed(1)+' | \u79EF\u5206 '+contrib.toFixed(1)+(merged?' | \u5E76\u961F':''),this);});
       b.addEventListener('mouseleave',hideTT);
-      b.addEventListener('click',function(){if(links[c.id])window.open(links[c.id],'_blank');});
+      b.addEventListener('click',function(){var u=links[c.id+'_rank']||links[c.id];if(u)window.open(u,'_blank');});
     }
     badges.appendChild(b);
   })(comps[k]);}
   card.appendChild(badges);app.appendChild(card);
 }
+
 // Restore toggle + initial render
 (function(){var v=localStorage.getItem('hunt_sim_show');document.getElementById('simToggle').checked=v==='true';})();
-renderLeaderboard();
-var simToggleEl=document.getElementById('simToggle');
-simToggleEl.addEventListener('change',function(){renderLeaderboard();try{localStorage.setItem('hunt_sim_show',simToggleEl.checked);}catch(e){}});
-
-var sortBy='total';
-function setSort(metric,el){
-  sortBy=metric;
-  document.querySelectorAll('.ch-total,.ch-front,.ch-stable').forEach(function(e){e.classList.remove('sort-active');});
-  el.classList.add('sort-active');
-  renderLeaderboard();
-}
-document.querySelector('.ch-total').addEventListener('click',function(){setSort('total',this);});
-document.querySelector('.ch-front').addEventListener('click',function(){setSort('frontSum',this);});
-document.querySelector('.ch-stable').addEventListener('click',function(){setSort('stableAvg',this);});
-document.querySelector('.ch-total').classList.add('sort-active');
+renderAll();
 
 // TAB 2
 var tsel=document.getElementById('teamSelect');
 teams.forEach(function(t){var o=document.createElement('option');o.value=t.origName;o.textContent=t.name;tsel.appendChild(o);});
 var tinfo=document.getElementById('teamInfo'),thist=document.getElementById('teamHistory');
-
 var tchart=document.getElementById('teamChart');
 
 function chartY(r,ph,pad){return pad.top+ph*Math.pow((r-1)/49,0.4);}
@@ -585,19 +663,15 @@ function drawChart(tname){
   var pw=cssW-pad.left-pad.right,ph=cssH-pad.top-pad.bottom,stepX=pw/15,maxR=50;
 
   ctx.clearRect(0,0,cssW,cssH);
-  // Grid
   ctx.strokeStyle='#eee';ctx.lineWidth=1;
   [1,10,20,30,40,50].forEach(function(r){var gy=chartY(r,ph,pad);ctx.beginPath();ctx.moveTo(pad.left,gy);ctx.lineTo(cssW-pad.right,gy);ctx.stroke();});
   ctx.strokeStyle='#ccc';ctx.beginPath();ctx.moveTo(pad.left,pad.top);ctx.lineTo(pad.left,cssH-pad.bottom);ctx.stroke();
   ctx.beginPath();ctx.moveTo(pad.left,cssH-pad.bottom);ctx.lineTo(cssW-pad.right,cssH-pad.bottom);ctx.stroke();
-  // Y labels
   ctx.fillStyle='#bbb';ctx.font='11px sans-serif';ctx.textAlign='right';
   [1,10,20,30,40,50].forEach(function(r){ctx.fillText(r,pad.left-4,chartY(r,ph,pad)+4);});
-  // X labels
   ctx.textAlign='right';ctx.fillStyle='#bbb';ctx.font='10px sans-serif';
   comps.forEach(function(c,i){ctx.save();ctx.translate(pad.left+i*stepX,cssH-pad.bottom+8);ctx.rotate(-0.6);ctx.fillText(c.id,0,0);ctx.restore();});
 
-  // Collect points
   var pts=[];
   comps.forEach(function(c,i){
     var r=tr[c.id];if(r===null||r===undefined||r==='')return;
@@ -606,7 +680,6 @@ function drawChart(tname){
     if(n>maxR)n=maxR;pts.push({x:pad.left+i*stepX,y:chartY(n,ph,pad),r:n,raw:raw,is50:is50,i:i});
   });
 
-  // Line connecting all points
   if(pts.length>1){
     ctx.strokeStyle='#3A6EA5';ctx.lineWidth=2;ctx.lineJoin='round';ctx.lineCap='round';
     ctx.beginPath();ctx.moveTo(pts[0].x,pts[0].y);
@@ -614,15 +687,11 @@ function drawChart(tname){
     ctx.stroke();
   }
 
-  // Dots + labels
   ctx.font='bold 10px sans-serif';ctx.textAlign='center';
-  for(var i=0;i<pts.length;i++){
-    var p=pts[i],n=p.r,lbl=p.is50?'50+':String(n);
+  for(var i=0;i<pts.length;i++){var p=pts[i],n=p.r,lbl=p.is50?'50+':String(n);
     ctx.beginPath();ctx.arc(p.x,p.y,4,0,Math.PI*2);
     if(n===1)ctx.fillStyle='#9B59B6';else if(n<=3)ctx.fillStyle='#E67E22';else if(n<=6)ctx.fillStyle='#D4AC0D';else if(n<=10)ctx.fillStyle='#27AE60';else if(n<=20)ctx.fillStyle='#2980B9';else ctx.fillStyle='#7F8C8D';
-    ctx.fill();
-    var ly=n<=3?p.y+14:p.y-10;
-    ctx.fillStyle='#333';ctx.fillText(lbl,p.x,ly);
+    ctx.fill();var ly=n<=3?p.y+14:p.y-10;ctx.fillStyle='#333';ctx.fillText(lbl,p.x,ly);
   }
 }
 
@@ -669,6 +738,7 @@ function buildCompDetail(cid){
 csel.addEventListener('change',function(){buildCompDetail(csel.value);});buildCompDetail(csel.value);
 
 // SIM PANEL
+document.getElementById('simToggle').addEventListener('change',function(){renderAll();try{localStorage.setItem('hunt_sim_show',this.checked);}catch(e){}});
 document.getElementById('fabBtn').addEventListener('click',function(){
   document.getElementById('simPanel').classList.toggle('show');
   if(document.getElementById('simPanel').classList.contains('show'))renderSimPanel();
@@ -688,17 +758,17 @@ function renderSimPanel(){
       nm.replaceWith(inp);inp.focus();inp.select();
       inp.addEventListener('blur',function(){saveName();});
       inp.addEventListener('keydown',function(e){if(e.key==='Enter')saveName();});
-      function saveName(){var v=inp.value.trim();if(v)st.name=v;saveSimTeams();renderSimPanel();renderLeaderboard();}
+      function saveName(){var v=inp.value.trim();if(v)st.name=v;saveSimTeams();renderSimPanel();renderAll();}
     });
     var del=document.createElement('button');del.className='sim-team-del';del.textContent='\u2715';
-    del.addEventListener('click',function(){simTeams.splice(i,1);saveSimTeams();renderSimPanel();renderLeaderboard();});
+    del.addEventListener('click',function(){simTeams.splice(i,1);saveSimTeams();renderSimPanel();renderAll();});
     hdr.appendChild(nm);hdr.appendChild(del);card.appendChild(hdr);
 
     (st.ranks||[]).forEach(function(e,j){
       var row=document.createElement('div');row.className='sim-result-row';
       row.innerHTML='<span class="sr-comp">'+e.c+'</span><span class="sr-rank">#'+badgeText(e.r)+'</span>';
       var rd=document.createElement('button');rd.className='sr-del';rd.textContent='\u2715';
-      rd.addEventListener('click',function(){simTeams[i].ranks.splice(j,1);saveSimTeams();renderSimPanel();renderLeaderboard();});
+      rd.addEventListener('click',function(){simTeams[i].ranks.splice(j,1);saveSimTeams();renderSimPanel();renderAll();});
       row.appendChild(rd);card.appendChild(row);
     });
 
@@ -713,7 +783,7 @@ function renderSimPanel(){
       var cid=sel.value,rn=parseInt(inp.value,10);if(!cid||isNaN(rn))return;
       if(!simTeams[i].ranks)simTeams[i].ranks=[];
       simTeams[i].ranks=simTeams[i].ranks.filter(function(e){return e.c!==cid;});
-      simTeams[i].ranks.push({c:cid,r:rn});saveSimTeams();renderSimPanel();renderLeaderboard();
+      simTeams[i].ranks.push({c:cid,r:rn});saveSimTeams();renderSimPanel();renderAll();
     });
     addRow.appendChild(sel);addRow.appendChild(inp);addRow.appendChild(btn);card.appendChild(addRow);
     body.appendChild(card);
@@ -727,7 +797,7 @@ function renderSimPanel(){
     var nm=addTeamInp.value.trim();if(!nm)return;
     simTeams.push({name:nm,ranks:[]});saveSimTeams();
     addTeamInp.value='';addTeamForm.classList.remove('show');addTeamBtn.style.display='';
-    renderSimPanel();renderLeaderboard();
+    renderSimPanel();renderAll();
   });
   addTeamForm.appendChild(addTeamInp);addTeamForm.appendChild(addTeamSubmit);
   addTeamBtn.addEventListener('click',function(){
