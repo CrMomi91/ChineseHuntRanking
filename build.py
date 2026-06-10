@@ -28,7 +28,30 @@ raw = raw.replace('@榆木华', '<a href="https://space.bilibili.com/3663104" ta
 raw = raw.replace('voilern 的网站', '<a href="https://stats.voilern.cn/" target="_blank">voilern 的网站</a>')
 raw = raw.replace('个人娱乐', '<b>个人娱乐</b>')
 raw = raw.replace('无科学依据', '<b>无科学依据</b>')
-readme_html = ''.join(f'<p>{l.strip()}</p>' for l in raw.split('\n') if l.strip())
+readme_html = '<p><b class="sec-title">网站说明</b></p>' + ''.join(f'<p>{l.strip()}</p>' for l in raw.split('\n') if l.strip())
+
+score_doc = r'''
+<p><b class="sec-title">分数说明</b></p>
+
+<p><b class="sub-title">排名得分</b></p>
+<p>第1~20名的得分由指数公式给出，名次越靠前得分越高。21名起统一为−1，未参赛为0。若同一比赛出现重复名次（并队），得分减半。</p>
+<p class="formula" data-latex="\text{得分} = e^{\frac{20 - \text{rank}}{5}} - 2 \qquad (\text{rank} \le 20)"></p>
+<p>例：#1 → <b>42.70</b>，#3 → <b>27.96</b>，#10 → <b>5.39</b>，#20 → <b>−1.00</b></p>
+
+<p><b class="sub-title">比赛权重</b></p>
+<p>每场比赛有一个随时间衰减的权重：</p>
+<p class="formula" data-latex="\text{时延系数} = e^{\frac{\text{开赛日期} - \text{今天}}{365 \times 3}}"></p>
+<p class="formula" data-latex="\text{比赛系数} = \begin{cases} 1.25 & \text{PKU / CCBC} \\ 0.75 & \text{其余赛事} \end{cases}"></p>
+<p class="formula" data-latex="\text{权重} = \text{时延系数} \times \text{比赛系数}"></p>
+<p>越新的比赛权重越大。距今 4 年 → 时延系数 ≈ <b>0.26</b>，10 个月 → <b>0.76</b>，1 个月后（未来）→ <b>1.03</b>。</p>
+
+<p><b class="sub-title">总分计算</b></p>
+<p class="formula" data-latex="\text{累积分} = \sum (\text{权重} \times \text{排名得分})"></p>
+<p class="formula" data-latex="\text{稳定分} = \frac{\sum \text{参赛场次得分}}{\text{参赛场次数}}"></p>
+<p class="formula" data-latex="\text{总分} = \text{累积分} \times 2 + \text{稳定分} \times 3"></p>
+<p>按总分降序排名。梯队：≥300 → T0，≥200 → T1，≥100 → T2，其余 → T3。</p>
+'''
+readme_html = readme_html + score_doc
 
 HTML = r'''<!DOCTYPE html>
 <html lang="zh-CN">
@@ -36,6 +59,8 @@ HTML = r'''<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>中华 Puzzle Hunt 队伍数据统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -332,6 +357,10 @@ body {
 .readme a { color: #3A6EA5; text-decoration: none; }
 .readme a:hover { text-decoration: underline; }
 .readme b { color: #333; }
+.readme .sec-title { font-size: 18px; color: #111; display: block; border-bottom: 1px solid #eee; padding-bottom: 6px; margin-bottom: 16px; }
+.readme .sub-title { font-size: 16px; color: #333; display: block; margin-top: 24px; margin-bottom: 8px; }
+.readme .formula { text-align: center; font-size: 16px; background: #f8f8f8; padding: 8px 0; border-radius: 4px; margin: 8px 0; }
+.readme .formula .katex { font-size: 1.1em; }
 
 #app { display: flex; flex-direction: column; align-items: center; }
 </style>
@@ -685,6 +714,7 @@ function renderSimPanel(){
 }
 })();
 </script>
+<script>document.querySelectorAll('.formula[data-latex]').forEach(function(el){try{katex.render(el.dataset.latex,el,{throwOnError:false})}catch(e){}});</script>
 </body>
 </html>'''
 
