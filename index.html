@@ -77,16 +77,16 @@ body {
 
 .card-strip { width: 6px; flex-shrink: 0; }
 .t0 .card-strip { background: #9B7CB8; }
-.t1 .card-strip { background: #E8943A; }
-.t2 .card-strip { background: #C4A832; }
+.t1 .card-strip { background: #E67E22; }
+.t2 .card-strip { background: #D4AC0D; }
 .t3 .card-strip { background: #5DA85D; }
 .t4 .card-strip { background: #5B9BD5; }
 .tsim .card-strip { background: #bbb; }
 
 .card-info { display: flex; align-items: stretch; flex-shrink: 0; }
 .t0 .card-info { background: #F4EEF8; }
-.t1 .card-info { background: #FEF4EA; }
-.t2 .card-info { background: #FEF9E8; }
+.t1 .card-info { background: #FEF2E4; }
+.t2 .card-info { background: #FEFBE4; }
 .t3 .card-info { background: #EEF5EE; }
 .t4 .card-info { background: #EEF2F8; }
 .tsim .card-info { background: #f5f5f5; }
@@ -361,21 +361,21 @@ body {
 
 <p><b class="sub-title">排名得分</b></p>
 <p>排名得分由指数公式给出，名次越靠前得分越高，靠后平滑趋近于 0。未参赛为 0。若同一比赛出现重复名次（并队），得分减半。</p>
-<p class="formula" data-latex="\text{得分} = e^{\frac{20 - \text{rank}}{5}}"></p>
-<p>例：#1 → <b>44.70</b>，#3 → <b>29.96</b>，#10 → <b>7.39</b>，#20 → <b>1.00</b>，#50 → <b>0.002</b></p>
+<p class="formula" data-latex="\text{得分} = \frac{100}{e^{\frac{\text{rank} - 1}{5}}}"></p>
+<p>例：#1 → <b>100.00</b>，#3 → <b>67.03</b>，#10 → <b>16.53</b>，#20 → <b>2.24</b>，#50 → <b>0.006</b></p>
 
 <p><b class="sub-title">比赛权重</b></p>
 <p>每场比赛有一个随时间衰减的权重：</p>
-<p class="formula" data-latex="\text{时延系数} = e^{\frac{\text{开赛日期} - \text{今天}}{365 \times 3}}"></p>
-<p class="formula" data-latex="\text{比赛系数} = \begin{cases} 1.25 & \text{PKU / CCBC} \\ 0.75 & \text{其余赛事} \end{cases}"></p>
+<p class="formula" data-latex="\text{时延系数} = e^{\frac{\text{开赛日期} - \text{今天}}{365 \times 2}}"></p>
+<p class="formula" data-latex="\text{比赛系数} = \begin{cases} 1.2 & \text{PKU / CCBC} \\ 0.8 & \text{其余赛事} \end{cases}"></p>
 <p class="formula" data-latex="\text{权重} = \text{时延系数} \times \text{比赛系数}"></p>
-<p>越新的比赛权重越大。距今 4 年 → 时延系数 ≈ <b>0.26</b>，10 个月 → <b>0.76</b>，1 个月后（未来）→ <b>1.03</b>。</p>
+<p>越新的比赛权重越大。距今 2 年 → 时延系数 ≈ <b>0.37</b>，1 年 → <b>0.61</b>，6 个月 → <b>0.78</b>。</p>
 
 <p><b class="sub-title">总分计算</b></p>
 <p class="formula" data-latex="\text{累积分} = \sum (\text{权重} \times \text{排名得分})"></p>
 <p class="formula" data-latex="\text{稳定分} = \frac{\sum (\text{时延系数} \times \text{得分})}{\sum \text{时延系数}}"></p>
-<p class="formula" data-latex="\text{总分} = \text{累积分} \times 2 + \text{稳定分} \times 3"></p>
-<p>按总分降序排名。梯队：≥400 → T0，≥300 → T1，≥200 → T2，≥100 → T3，其余 → 蓝。</p>
+<p class="formula" data-latex="\text{总分} = \text{累积分} + \text{稳定分}"></p>
+<p>按总分降序排名。梯队：≥300 → T0，≥200 → T1，≥100 → T2，其余 → T3。</p>
 </div></div>
     </div>
   </div>
@@ -3103,15 +3103,15 @@ var COMP_EPOCHS = {"P&KU1": 1656072000000, "CCBC12": 1660305600000, "P&KU2": 168
 (function() {
 var comps=COMPETITIONS,rankings=RANKINGS,links=LINKS,compResults=COMP_RESULTS,epochs=COMP_EPOCHS;
 
-function compWeight(id){if(id.indexOf('P&KU')===0||id.indexOf('CCBC')===0)return 1.25;return 0.75;}
+function compWeight(id){if(id.indexOf('P&KU')===0||id.indexOf('CCBC')===0)return 1.2;return 0.8;}
 function isMajor(id){return id.indexOf('P&KU')===0||id.indexOf('CCBC')===0;}
 function esc(s){if(!s)return'';return s.replace(/&/g,'&amp;').replace(/</g,'&lt;');}
 function boldComp(id){return isMajor(id)?'<b>'+esc(id)+'</b>':esc(id);}
-function decayCoeff(compId,w){var days=(epochs[compId]-Date.now())/86400000;return Math.exp(days/365/3)*w;}
+function decayCoeff(compId,w){var days=(epochs[compId]-Date.now())/86400000;return Math.exp(days/365/2)*w;}
 function rankScore(r){
   if(r===null||r===undefined||r==='')return 0;
   var n=parseInt(r,10);if(isNaN(n))return 0;
-  return Math.exp((20-n)/5);
+  return 100/Math.exp((n-1)/5);
 }
 
 var mergedMap={},rankBuckets={};
@@ -3125,7 +3125,7 @@ function computeScores(tr,tname){
   var fs=0,ss=0,sw=0;
   for(var i=0;i<comps.length;i++){var c=comps[i],r=tr[c.id],rs=rankScore(r);if(tname&&isMerged(tname,c.id))rs/=2;var dc=decayCoeff(c.id,compWeight(c.id)),rd=decayCoeff(c.id,1);fs+=dc*rs;if(r!==null&&r!==undefined&&r!==''){ss+=rd*rs;sw+=rd;}}
   var sa=sw>0?ss/sw:0;
-  return{total:fs*2+sa*3,frontSum:fs,stableAvg:sa};
+  return{total:fs+sa,frontSum:fs,stableAvg:sa};
 }
 
 var teams=TEAMS.map(function(t){
@@ -3133,7 +3133,7 @@ var teams=TEAMS.map(function(t){
   return{name:t.name,origName:t.name,total:s.total,frontSum:s.frontSum,stableAvg:s.stableAvg};
 });
 teams.sort(function(a,b){return b.total-a.total;});
-teams.forEach(function(t,i){t.rank=i+1;t.tier=t.total>=400?'t0':t.total>=300?'t1':t.total>=200?'t2':t.total>=100?'t3':'t4';});
+teams.forEach(function(t,i){t.rank=i+1;t.tier=t.total>=300?'t0':t.total>=200?'t1':t.total>=100?'t2':'t3';});
 
 var tooltip=document.getElementById('tooltip');
 function showTT(e,text){tooltip.textContent=text;var x=e.clientX+12,y=e.clientY-30;tooltip.style.left='-999px';tooltip.classList.add('show');var tw=tooltip.offsetWidth;if(x+tw>window.innerWidth-10)x=e.clientX-tw-12;tooltip.style.left=x+'px';tooltip.style.top=y+'px';}
@@ -3193,8 +3193,13 @@ function renderCard(team){
     var cls=badgeCls(r),merged=!isSim&&isMerged(team.origName||'',c.id);
     b.className='badge '+cls+(merged?' merged':'');
     b.textContent=badgeText(r);
+    var dc=decayCoeff(c.id,compWeight(c.id));
+    var alpha=Math.max(0.2,Math.min(1,dc/0.8));
+    b.style.opacity=alpha;
+    b.addEventListener('mouseenter',function(){this.style.opacity='1';});
+    b.addEventListener('mouseleave',function(){this.style.opacity=alpha;});
     if(r!==null&&r!==undefined&&r!==''){
-      var rs=rankScore(r);if(merged)rs/=2;var dc=decayCoeff(c.id,compWeight(c.id)),contrib=dc*rs;
+      var rs=rankScore(r);if(merged)rs/=2;var contrib=dc*rs;
       b.addEventListener('mouseenter',function(e){showTT(e,c.id+' | \u5F97\u5206 '+rs.toFixed(1)+' | \u79EF\u5206 '+contrib.toFixed(1)+(merged?' | \u5E76\u961F':''));});
       b.addEventListener('mouseleave',hideTT);
       b.addEventListener('click',function(){if(links[c.id])window.open(links[c.id],'_blank');});
@@ -3299,7 +3304,7 @@ function buildTeamHistory(tname){
     body.appendChild(nm);body.appendChild(dt);body.appendChild(rk);body.appendChild(sc);body.appendChild(wt);body.appendChild(it);card.appendChild(body);thist.appendChild(card);
   });
   var sa=sw>0?ss/sw:0;
-  tinfo.innerHTML='\u53C2\u8D5B <strong>'+parts+'</strong> / '+comps.length+' \u573A &nbsp;|&nbsp; \u603B\u5206 <strong>'+(frontSum*2+sa*3).toFixed(1)+'</strong> &nbsp;|&nbsp; \u7D2F\u79EF\u5206 <strong>'+frontSum.toFixed(1)+'</strong> &nbsp;|&nbsp; \u7A33\u5B9A\u5206 <strong>'+sa.toFixed(1)+'</strong>';
+  tinfo.innerHTML='\u53C2\u8D5B <strong>'+parts+'</strong> / '+comps.length+' \u573A &nbsp;|&nbsp; \u603B\u5206 <strong>'+(frontSum+sa).toFixed(1)+'</strong> &nbsp;|&nbsp; \u7D2F\u79EF\u5206 <strong>'+frontSum.toFixed(1)+'</strong> &nbsp;|&nbsp; \u7A33\u5B9A\u5206 <strong>'+sa.toFixed(1)+'</strong>';
   drawChart(tname);
 }
 tsel.addEventListener('change',function(){buildTeamHistory(tsel.value);});setTimeout(function(){buildTeamHistory(tsel.value);},100);
