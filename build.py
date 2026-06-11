@@ -108,14 +108,16 @@ body {
   padding: 0 0 10px 0; font-size: 14px; color: #aaa; font-weight: 500;
 }
 .col-heads .ch-spacer { width: 6px; flex-shrink: 0; }
-.col-heads .ch-rank   { width: 54px; flex-shrink: 0; text-align: center; }
-.col-heads .ch-name   { width: 231px; flex-shrink: 0; text-align: center; }
+.col-heads .ch-rank   { width: 44px; flex-shrink: 0; text-align: center; }
+.col-heads .ch-name   { width: 200px; flex-shrink: 0; text-align: center; }
 .col-heads .ch-total,
 .col-heads .ch-front,
-.col-heads .ch-stable { width: 102px; flex-shrink: 0; text-align: center; cursor: pointer; user-select: none; }
+.col-heads .ch-stable,
+.col-heads .ch-count  { width: 68px; flex-shrink: 0; text-align: center; cursor: pointer; user-select: none; }
 .col-heads .ch-total:hover,
 .col-heads .ch-front:hover,
-.col-heads .ch-stable:hover { color: #555; }
+.col-heads .ch-stable:hover,
+.col-heads .ch-count:hover { color: #555; }
 .col-heads .sort-active { color: #333; font-weight: 600; }
 
 .comp-heads {
@@ -161,12 +163,13 @@ body {
 .tw .card-total { color: #fff; }
 .tw .card-front { color: #ccc; }
 .tw .card-stable { color: #ccc; }
-.card-rank  { width: 54px; font-size: 19px; font-weight: 700; color: #333; }
-.card-name  { width: 231px; font-size: 17px; font-weight: 500; color: #1a1a1a;
+.card-rank  { width: 44px; font-size: 17px; font-weight: 700; color: #333; }
+.card-name  { width: 200px; font-size: 15px; font-weight: 500; color: #1a1a1a;
               overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0 8px; }
-.card-total { width: 102px; font-size: 17px; font-weight: 600; color: #111; }
-.card-front { width: 102px; font-size: 17px; font-weight: 500; color: #999; }
-.card-stable{ width: 102px; font-size: 17px; font-weight: 500; color: #999; }
+.card-total { width: 68px; font-size: 15px; font-weight: 600; color: #111; }
+.card-front { width: 68px; font-size: 15px; font-weight: 500; color: #999; }
+.card-stable{ width: 68px; font-size: 15px; font-weight: 500; color: #999; }
+.card-count { width: 68px; font-size: 15px; font-weight: 500; color: #555; }
 
 .card-badges {
   display: flex; align-items: center; gap: 10px; flex-shrink: 0; padding: 0 10px;
@@ -402,7 +405,7 @@ body {
       <div class="col-heads">
         <span class="ch-spacer"></span>
         <span class="ch-rank">排名</span><span class="ch-name">队伍</span>
-        <span class="ch-total">总分</span><span class="ch-front">累积分</span><span class="ch-stable">稳定分</span>
+        <span class="ch-total">总分</span><span class="ch-front">累积分</span><span class="ch-stable">稳定分</span><span class="ch-count">参赛</span>
         <div class="comp-heads" id="compHeads"></div>
       </div>
       <div id="app"></div>
@@ -485,7 +488,9 @@ function computeScores(tr,tname){
 
 var teams=TEAMS.map(function(t){
   var s=computeScores(rankings[t.name]||{},t.name);
-  return{name:t.name,origName:t.name,total:s.total,frontSum:s.frontSum,stableAvg:s.stableAvg};
+  var count=0,tw=0;
+  for(var i=0;i<comps.length;i++){var r=rankings[t.name][comps[i].id];if(r!==null&&r!==undefined&&r!==''){count++;tw+=decayCoeff(comps[i].id,compWeight(comps[i].id));}}
+  return{name:t.name,origName:t.name,total:s.total,frontSum:s.frontSum,stableAvg:s.stableAvg,count:count,tw:tw};
 });
 teams.sort(function(a,b){return b.total-a.total;});
 teams.forEach(function(t,i){t.rank=i+1;t.tier=t.total>=500?'tw':t.total>=300?'t0':t.total>=200?'t1':t.total>=100?'t2':t.total>=25?'t3':'t4';});
@@ -525,7 +530,7 @@ function simRanksToObj(ranks){var o={};ranks.forEach(function(e){o[e.c]=e.r;});r
 var sortBy='total';
 function setSort(metric,el){
   sortBy=metric;
-  document.querySelectorAll('.ch-total,.ch-front,.ch-stable').forEach(function(e){e.classList.remove('sort-active');});
+  document.querySelectorAll('.ch-total,.ch-front,.ch-stable,.ch-count').forEach(function(e){e.classList.remove('sort-active');});
   el.classList.add('sort-active');
   renderAll();
 }
@@ -540,8 +545,8 @@ var barCanvas=document.getElementById('barChart');
 
 function drawBarChart(){
   var showSim=document.getElementById('simToggle').checked;
-  var all=(showSim?simTeams.map(function(st){var tr=simRanksToObj(st.ranks||[]),s=computeScores(tr);return{name:st.name,total:s.total,frontSum:s.frontSum,stableAvg:s.stableAvg,_ranks:tr,_sim:true,rank:0,tier:'tsim'};}).concat(teams):teams);
-  all.sort(function(a,b){return b[sortBy]-a[sortBy];});
+  var all=(showSim?simTeams.map(function(st){var tr=simRanksToObj(st.ranks||[]),s=computeScores(tr);return{name:st.name,total:s.total,frontSum:s.frontSum,stableAvg:s.stableAvg,_ranks:tr,_sim:true,rank:0,tier:'tsim',count:Object.values(tr).filter(function(v){return v!==null&&v!==undefined&&v!=='';}).length,tw:0};}).concat(teams):teams);
+  all.sort(function(a,b){var va=a[sortBy]||0,vb=b[sortBy]||0;if(vb!==va)return vb-va;if(sortBy==='count')return (b.tw||0)-(a.tw||0);return 0;});
   all.forEach(function(t,i){t.rank=i+1;});
 
   var canvas=barCanvas,ctx=canvas.getContext('2d'),dpr=window.devicePixelRatio||1;
@@ -549,7 +554,7 @@ function drawBarChart(){
   canvas.style.width=cssW+'px';canvas.style.height=cssH+'px';
   canvas.width=cssW*dpr;canvas.height=cssH*dpr;ctx.scale(dpr,dpr);
 
-  var ceilY=sortBy==='stableAvg'?100:500;
+  var ceilY=sortBy==='stableAvg'?100:sortBy==='count'?20:500;
   var pad={top:44,right:16,bottom:50,left:40};
   var pw=cssW-pad.left-pad.right,ph=cssH-pad.top-pad.bottom;
   var n=all.length,colW=20,gap=(pw-colW*n)/(n+1);
@@ -557,12 +562,12 @@ function drawBarChart(){
   ctx.clearRect(0,0,cssW,cssH);
 
   // Title
-  var labels={total:'\u603B\u5206',frontSum:'\u7D2F\u79EF\u5206',stableAvg:'\u7A33\u5B9A\u5206'};
+  var labels={total:'\u603B\u5206',frontSum:'\u7D2F\u79EF\u5206',stableAvg:'\u7A33\u5B9A\u5206',count:'\u53C2\u8D5B\u6B21\u6570'};
   ctx.fillStyle='#888';ctx.font='12px sans-serif';ctx.textAlign='left';
   ctx.fillText(labels[sortBy]||'',8,18);
 
   // Grid lines at 100 (or 20 for stable)
-  var step=sortBy==='stableAvg'?20:100;
+  var step=sortBy==='stableAvg'?20:sortBy==='count'?5:100;
   ctx.setLineDash([4,3]);ctx.strokeStyle='#e0e0e0';ctx.lineWidth=1;
   for(var v=step;v<=ceilY;v+=step){
     var gy=pad.top+ph*(1-v/ceilY);
@@ -598,16 +603,18 @@ function drawBarChart(){
 var sortTotal=document.querySelector('.ch-total');
 var sortFront=document.querySelector('.ch-front');
 var sortStable=document.querySelector('.ch-stable');
+var sortCount=document.querySelector('.ch-count');
 sortTotal.classList.add('sort-active');
 sortTotal.addEventListener('click',function(){setSort('total',this);});
 sortFront.addEventListener('click',function(){setSort('frontSum',this);});
 sortStable.addEventListener('click',function(){setSort('stableAvg',this);});
+sortCount.addEventListener('click',function(){setSort('count',this);});
 
 function renderLeaderboard(){
   app.innerHTML='';
   var showSim=document.getElementById('simToggle').checked;
-  var all=(showSim?simTeams.map(function(st){var tr=simRanksToObj(st.ranks||[]),s=computeScores(tr);return{name:st.name,total:s.total,frontSum:s.frontSum,stableAvg:s.stableAvg,_ranks:tr,_sim:true,rank:0,tier:'tsim'};}).concat(teams):teams);
-  all.sort(function(a,b){return b[sortBy]-a[sortBy];});
+  var all=(showSim?simTeams.map(function(st){var tr=simRanksToObj(st.ranks||[]),s=computeScores(tr);return{name:st.name,total:s.total,frontSum:s.frontSum,stableAvg:s.stableAvg,_ranks:tr,_sim:true,rank:0,tier:'tsim',count:Object.values(tr).filter(function(v){return v!==null&&v!==undefined&&v!=='';}).length,tw:0};}).concat(teams):teams);
+  all.sort(function(a,b){var va=a[sortBy]||0,vb=b[sortBy]||0;if(vb!==va)return vb-va;if(sortBy==='count')return (b.tw||0)-(a.tw||0);return 0;});
   all.forEach(function(t,i){t.rank=i+1;});
   all.forEach(function(t){renderCard(t);});
 }
@@ -617,7 +624,7 @@ function renderCard(team){
   var card=document.createElement('div');  card.className='card '+(isSim?'tsim':team.tier||'t4');
   var strip=document.createElement('div');strip.className='card-strip';card.appendChild(strip);
   var info=document.createElement('div');info.className='card-info';
-  [{c:'card-rank',v:team.rank},{c:'card-name',v:team.name},{c:'card-total',v:team.total.toFixed(1)},{c:'card-front',v:team.frontSum.toFixed(1)},{c:'card-stable',v:team.stableAvg.toFixed(1)}].forEach(function(it){var s=document.createElement('span');s.className=it.c;s.textContent=it.v;info.appendChild(s);});
+  [{c:'card-rank',v:team.rank},{c:'card-name',v:team.name},{c:'card-total',v:team.total.toFixed(1)},{c:'card-front',v:team.frontSum.toFixed(1)},{c:'card-stable',v:team.stableAvg.toFixed(1)},{c:'card-count',v:team.count}].forEach(function(it){var s=document.createElement('span');s.className=it.c;s.textContent=it.v;info.appendChild(s);});
   card.appendChild(info);
   var badges=document.createElement('div');badges.className='card-badges';
   for(var k=0;k<comps.length;k++){(function(c){
