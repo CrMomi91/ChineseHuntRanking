@@ -153,8 +153,8 @@ body {
 #tooltip {
   position: fixed; pointer-events: none; z-index: 1000;
   background: #333; color: #fff; font-size: 13px; font-weight: 400;
-  padding: 5px 12px; border-radius: 5px; white-space: nowrap;
-  opacity: 0; transition: opacity 0.12s; top: 0; left: 0;
+  padding: 5px 12px; border-radius: 5px; white-space: normal; max-width: 360px;
+  opacity: 0; transition: opacity 0.12s; top: 0; left: 0; line-height: 1.5;
 }
 #tooltip.show { opacity: 1; }
 
@@ -338,7 +338,7 @@ body {
 .ach-col { width: 300px; flex-shrink: 0; }
 .ach-section-title { font-size: 14px; color: #888; font-weight: 500; margin-bottom: 8px; }
 .ach-item {
-  display: flex; align-items: flex-start; gap: 8px;
+  display: flex; align-items: flex-start; gap: 8px; position: relative; overflow: hidden;
   padding: 8px 10px; border-radius: 6px; margin-bottom: 6px;
 }
 .ach-item.platinum { background: linear-gradient(135deg, #f0e8f8, #e4d4f0); }
@@ -358,6 +358,11 @@ body {
 .ach-item-name  { font-size: 13px; font-weight: 500; color: #333; }
 .ach-item-desc  { font-size: 12px; color: #999; margin-top: 2px; line-height: 1.4; word-break: break-all; }
 .ach-item-detail { font-size: 11px; color: #bbb; margin-top: 4px; line-height: 1.5; white-space: pre-line; word-break: break-all; }
+.ach-item-pct {
+  position: absolute; bottom: -8px; right: -14px;
+  font-size: 52px; font-weight: 900; color: rgba(0,0,0,0.06);
+  pointer-events: none; line-height: 1; user-select: none;
+}
 
 /* Filter bar */
 .filter-bar {
@@ -3706,9 +3711,28 @@ function renderAchievements(teamName){
     body.appendChild(nameEl);
     var descEl=document.createElement('div');descEl.className='ach-item-desc';descEl.textContent=achDescs[a.id]||'';body.appendChild(descEl);
     if(a.detail){var detEl=document.createElement('div');detEl.className='ach-item-detail';detEl.textContent=a.detail;body.appendChild(detEl);}
-    item.appendChild(icon);item.appendChild(body);achGrid.appendChild(item);
+    item.appendChild(icon);item.appendChild(body);
+    var pct=achPercentages[a.id]||0;if(pct>0){var pctEl=document.createElement('div');pctEl.className='ach-item-pct';pctEl.textContent=pct+'%';item.appendChild(pctEl);}
+    var teams=achTeams[a.id]||[];
+    if(teams.length>0){item.style.cursor='pointer';
+      item.addEventListener('mouseenter',function(e){var t=achTeams[a.id]||[];tooltip.textContent='\u5DF2\u83B7\u5F97\u961F\u4F0D\uFF1A'+t.join('\u3001');tooltip.style.left='-999px';tooltip.classList.add('show');var tw=tooltip.offsetWidth,th=tooltip.offsetHeight;var rect=this.getBoundingClientRect();var x=rect.right+10;if(x+tw>window.innerWidth-4)x=rect.left-tw-10;var y=rect.top;if(y+th>window.innerHeight-4)y=window.innerHeight-th-4;tooltip.style.left=x+'px';tooltip.style.top=y+'px';});
+      item.addEventListener('mouseleave',hideTT);}
+    achGrid.appendChild(item);
   });
 }
+
+// Compute achievement percentages across all active teams
+var achPercentages={},achCounts={},activeTeams=0;
+for(var tmn in teamAch){
+  var has=false;for(var cid in rankings[tmn]){if(rankings[tmn][cid]!==null&&rankings[tmn][cid]!==undefined&&rankings[tmn][cid]!==''){has=true;break;}}
+  if(has)activeTeams++;
+  teamAch[tmn].forEach(function(a){achCounts[a.id]=(achCounts[a.id]||0)+1;});
+}
+for(var id in achCounts){achPercentages[id]=Math.round(achCounts[id]/activeTeams*100);}
+
+// Reverse mapping: achievement id -> team names
+var achTeams={};
+for(var tmn in teamAch){teamAch[tmn].forEach(function(a){if(!achTeams[a.id])achTeams[a.id]=[];achTeams[a.id].push(tmn);});}
 
 var tooltip=document.getElementById('tooltip');
 function showTT(e,text,el){tooltip.textContent=text;tooltip.style.left='-999px';tooltip.classList.add('show');var tw=tooltip.offsetWidth,th=tooltip.offsetHeight;var rect=el.getBoundingClientRect();var x=rect.left+rect.width/2-tw/2;var y=rect.top-th-6;if(y<0)y=rect.bottom+6;if(x<4)x=4;if(x+tw>window.innerWidth-4)x=window.innerWidth-tw-4;tooltip.style.left=x+'px';tooltip.style.top=y+'px';}
