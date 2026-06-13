@@ -41,7 +41,7 @@ body {
 #tab2, #tab3 { width: 100%; }
 
 /* Bar chart */
-.bar-chart-wrap { margin-bottom: 20px; background: #fff; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 16px 10px 10px; overflow: visible; }
+.bar-chart-wrap { margin-bottom: 20px; background: #fff; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 16px 10px 10px; overflow: visible; position: relative; }
 .bar-chart-wrap canvas { display: block; }
 
 /* Leaderboard */
@@ -376,17 +376,27 @@ body {
   pointer-events: none; line-height: 1; user-select: none;
 }
 
-/* Filter bar */
+/* Filter bar - overlay on chart top-right */
 .filter-bar {
-  display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap;
-  margin-bottom: 16px; padding: 10px 18px;
-  background: #fff; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  position: absolute; top: 8px; right: 12px; z-index: 10;
+  padding: 6px 12px; background: rgba(255,255,255,0.92); border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
 }
 .filter-bar label { font-size: 13px; color: #888; white-space: nowrap; font-weight: 500; }
 .filter-bar .filter-group { display: flex; align-items: center; gap: 8px; }
 
 /* Date range slider */
-.date-slider-wrap { display: flex; align-items: center; gap: 4px; }
+.date-slider-wrap { display: flex; align-items: center; gap: 6px; }
+.play-btn {
+  width: 24px; height: 24px; border: 1px solid #ccc; border-radius: 4px;
+  background: #fff; color: #555; font-size: 11px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; padding: 0; line-height: 1;
+  transition: background 0.15s;
+}
+.play-btn:hover { background: #f0f0f0; }
+.play-btn.playing { color: #e55; border-color: #e55; }
+.play-btn:disabled { opacity: 0.35; cursor: default; }
 .date-slider-wrap input[type="range"] {
   -webkit-appearance: none; appearance: none; width: 160px; height: 4px;
   background: #ddd; border-radius: 2px; outline: none; cursor: pointer;
@@ -421,13 +431,14 @@ body {
     </div>
 
     <div class="tab-content active" id="tab1">
-      <div class="bar-chart-wrap"><canvas id="barChart"></canvas></div>
-      <div class="filter-bar">
-        <div class="date-slider-wrap">
-          <input type="range" id="dateSlider" min="0" max="100" value="100" step="1">
-          <span class="date-label" id="dateLabel"></span>
-        </div>
-        <div class="filter-group">
+      <div class="bar-chart-wrap">
+        <canvas id="barChart"></canvas>
+        <div class="filter-bar">
+          <div class="date-slider-wrap">
+            <button id="playBtn" class="play-btn" title="播放时间线">▶</button>
+            <input type="range" id="dateSlider" min="0" max="100" value="100" step="1">
+            <span class="date-label" id="dateLabel"></span>
+          </div>
           <label class="pk-ccbc-check" id="pkCcbcLabel">
             <input type="checkbox" id="pkCcbcCheck"> 仅 P&KU / CCBC
           </label>
@@ -3562,7 +3573,7 @@ function recomputeTeams(compsList){
     for(var i=0;i<compsList.length;i++){var r=rankings[t.name][compsList[i].id];if(r!==null&&r!==undefined&&r!==''){count++;tw+=decayCoeff(compsList[i].id,compWeight(compsList[i].id));}}
     return{name:t.name,origName:t.name,total:s.total,frontSum:s.frontSum,stableAvg:s.stableAvg,count:count,tw:tw};
   });
-  teams.sort(function(a,b){return b.total-a.total;});
+  teams=teams.filter(function(t){return t.count>0;});teams.sort(function(a,b){return b.total-a.total;});
   teams.forEach(function(t,i){t.rank=i+1;t.tier=t.total>=500?'tw':t.total>=300?'t0':t.total>=200?'t1':t.total>=100?'t2':t.total>=25?'t3':'t4';});
 }
 recomputeTeams(comps);
@@ -3916,8 +3927,8 @@ renderAll();
 // Filter event listeners
 function onFilterChange(){
   var v=parseInt(dateSlider.value,10);
-  if(v>=100){refDate=Date.now();dateLabel.textContent=fmtDate(new Date());}
-  else{refDate=sliderToEpoch(v);dateLabel.textContent=fmtDate(new Date(refDate));}
+  if(v>=100){refDate=Date.now();dateLabel.textContent=fmtDate(new Date());playBtn.disabled=true;}
+  else{refDate=sliderToEpoch(v);dateLabel.textContent=fmtDate(new Date(refDate));playBtn.disabled=false;}
   renderAll();
   if(document.getElementById('tab2').classList.contains('active')){
     buildTeamHistory(tsel.value);
@@ -3930,6 +3941,24 @@ pkCcbcCheck.addEventListener('change',function(){
   filterPkCcbc=this.checked;
   pkCcbcLabel.classList.toggle('checked',filterPkCcbc);
   onFilterChange();
+});
+
+// Play button animation
+var playBtn=document.getElementById('playBtn'),playAnim=null;
+playBtn.addEventListener('click',function(){
+  if(parseInt(dateSlider.value,10)>=100)return;
+  if(playAnim){cancelAnimationFrame(playAnim);playAnim=null;playBtn.textContent='\u25B6';playBtn.classList.remove('playing');return;}
+  var startV=parseInt(dateSlider.value,10),startT=performance.now();
+  var duration=Math.max(4000,(100-startV)/100*16000);
+  playBtn.textContent='\u23F8';playBtn.classList.add('playing');
+  function step(now){
+    var p=Math.min(1,(now-startT)/duration);
+    var v=Math.round(startV+(100-startV)*p);
+    dateSlider.value=v;onFilterChange();
+    if(p<1){playAnim=requestAnimationFrame(step);}
+    else{playAnim=null;playBtn.textContent='\u25B6';playBtn.classList.remove('playing');}
+  }
+  playAnim=requestAnimationFrame(step);
 });
 
 // TAB 2
