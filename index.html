@@ -38,6 +38,7 @@ body {
 .tab-btn.active { color: #111; border-bottom-color: #333; }
 .tab-content { display: none; }
 .tab-content.active { display: block; }
+#tab2, #tab3 { width: 100%; }
 
 /* Bar chart */
 .bar-chart-wrap { margin-bottom: 20px; background: #fff; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 16px 10px 10px; overflow: visible; }
@@ -236,14 +237,24 @@ body {
 .sim-switch input:checked + .sim-slider::before { transform: translateX(12px); }
 
 /* Tab 2 */
-.tab2-wrap, .tab3-wrap { max-width: 1120px; margin: 0 auto; }
+.tab2-wrap, .tab3-wrap { max-width: 1200px; margin: 0 auto; }
+.sel-row label { font-size: 15px; color: #666; white-space: nowrap; }
+.sel-row select {
+  font-size: 15px; padding: 6px 12px; border: 1px solid #ddd; border-radius: 5px;
+  background: #fff; font-family: inherit; min-width: 200px; outline: none;
+}
+.info-bar { font-size: 14px; color: #888; white-space: nowrap; margin-left: 16px; }
+.info-bar span { margin-right: 20px; }
+.info-bar strong { color: #555; }
+.chart-wrap { margin-bottom: 20px; background: #fff; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 16px 10px 10px; }
+.chart-wrap canvas { display: block; width: 100%; }
 .sel-row { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
 .sel-row label { font-size: 15px; color: #666; white-space: nowrap; }
 .sel-row select {
   font-size: 15px; padding: 6px 12px; border: 1px solid #ddd; border-radius: 5px;
   background: #fff; font-family: inherit; min-width: 200px; outline: none;
 }
-.info-bar { font-size: 14px; color: #888; margin-bottom: 16px; }
+.info-bar { font-size: 14px; color: #888; white-space: nowrap; margin-left: 16px; }
 .info-bar span { margin-right: 20px; }
 .info-bar strong { color: #555; }
 
@@ -251,21 +262,22 @@ body {
 .chart-wrap canvas { display: block; width: 100%; }
 
 .history-header {
-  display: flex; align-items: center; padding: 0 18px 6px; font-size: 12px; color: #bbb; font-weight: 500;
+  display: flex; align-items: center; padding: 0 18px 8px; font-size: 14px; color: #bbb; font-weight: 500;
 }
 .history-header .hh-spacer { width: 4px; flex-shrink: 0; }
 .history-header span { flex-shrink: 0; }
-.hh-name { width: 130px; }
-.hh-date { width: 90px; }
+.hh-name { width: 160px; flex-shrink: 0; }
+.hh-date { width: 85px; }
 .hh-rank { width: 60px; text-align: center; }
-.hh-score { width: 55px; text-align: right; }
-.hh-weight{ width: 62px; text-align: right; }
-.hh-integral { width: 62px; text-align: right; }
+.hh-score { width: 62px; text-align: right; }
+.hh-weight{ width: 66px; text-align: right; }
+.hh-integral { width: 64px; text-align: right; }
+.hh-spacer-right { flex: 1; }
 
 .history-card {
   background: #fff; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
   margin-bottom: 4px; overflow: hidden;
-  display: flex; align-items: stretch; min-height: 46px;
+  display: flex; align-items: stretch; min-height: 52px;
   transition: box-shadow 0.15s;
 }
 .history-card:hover { box-shadow: 0 2px 6px rgba(0,0,0,0.10); }
@@ -279,11 +291,11 @@ body {
 .hcard-strip.s-low { background: #ccc; }
 
 .hcard-body { display: flex; align-items: center; flex: 1; padding: 0 14px; gap: 0; }
-.hcard-name { width: 130px; font-size: 15px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hcard-name { width: 160px; flex-shrink: 0; font-size: 17px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .hcard-name:hover { color: #3A6EA5 !important; }
 .hcard-name b { font-weight: 700; }
-.hcard-date { width: 90px; font-size: 13px; color: #888; }
-.hcard-rank { width: 48px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 4px; font-size: 13px; font-weight: 700; margin: 0 6px; }
+.hcard-date { width: 85px; font-size: 15px; color: #888; }
+.hcard-rank { width: 52px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 4px; font-size: 15px; font-weight: 700; margin: 0 10px; }
 .hcard-rank.sr-1 { background: #FADBD8; color: #C0392B; }
 .hcard-rank.sr-2 { background: #FDEBD0; color: #D68910; }
 .hcard-rank.sr-3 { background: #FDEBD0; color: #D68910; }
@@ -292,9 +304,9 @@ body {
 .hcard-rank.sr-mid { background: #E0F0E0; color: #2E7D32; }
 .hcard-rank.sr-low { background: #f5f5f5; color: #999; font-weight: 400; }
 .hcard-rank.sr-merged { font-style: italic; font-weight: 400; }
-.hcard-score { width: 55px; text-align: right; font-size: 14px; font-weight: 500; color: #555; }
-.hcard-weight{ width: 62px; text-align: right; font-size: 13px; color: #999; font-weight: 400; }
-.hcard-integral { width: 62px; text-align: right; font-size: 14px; font-weight: 500; color: #333; }
+.hcard-score { width: 62px; text-align: right; font-size: 16px; font-weight: 500; color: #555; }
+.hcard-weight{ width: 66px; text-align: right; font-size: 15px; color: #999; font-weight: 400; }
+.hcard-integral { width: 64px; text-align: right; font-size: 16px; font-weight: 500; color: #333; }
 
 .comp-card {
   background: #fff; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
@@ -434,12 +446,11 @@ body {
 
     <div class="tab-content" id="tab2">
       <div class="tab2-wrap">
-        <div class="sel-row"><label>选择队伍：</label><select id="teamSelect"></select></div>
-        <div class="info-bar" id="teamInfo"></div>
+        <div class="sel-row"><label>选择队伍：</label><select id="teamSelect"></select><span class="info-bar" id="teamInfo"></span></div>
         <div class="main-ach-row">
           <div class="main-col">
             <div class="chart-wrap"><canvas id="teamChart"></canvas></div>
-            <div class="history-header"><span class="hh-spacer"></span><span class="hh-name">比赛</span><span class="hh-date">日期</span><span class="hh-rank">名次</span><span class="hh-score">得分</span><span class="hh-weight">权重</span><span class="hh-integral">积分</span></div>
+            <div class="history-header"><span class="hh-spacer"></span><span class="hh-name">比赛</span><span class="hh-date">日期</span><span class="hh-spacer-right"></span><span class="hh-rank">名次</span><span class="hh-score">得分</span><span class="hh-weight">权重</span><span class="hh-integral">积分</span></div>
             <div id="teamHistory"></div>
           </div>
           <div class="ach-col" id="achSection" style="display:none;">
@@ -3744,6 +3755,7 @@ document.querySelectorAll('.tab-btn').forEach(function(btn){btn.addEventListener
   btn.classList.add('active');document.getElementById(btn.dataset.tab).classList.add('active');
   document.getElementById('fabBtn').style.display=btn.dataset.tab==='tab1'?'':'none';
   var panel=document.getElementById('simPanel');if(btn.dataset.tab!=='tab1')panel.classList.remove('show');
+  if(btn.dataset.tab==='tab2')buildTeamHistory(tsel.value);
 });});
 
 // TAB 1
@@ -3930,15 +3942,28 @@ function chartY(r,ph,pad){return pad.top+ph*Math.pow((r-1)/49,0.4);}
 
 function drawChart(tname){
   var canvas=tchart,ctx=canvas.getContext('2d'),dpr=window.devicePixelRatio||1;
-  var cssW=canvas.parentElement.clientWidth-20,cssH=220;
-  if(cssW<500)cssW=500;
+  var cssH=280;
+  requestAnimationFrame(function(){
+  var cssW=thist.clientWidth;if(!cssW||cssW<500)cssW=500;
   canvas.style.width=cssW+'px';canvas.style.height=cssH+'px';
-  canvas.width=cssW*dpr;canvas.height=cssH*dpr;ctx.scale(dpr,dpr);
-  var tr=rankings[tname]||{},pad={top:22,right:16,bottom:40,left:34};
-  var fcomps=getFilteredComps(),nComps=fcomps.length;
-  var pw=cssW-pad.left-pad.right,ph=cssH-pad.top-pad.bottom,stepX=nComps>1?pw/(nComps-1):pw,maxR=50;
+  canvas.width=cssW*dpr;canvas.height=cssH*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+  var tr=rankings[tname]||{},pad={top:22,right:50,bottom:40,left:34};
+  var fcomps=getFilteredComps();
+  var pw=cssW-pad.left-pad.right,ph=cssH-pad.top-pad.bottom,maxR=50,maxScore=500;
 
   ctx.clearRect(0,0,cssW,cssH);
+
+  // Score grid lines & right Y-axis labels
+  ctx.setLineDash([4,3]);ctx.strokeStyle='#f0e0d0';ctx.lineWidth=1;
+  ctx.fillStyle='#d4a080';ctx.font='10px sans-serif';ctx.textAlign='left';
+  for(var s=100;s<=500;s+=100){
+    var gy=pad.top+ph*(1-s/maxScore);
+    ctx.beginPath();ctx.moveTo(pad.left,gy);ctx.lineTo(cssW-pad.right,gy);ctx.stroke();
+    ctx.fillText(s,cssW-pad.right+4,gy+4);
+  }
+  ctx.setLineDash([]);
+
+  // Rank grid lines & left Y-axis labels
   ctx.strokeStyle='#eee';ctx.lineWidth=1;
   [1,10,20,30,40,50].forEach(function(r){var gy=chartY(r,ph,pad);ctx.beginPath();ctx.moveTo(pad.left,gy);ctx.lineTo(cssW-pad.right,gy);ctx.stroke();});
   ctx.strokeStyle='#ccc';ctx.beginPath();ctx.moveTo(pad.left,pad.top);ctx.lineTo(pad.left,cssH-pad.bottom);ctx.stroke();
@@ -3946,14 +3971,59 @@ function drawChart(tname){
   ctx.fillStyle='#bbb';ctx.font='11px sans-serif';ctx.textAlign='right';
   [1,10,20,30,40,50].forEach(function(r){ctx.fillText(r,pad.left-4,chartY(r,ph,pad)+4);});
   ctx.textAlign='right';ctx.fillStyle='#bbb';ctx.font='10px sans-serif';
-  fcomps.forEach(function(c,i){ctx.save();ctx.translate(pad.left+(nComps>1?i*stepX:pw/2),cssH-pad.bottom+8);ctx.rotate(-0.6);ctx.fillText(c.id,0,0);ctx.restore();});
+  // Time-based X axis setup
+  var fcompsSorted=fcomps.slice().sort(function(a,b){return epochs[a.id]-epochs[b.id];});
+  var tMin=epochs[fcompsSorted[0].id],tMax=Date.now(),tSpan=Math.max(tMax-tMin,1);
+  function tX(ep){return pad.left+(ep-tMin)/tSpan*pw;}
+  fcompsSorted.forEach(function(c){ctx.save();ctx.translate(tX(epochs[c.id]),cssH-pad.bottom+8);ctx.rotate(-0.6);ctx.fillText(c.id,0,0);ctx.restore();});
 
+  // Continuous score curve
+  var scoreCurve=[],acc=[];
+  var tierFill={tw:'rgba(51,51,51,0.35)',t0:'rgba(231,76,60,0.35)',t1:'rgba(240,160,48,0.35)',t2:'rgba(155,124,184,0.35)',t3:'rgba(91,155,213,0.35)',t4:'rgba(93,168,93,0.35)'};
+  var tierStroke={tw:'rgba(51,51,51,0.5)',t0:'rgba(231,76,60,0.5)',t1:'rgba(240,160,48,0.5)',t2:'rgba(155,124,184,0.5)',t3:'rgba(91,155,213,0.5)',t4:'rgba(93,168,93,0.5)'};
+  function tierOf(s){return s>=500?'tw':s>=300?'t0':s>=200?'t1':s>=100?'t2':s>=25?'t3':'t4';}
+  for(var ci=0;ci<fcompsSorted.length;ci++){
+    var c=fcompsSorted[ci],curEp=epochs[c.id],r=tr[c.id];
+    if(r!==null&&r!==undefined&&r!=='')acc.push(c);
+    var nextEp=ci+1<fcompsSorted.length?epochs[fcompsSorted[ci+1].id]:tMax;
+    var steps=Math.max(4,Math.ceil((nextEp-curEp)/(20*86400000)));
+    for(var s=0;s<=steps;s++){
+      var t=curEp+(nextEp-curEp)*s/steps;
+      var score=totalScoreAt(tr,tname,acc.slice(),t);
+      scoreCurve.push({x:tX(t),y:pad.top+ph*(1-Math.min(score,maxScore)/maxScore),score:score,tier:tierOf(score)});
+    }
+  }
+
+  if(scoreCurve.length>1){
+    var segStart=0;
+    for(var i=1;i<=scoreCurve.length;i++){
+      if(i===scoreCurve.length||scoreCurve[i].tier!==scoreCurve[segStart].tier){
+        var seg=scoreCurve.slice(segStart,i+1);
+        var tc=scoreCurve[segStart].tier;
+        var minY=Math.min.apply(null,seg.map(function(p){return p.y;}));
+        var grad=ctx.createLinearGradient(0,minY,0,pad.top+ph);
+        grad.addColorStop(0,tierFill[tc]||'rgba(153,153,153,0.35)');grad.addColorStop(1,'rgba(255,255,255,0)');
+        ctx.beginPath();ctx.moveTo(seg[0].x,seg[0].y);
+        for(var j=1;j<seg.length;j++)ctx.lineTo(seg[j].x,seg[j].y);
+        ctx.lineTo(seg[seg.length-1].x,pad.top+ph);ctx.lineTo(seg[0].x,pad.top+ph);ctx.closePath();
+        ctx.fillStyle=grad;ctx.fill();
+        ctx.beginPath();ctx.moveTo(seg[0].x,seg[0].y);
+        for(var j=1;j<seg.length;j++)ctx.lineTo(seg[j].x,seg[j].y);
+        ctx.strokeStyle=tierStroke[tc]||'rgba(153,153,153,0.5)';ctx.lineWidth=2;ctx.lineJoin='round';ctx.stroke();
+        segStart=i;
+      }
+    }
+  }
+
+  // Rank points & line (drawn on top, time-based X)
   var pts=[];
-  fcomps.forEach(function(c,i){
-    var r=tr[c.id];if(r===null||r===undefined||r==='')return;
-    var raw=r,is50=typeof r==='string'&&r.indexOf('50')!==-1;
-    var n=is50?50:parseInt(r,10);if(isNaN(n))return;
-    if(n>maxR)n=maxR;pts.push({x:pad.left+(nComps>1?i*stepX:pw/2),y:chartY(n,ph,pad),r:n,raw:raw,is50:is50,i:i});
+  fcompsSorted.forEach(function(c){
+    var r=tr[c.id];
+    if(r!==null&&r!==undefined&&r!==''){
+      var raw=r,is50=typeof r==='string'&&r.indexOf('50')!==-1;
+      var n=is50?50:parseInt(r,10);if(isNaN(n))return;
+      if(n>maxR)n=maxR;pts.push({x:tX(epochs[c.id]),y:chartY(n,ph,pad),r:n,raw:raw,is50:is50});
+    }
   });
 
   if(pts.length>1){
@@ -3962,13 +4032,20 @@ function drawChart(tname){
     for(var i=1;i<pts.length;i++)ctx.lineTo(pts[i].x,pts[i].y);
     ctx.stroke();
   }
-
   ctx.font='bold 10px sans-serif';ctx.textAlign='center';
   for(var i=0;i<pts.length;i++){var p=pts[i],n=p.r,lbl=p.is50?'50+':String(n);
     ctx.beginPath();ctx.arc(p.x,p.y,4,0,Math.PI*2);
     if(n===1)ctx.fillStyle='#E74C3C';else if(n<=3)ctx.fillStyle='#F0A030';else if(n<=6)ctx.fillStyle='#9B7CB8';else if(n<=10)ctx.fillStyle='#2471A3';else if(n<=20)ctx.fillStyle='#4CAF50';else ctx.fillStyle='#7F8C8D';
-    ctx.fill();var ly=n<=3?p.y+14:p.y-10;ctx.fillStyle='#333';ctx.fillText(lbl,p.x,ly);
+    ctx.fill();
+    // Smart label position: avoid the connecting lines
+    var above=false;
+    if(i===0){above=pts.length>1&&pts[1].y>p.y;} // first: check if next is below
+    else if(i===pts.length-1){above=pts[i-1].y>p.y;} // last: check if prev is below
+    else{var ly1=pts[i-1].y,ly2=pts[i+1].y;above=(ly1>=p.y&&ly2>=p.y)?true:(ly1<=p.y&&ly2<=p.y)?false:p.y<pad.top+ph/2;}
+    var ly=above?p.y-10:p.y+14;if(above&&ly<pad.top+4)ly=p.y+14;if(!above&&ly>pad.top+ph-4)ly=p.y-10;
+    ctx.fillStyle='#333';ctx.fillText(lbl,p.x,ly);
   }
+  }); // rAF
 }
 
 function buildTeamHistory(tname){
@@ -3987,14 +4064,16 @@ function buildTeamHistory(tname){
     var sc=document.createElement('span');sc.className='hcard-score';sc.textContent=rs.toFixed(1);
     var wt=document.createElement('span');wt.className='hcard-weight';wt.textContent=dc.toFixed(2);
     var it=document.createElement('span');it.className='hcard-integral';it.textContent=integral.toFixed(1);
-    body.appendChild(nm);body.appendChild(dt);body.appendChild(rk);body.appendChild(sc);body.appendChild(wt);body.appendChild(it);card.appendChild(body);thist.appendChild(card);
+    body.appendChild(nm);body.appendChild(dt);var sp=document.createElement('span');sp.className='hh-spacer-right';body.appendChild(sp);body.appendChild(rk);body.appendChild(sc);body.appendChild(wt);body.appendChild(it);card.appendChild(body);thist.appendChild(card);
   });
   var sa=sw>0?ss/sw:0;
   tinfo.innerHTML='\u53C2\u8D5B <strong>'+parts+'</strong> / '+fcomps.length+' \u573A &nbsp;|&nbsp; \u603B\u5206 <strong>'+(frontSum+sa).toFixed(1)+'</strong> &nbsp;|&nbsp; \u7D2F\u79EF\u5206 <strong>'+frontSum.toFixed(1)+'</strong> &nbsp;|&nbsp; \u7A33\u5B9A\u5206 <strong>'+sa.toFixed(1)+'</strong>';
   drawChart(tname);
   renderAchievements(tname);
 }
-tsel.addEventListener('change',function(){buildTeamHistory(tsel.value);});setTimeout(function(){buildTeamHistory(tsel.value);},100);
+tsel.addEventListener('change',function(){buildTeamHistory(tsel.value);});
+// Redraw on window resize
+var resizeTimer;window.addEventListener('resize',function(){clearTimeout(resizeTimer);resizeTimer=setTimeout(function(){if(document.getElementById('tab2').classList.contains('active'))buildTeamHistory(tsel.value);},200);});
 
 // TAB 3
 var csel=document.getElementById('compSelect');
