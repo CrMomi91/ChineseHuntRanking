@@ -56,10 +56,12 @@ body {
 .col-heads .ch-front,
 .col-heads .ch-stable { width: 68px; flex-shrink: 0; text-align: center; cursor: pointer; user-select: none; }
 .col-heads .ch-count  { width: 52px; flex-shrink: 0; text-align: center; cursor: pointer; user-select: none; }
+.col-heads .ch-ach   { width: 52px; flex-shrink: 0; text-align: center; cursor: pointer; user-select: none; }
 .col-heads .ch-total:hover,
 .col-heads .ch-front:hover,
 .col-heads .ch-stable:hover,
-.col-heads .ch-count:hover { color: #555; }
+.col-heads .ch-count:hover,
+.col-heads .ch-ach:hover { color: #555; }
 .col-heads .sort-active { color: #333; font-weight: 600; }
 
 .comp-heads {
@@ -112,6 +114,7 @@ body {
 .card-front { width: 68px; font-size: 15px; font-weight: 500; color: #999; }
 .card-stable{ width: 68px; font-size: 15px; font-weight: 500; color: #999; }
 .card-count { width: 52px; font-size: 15px; font-weight: 500; color: #555; }
+.card-ach  { width: 52px; font-size: 15px; font-weight: 500; color: #555; }
 
 .card-badges {
   display: flex; align-items: center; gap: 10px; flex-shrink: 0; padding: 0 10px;
@@ -448,7 +451,7 @@ body {
         <div class="col-heads">
         <span class="ch-spacer"></span>
         <span class="ch-rank">排名</span><span class="ch-name">队伍</span>
-        <span class="ch-total">总分</span><span class="ch-front">累积分</span><span class="ch-stable">稳定分</span><span class="ch-count">次数</span>
+        <span class="ch-total">总分</span><span class="ch-front">累积分</span><span class="ch-stable">稳定分</span><span class="ch-count">参赛数</span><span class="ch-ach">成就数</span>
         <div class="comp-heads" id="compHeads"></div>
       </div>
       <div id="app"></div>
@@ -465,7 +468,7 @@ body {
             <div id="teamHistory"></div>
           </div>
           <div class="ach-col" id="achSection" style="display:none;">
-            <div class="ach-section-title">成就</div>
+            <div class="ach-section-title" id="achTitle">成就</div>
             <div id="achGrid"></div>
           </div>
         </div>
@@ -759,6 +762,30 @@ var TEAMS = [
   },
   {
     "name": "Live Fast Die Young",
+    "tier": "",
+    "rank": "",
+    "score": 0
+  },
+  {
+    "name": "Omega5",
+    "tier": "",
+    "rank": "",
+    "score": 0
+  },
+  {
+    "name": "Hungergame",
+    "tier": "",
+    "rank": "",
+    "score": 0
+  },
+  {
+    "name": "丁香鱼徒步运动",
+    "tier": "",
+    "rank": "",
+    "score": 0
+  },
+  {
+    "name": "给猫铲屎去了",
     "tier": "",
     "rank": "",
     "score": 0
@@ -1580,6 +1607,78 @@ var RANKINGS = {
     "US-TC": 26,
     "ZJUPH1": 33,
     "SECO2": null,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "Omega5": {
+    "P&KU1": null,
+    "CCBC12": null,
+    "P&KU2": null,
+    "CCBCBA": 33,
+    "MH2023": 54,
+    "JH2024": null,
+    "P&KU3a": 59,
+    "CCBC15": 19,
+    "JUST1": 16,
+    "GnPH": 16,
+    "CCBC16": 27,
+    "US-TC": 35,
+    "ZJUPH1": null,
+    "SECO2": null,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "Hungergame": {
+    "P&KU1": null,
+    "CCBC12": null,
+    "P&KU2": null,
+    "CCBCBA": null,
+    "MH2023": null,
+    "JH2024": null,
+    "P&KU3a": 30,
+    "CCBC15": 48,
+    "JUST1": null,
+    "GnPH": 56,
+    "CCBC16": 32,
+    "US-TC": 16,
+    "ZJUPH1": null,
+    "SECO2": null,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "丁香鱼徒步运动": {
+    "P&KU1": null,
+    "CCBC12": null,
+    "P&KU2": null,
+    "CCBCBA": null,
+    "MH2023": null,
+    "JH2024": null,
+    "P&KU3a": 17,
+    "CCBC15": null,
+    "JUST1": 22,
+    "GnPH": 51,
+    "CCBC16": 30,
+    "US-TC": 178,
+    "ZJUPH1": null,
+    "SECO2": null,
+    "P&KU3b": null,
+    "CCBC17": null
+  },
+  "给猫铲屎去了": {
+    "P&KU1": null,
+    "CCBC12": null,
+    "P&KU2": null,
+    "CCBCBA": 89,
+    "MH2023": 41,
+    "JH2024": 21,
+    "P&KU3a": 35,
+    "CCBC15": 26,
+    "JUST1": 25,
+    "GnPH": 49,
+    "CCBC16": 64,
+    "US-TC": 28,
+    "ZJUPH1": 12,
+    "SECO2": 21,
     "P&KU3b": null,
     "CCBC17": null
   }
@@ -3550,7 +3649,7 @@ function rankScore(r){
 }
 
 var mergedMap={},rankBuckets={};
-for(var tn in rankings){for(var cid in rankings[tn]){var r=rankings[tn][cid];if(r!==null&&r!==undefined&&r!==''&&typeof r==='number'){var key=cid+'_'+r;if(!rankBuckets[key])rankBuckets[key]=[];rankBuckets[key].push(tn);}}}
+for(var tn in rankings){for(var cid in rankings[tn]){var r=rankings[tn][cid];if(r===null||r===undefined||r===''||typeof r==='string')continue;if(typeof r==='number'){var key=cid+'_'+r;if(!rankBuckets[key])rankBuckets[key]=[];rankBuckets[key].push(tn);}}}
 for(var key in rankBuckets){if(rankBuckets[key].length>1){var cid=key.split('_')[0];rankBuckets[key].forEach(function(tn){mergedMap[tn+'_'+cid]=true;});}}
 function isMerged(teamName,compId){return !!mergedMap[teamName+'_'+compId];}
 
@@ -3565,13 +3664,14 @@ function computeScores(tr,tname,compsList){
 }
 
 var teams=[];
+var teamAch={}; // defined early for recomputeTeams reference
 function recomputeTeams(compsList){
   compsList=compsList||comps;
   teams=TEAMS.map(function(t){
     var s=computeScores(rankings[t.name]||{},t.name,compsList);
     var count=0,tw=0;
     for(var i=0;i<compsList.length;i++){var r=rankings[t.name][compsList[i].id];if(r!==null&&r!==undefined&&r!==''){count++;tw+=decayCoeff(compsList[i].id,compWeight(compsList[i].id));}}
-    return{name:t.name,origName:t.name,total:s.total,frontSum:s.frontSum,stableAvg:s.stableAvg,count:count,tw:tw};
+    return{name:t.name,origName:t.name,total:s.total,frontSum:s.frontSum,stableAvg:s.stableAvg,count:count,tw:tw,achCount:(teamAch[t.name]||[]).length};
   });
   teams=teams.filter(function(t){return t.count>0;});teams.sort(function(a,b){return b.total-a.total;});
   teams.forEach(function(t,i){t.rank=i+1;t.tier=t.total>=500?'tw':t.total>=300?'t0':t.total>=200?'t1':t.total>=100?'t2':t.total>=25?'t3':'t4';});
@@ -3725,6 +3825,7 @@ function renderAchievements(teamName){
 }
 function renderAchList(ach){
   achSection.style.display='block';achGrid.innerHTML='';
+  document.getElementById('achTitle').textContent='成就 ('+ach.length+')';
   var tierPriority={platinum:4,gold:3,silver:2,bronze:1};
   ach.sort(function(a,b){var tp=tierPriority[b.tier]-tierPriority[a.tier];if(tp!==0)return tp;var aMax=a.id.indexOf('max_')===0?0:1,bMax=b.id.indexOf('max_')===0?0:1;return aMax-bMax;});
   var tierIcons={platinum:'\u2666',gold:'\u2605',silver:'\u25C6',bronze:'\u25CF'};
@@ -3800,7 +3901,7 @@ function simRanksToObj(ranks){var o={};ranks.forEach(function(e){o[e.c]=e.r;});r
 var sortBy='total';
 function setSort(metric,el){
   sortBy=metric;
-  document.querySelectorAll('.ch-total,.ch-front,.ch-stable,.ch-count').forEach(function(e){e.classList.remove('sort-active');});
+  document.querySelectorAll('.ch-total,.ch-front,.ch-stable,.ch-count,.ch-ach').forEach(function(e){e.classList.remove('sort-active');});
   el.classList.add('sort-active');
   renderAll();
 }
@@ -3827,7 +3928,7 @@ function drawBarChart(){
   canvas.style.width=cssW+'px';canvas.style.height=cssH+'px';
   canvas.width=cssW*dpr;canvas.height=cssH*dpr;ctx.scale(dpr,dpr);
 
-  var ceilY=sortBy==='stableAvg'?100:sortBy==='count'?20:500;
+  var ceilY=sortBy==='stableAvg'?100:sortBy==='count'||sortBy==='achCount'?30:500;
   var pad={top:44,right:16,bottom:56,left:50};
   var pw=cssW-pad.left-pad.right,ph=cssH-pad.top-pad.bottom;
   var n=all.length,colW=20,gap=(pw-colW*n)/(n+1);
@@ -3835,12 +3936,12 @@ function drawBarChart(){
   ctx.clearRect(0,0,cssW,cssH);
 
   // Title
-  var labels={total:'\u603B\u5206',frontSum:'\u7D2F\u79EF\u5206',stableAvg:'\u7A33\u5B9A\u5206',count:'\u53C2\u8D5B\u6B21\u6570'};
+  var labels={total:'\u603B\u5206',frontSum:'\u7D2F\u79EF\u5206',stableAvg:'\u7A33\u5B9A\u5206',count:'\u53C2\u8D5B\u6570',achCount:'\u6210\u5C31\u6570'};
   ctx.fillStyle='#888';ctx.font='12px sans-serif';ctx.textAlign='left';
   ctx.fillText(labels[sortBy]||'',8,18);
 
   // Grid lines at 100 (or 20 for stable)
-  var step=sortBy==='stableAvg'?20:sortBy==='count'?5:100;
+  var step=sortBy==='stableAvg'?20:sortBy==='count'||sortBy==='achCount'?5:100;
   ctx.setLineDash([4,3]);ctx.strokeStyle='#e0e0e0';ctx.lineWidth=1;
   for(var v=step;v<=ceilY;v+=step){
     var gy=pad.top+ph*(1-v/ceilY);
@@ -3877,11 +3978,13 @@ var sortTotal=document.querySelector('.ch-total');
 var sortFront=document.querySelector('.ch-front');
 var sortStable=document.querySelector('.ch-stable');
 var sortCount=document.querySelector('.ch-count');
+var sortAch=document.querySelector('.ch-ach');
 sortTotal.classList.add('sort-active');
 sortTotal.addEventListener('click',function(){setSort('total',this);});
 sortFront.addEventListener('click',function(){setSort('frontSum',this);});
 sortStable.addEventListener('click',function(){setSort('stableAvg',this);});
 sortCount.addEventListener('click',function(){setSort('count',this);});
+sortAch.addEventListener('click',function(){setSort('achCount',this);});
 
 function renderLeaderboard(){
   app.innerHTML='';
@@ -3898,7 +4001,7 @@ function renderCard(team){
   var card=document.createElement('div');  card.className='card '+(isSim?'tsim':team.tier||'t4');
   var strip=document.createElement('div');strip.className='card-strip';card.appendChild(strip);
   var info=document.createElement('div');info.className='card-info';
-  [{c:'card-rank',v:team.rank},{c:'card-name',v:team.name},{c:'card-total',v:team.total.toFixed(1)},{c:'card-front',v:team.frontSum.toFixed(1)},{c:'card-stable',v:team.stableAvg.toFixed(1)},{c:'card-count',v:team.count}].forEach(function(it){var s=document.createElement('span');s.className=it.c;s.textContent=it.v;info.appendChild(s);});
+  [{c:'card-rank',v:team.rank},{c:'card-name',v:team.name},{c:'card-total',v:team.total.toFixed(1)},{c:'card-front',v:team.frontSum.toFixed(1)},{c:'card-stable',v:team.stableAvg.toFixed(1)},{c:'card-count',v:team.count},{c:'card-ach',v:team.achCount}].forEach(function(it){var s=document.createElement('span');s.className=it.c;s.textContent=it.v;info.appendChild(s);});
   card.appendChild(info);
   var badges=document.createElement('div');badges.className='card-badges';
   var fcomps=getFilteredComps();
@@ -4122,7 +4225,7 @@ function buildTeamHistory(tname){
       simAch=computeOneTeamAch(simName,simTr,simTc,simMt,simFe);
       if(oldRk===undefined)delete rankings[simName];else rankings[simName]=oldRk;
     }
-    if(simAch.length===0){achSection.style.display='block';achGrid.innerHTML='<div style="font-size:12px;color:#ccc;padding:10px 0;">暂无成就</div>';}
+    if(simAch.length===0){achSection.style.display='block';achGrid.innerHTML='<div style=\"font-size:12px;color:#ccc;padding:10px 0;\">暂无成就</div>';document.getElementById('achTitle').textContent='成就 (0)';}
     else{achSection.style.display='block';renderAchList(simAch);}
   }
   else renderAchievements(tname);

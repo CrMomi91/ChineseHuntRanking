@@ -6,9 +6,13 @@ DATA_DIR = r'D:\工作\华Hunt队伍强度表\华hunt-ranking\data'
 HTML_PATH = r'D:\工作\华Hunt队伍强度表\华hunt-ranking\index.html'
 README_PATH = r'D:\工作\华Hunt队伍强度表\说明.txt'
 
-with open(f'{DATA_DIR}/teams.json', 'r', encoding='utf-8') as f: teams_json = f.read()
 with open(f'{DATA_DIR}/competitions.json', 'r', encoding='utf-8') as f: comps_json = f.read()
 with open(f'{DATA_DIR}/rankings.json', 'r', encoding='utf-8') as f: rankings_json = f.read()
+
+# Generate TEAMS from rankings.json keys
+rankings_data = json.loads(rankings_json)
+teams_list = [{"name": name, "tier": "", "rank": "", "score": 0} for name in rankings_data.keys()]
+teams_json = json.dumps(teams_list, ensure_ascii=False, indent=2)
 with open(f'{DATA_DIR}/comp_results.json', 'r', encoding='utf-8') as f: comp_results_json = f.read()
 
 links = {}
