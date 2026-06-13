@@ -293,7 +293,7 @@ body {
 .hcard-strip.s-top10 { background: #2471A3; }
 .hcard-strip.s-mid { background: #9B7CB8; }
 .hcard-strip.s-low { background: #ccc; }
-.hcard-strip.s-staff { background: #333; }
+.hcard-strip.s-staff { background: #555; }
 
 .hcard-body { display: flex; align-items: center; flex: 1; padding: 0 14px; gap: 0; }
 .hcard-name { width: 160px; flex-shrink: 0; font-size: 17px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -308,7 +308,7 @@ body {
 .hcard-rank.sr-7, .hcard-rank.sr-8, .hcard-rank.sr-9, .hcard-rank.sr-10 { background: #D4E6F1; color: #2471A3; }
 .hcard-rank.sr-mid { background: #E0F0E0; color: #2E7D32; }
 .hcard-rank.sr-low { background: #f5f5f5; color: #999; font-weight: 400; }
-.hcard-rank.sr-staff { background: #333; color: #fff; font-weight: 700; font-size: 13px; }
+.hcard-rank.sr-staff { background: #555; color: #fff; font-weight: 700; font-size: 13px; }
 .hcard-rank.sr-merged { font-style: italic; font-weight: 400; }
 .hcard-score { width: 62px; text-align: right; font-size: 16px; font-weight: 500; color: #555; }
 .hcard-weight{ width: 66px; text-align: right; font-size: 15px; color: #999; font-weight: 400; }
@@ -5383,7 +5383,7 @@ function buildTeamHistory(tname){
     var nm=document.createElement('a');nm.className='hcard-name';nm.innerHTML=boldComp(c.id);nm.href=links[c.id]||'#';nm.target='_blank';nm.rel='noopener';nm.style.cssText='text-decoration:none;color:inherit;';
     var dt=document.createElement('span');dt.className='hcard-date';dt.textContent=c.date;
     var isStaffEntry=r&&typeof r==='object'&&r.staff;
-    var rk=document.createElement('span');rk.className='hcard-rank';var rn=parseInt(r,10);
+    var rk=document.createElement('span');rk.className='hcard-rank';var rn=parseRank(r);
     if(isStaffEntry){rk.className+=' sr-staff';rk.textContent='STAFF';}
     else{if(rn===1)rk.className+=' sr-1';else if(rn<=3)rk.className+=' sr-2';else if(rn<=6)rk.className+=' sr-4';else if(rn<=10)rk.className+=' sr-7';else if(rn<=20)rk.className+=' sr-mid';else rk.className+=' sr-low';
     if(merged)rk.className+=' sr-merged';rk.textContent='#'+badgeText(r);}
