@@ -3641,60 +3641,60 @@ var teamMaxTier={};for(var tmn in rankings){teamMaxTier[tmn]=maxTierEver(tmn).ti
 
 // Compute all achievements for all teams
 var teamAch={};
-for(var tn in rankings){
-  var ach=[],tc=teamComps(tn),tr=rankings[tn];
-  if(tc.length===0){teamAch[tn]=[];continue;}
-  var mt=maxTierEver(tn),firstEpoch=tc[0].epoch;
-
+function computeOneTeamAch(tn,tr,tc,mt,firstEpoch){
+  var ach=[];
   // ---- 铂金 ----
   (function(){var cover={r1:false,r2:false,r3:false,r4:false};tc.forEach(function(e){var n=parseInt(e.rank,10);if(isNaN(n))return;if(n<=3)cover.r1=true;else if(n<=10)cover.r2=true;else if(n<=20)cover.r3=true;else cover.r4=true;});if(cover.r1&&cover.r2&&cover.r3&&cover.r4)ach.push({id:'fullspectrum',tier:'platinum',name:'雨露均沾',detail:''});})();
   if(mt.tier==='tw')ach.push({id:'max_tw',tier:'platinum',name:'恭喜爹可以称帝了',detail:''});
   if(mt.tier==='t0')ach.push({id:'max_t0',tier:'platinum',name:'冠绝一时',detail:''});
-
   // ---- 金 ----
   (function(){var has=tc.some(function(e){return parseInt(e.rank,10)===1;});if(has)ach.push({id:'champion',tier:'gold',name:'我们是冠军！',detail:''});})();
   (function(){var streak=0,maxStreak=0;tc.forEach(function(e){var n=parseInt(e.rank,10);if(!isNaN(n)&&n<=10){streak++;if(streak>maxStreak)maxStreak=streak;}else streak=0;});if(maxStreak>=5)ach.push({id:'top10_streak5',tier:'gold',name:'前十钉子户',detail:maxStreak+'次'});})();
   (function(){var pk=false,cc=false;tc.forEach(function(e){var n=parseInt(e.rank,10);if(isNaN(n))return;if(e.compId.indexOf('P&KU')===0&&n<=5)pk=true;if(e.compId.indexOf('CCBC')===0&&n<=5)cc=true;});if(pk&&cc)ach.push({id:'mini_slam',tier:'gold',name:'小满贯',detail:''});})();
-  // 宿敌: only count ranks ≤50, list ALL rivals
-  (function(){
-    var rivals=[];
-    for(var otn in rankings){if(otn===tn)continue;var tro=rankings[otn];var wins=0,losses=0,total=0;
-      tc.forEach(function(e){var ro=tro[e.compId];if(ro===null||ro===undefined||ro==='')return;var rn=parseInt(e.rank,10),orn=parseInt(ro,10);if(isNaN(rn)||isNaN(orn))return;if(rn>20||orn>20)return;total++;if(rn<orn)wins++;else if(orn<rn)losses++;});
-      if(total>=8&&Math.abs(wins-losses)<=2)rivals.push('对'+otn+' '+wins+':'+losses);
-    }
-    if(rivals.length>0)ach.push({id:'rival',tier:'silver',name:'宿敌',detail:rivals.join('\n')});
-  })();
-// 屠龙勇士 - beat previous total-score #1 in a comp, list ALL, skip first comp
-(function(){var results=[];chronoComps.forEach(function(c){if(c===chronoComps[0])return;var hr=histRankings[c.id];if(!hr||!hr.ranked||hr.ranked.length===0)return;var prev1=hr.ranked[0];if(prev1===tn)return;var myR=tr[c.id],p1R=rankings[prev1][c.id];if(myR===null||myR===undefined||myR===''||p1R===null||p1R===undefined||p1R==='')return;var mn=parseInt(myR,10),pn=parseInt(p1R,10);if(isNaN(mn)||isNaN(pn))return;if(mn<pn)results.push(c.id+' 超越'+prev1);});if(results.length>0)ach.push({id:'dragonslayer',tier:'gold',name:'屠龙勇士',detail:results.join('\n')});})();
+  (function(){var rivals=[];for(var otn in rankings){if(otn===tn)continue;var tro=rankings[otn];var wins=0,losses=0,total=0;tc.forEach(function(e){var ro=tro[e.compId];if(ro===null||ro===undefined||ro==='')return;var rn=parseInt(e.rank,10),orn=parseInt(ro,10);if(isNaN(rn)||isNaN(orn))return;if(rn>20||orn>20)return;if(rn<orn)wins++;else if(orn<rn)losses++;});if(wins+losses>=8&&Math.abs(wins-losses)<=2)rivals.push('对'+otn+' '+wins+':'+losses);}if(rivals.length>0)ach.push({id:'rival',tier:'silver',name:'宿敌',detail:rivals.join('\n')});})();
+  (function(){var results=[];chronoComps.forEach(function(c){if(c===chronoComps[0])return;var hr=histRankings[c.id];if(!hr||!hr.ranked||hr.ranked.length===0)return;var prev1=hr.ranked[0];if(prev1===tn)return;var myR=tr[c.id],p1R=rankings[prev1][c.id];if(myR===null||myR===undefined||myR===''||p1R===null||p1R===undefined||p1R==='')return;var mn=parseInt(myR,10),pn=parseInt(p1R,10);if(isNaN(mn)||isNaN(pn))return;if(mn<pn)results.push(c.id+' 超越'+prev1);});if(results.length>0)ach.push({id:'dragonslayer',tier:'gold',name:'屠龙勇士',detail:results.join('\n')});})();
   if(mt.tier==='t1')ach.push({id:'max_t1',tier:'gold',name:'登堂入室',detail:''});
-
   // ---- 银 ----
   (function(){if(tc.length>0){var n=parseInt(tc[0].rank,10);if(!isNaN(n)&&n<=10)ach.push({id:'debut_top10',tier:'silver',name:'出道即巅峰',detail:tc[0].compId+' #'+tc[0].rank});}})();
   (function(){var c10=tc.filter(function(e){return parseInt(e.rank,10)===10;}).length;if(c10>=2)ach.push({id:'gold_line',tier:'silver',name:'金牌线',detail:c10+'次'});})();
-  // 帽子戏法: find ALL 3+ consecutive segments where rank change ≤1
   (function(){var start=0,segs=[];for(var i=1;i<=tc.length;i++){var ok=i<tc.length;if(ok){var r1=parseInt(tc[i-1].rank,10),r2=parseInt(tc[i].rank,10);ok=!isNaN(r1)&&!isNaN(r2)&&Math.abs(r1-r2)<=2;}if(!ok){if(i-start>=3){var s=[];for(var j=start;j<i;j++)s.push(tc[j].compId+'#'+tc[j].rank);segs.push(s.join(' → '));}start=i;}}if(segs.length>0)ach.push({id:'hattrick',tier:'silver',name:'帽子戏法',detail:segs.join('\n')});})();
-  // 节节高: find ALL 3+ consecutive segments where rank strictly improves
   (function(){var start=0,segs=[];for(var i=1;i<=tc.length;i++){var ok=i<tc.length;if(ok){var r1=parseInt(tc[i-1].rank,10),r2=parseInt(tc[i].rank,10);ok=!isNaN(r1)&&!isNaN(r2)&&r2<r1;}if(!ok){if(i-start>=3){var s=[];for(var j=start;j<i;j++)s.push(tc[j].compId+'#'+tc[j].rank);segs.push(s.join(' → '));}start=i;}}if(segs.length>0)ach.push({id:'rising',tier:'silver',name:'节节高',detail:segs.join('\n')});})();
-  // 逆袭
   (function(){for(var i=1;i<tc.length;i++){var r1=parseInt(tc[i-1].rank,10),r2=parseInt(tc[i].rank,10);if(!isNaN(r1)&&!isNaN(r2)&&r1-r2>=30){ach.push({id:'comeback',tier:'silver',name:'逆袭',detail:tc[i-1].compId+' #'+r1+' → '+tc[i].compId+' #'+r2});break;}}})();
-  // 断头台: only count beating AFTER champion got their first rank 1, skip 50+
   (function(){var beaten=[];championList.forEach(function(ch){if(ch===tn)return;var chFirstEpoch=null;compChampions[ch].forEach(function(cid){var ep=epochs[cid];if(chFirstEpoch===null||ep<chFirstEpoch)chFirstEpoch=ep;});var bc=[];tc.forEach(function(e){if(e.epoch<=chFirstEpoch)return;var rch=rankings[ch][e.compId];if(rch===null||rch===undefined||rch==='')return;var mn=parseInt(e.rank,10),cn=parseInt(rch,10);if(isNaN(mn)||isNaN(cn))return;if(mn>20||cn>20)return;if(typeof e.rank==='string'&&e.rank.indexOf('50+')!==-1)return;if(typeof rch==='string'&&rch.indexOf('50+')!==-1)return;if(mn<cn)bc.push(e.compId);});if(bc.length>0)beaten.push(ch+': '+bc.join('、'));});if(beaten.length>=5)ach.push({id:'guillotine',tier:'silver',name:'断头台',detail:beaten.join('\n')});})();
-// 一穿三: list team names, list ALL qualifying comps, exclude debut, top 20 only, only T1+ opponents at that time
-(function(){var results=[];chronoComps.forEach(function(c){var hr=histRankings[c.id];if(!hr||!hr.ranked)return;var myRank=tr[c.id];if(myRank===null||myRank===undefined||myRank===''||epochs[c.id]===firstEpoch)return;var mn=parseInt(myRank,10);if(isNaN(mn))return;var myIdx=-1;for(var ri=0;ri<hr.ranked.length;ri++){if(hr.ranked[ri]===tn){myIdx=ri;break;}}if(myIdx===-1)return;var beaten=[];for(var ri=0;ri<myIdx;ri++){var otn=hr.ranked[ri],or=rankings[otn][c.id];if(or===null||or===undefined||or==='')continue;var os=hr.scores[otn]||0,ot=os>=500?'tw':os>=300?'t0':os>=200?'t1':os>=100?'t2':os>=25?'t3':'t4';if(ot!=='tw'&&ot!=='t0'&&ot!=='t1')continue;var on=parseInt(or,10);if(!isNaN(on)&&on<=20&&mn<on)beaten.push(otn);}if(beaten.length>=3)results.push(c.id+': '+beaten.join('、'));});if(results.length>0)ach.push({id:'onetouchfive',tier:'gold',name:'一穿三',detail:results.join('\n')});})();
+  (function(){var results=[];chronoComps.forEach(function(c){var hr=histRankings[c.id];if(!hr||!hr.ranked)return;var myRank=tr[c.id];if(myRank===null||myRank===undefined||myRank===''||epochs[c.id]===firstEpoch)return;var mn=parseInt(myRank,10);if(isNaN(mn))return;var myIdx=-1;for(var ri=0;ri<hr.ranked.length;ri++){if(hr.ranked[ri]===tn){myIdx=ri;break;}}if(myIdx===-1)return;var beaten=[];for(var ri=0;ri<myIdx;ri++){var otn=hr.ranked[ri],or=rankings[otn][c.id];if(or===null||or===undefined||or==='')continue;var os=hr.scores[otn]||0,ot=os>=500?'tw':os>=300?'t0':os>=200?'t1':os>=100?'t2':os>=25?'t3':'t4';if(ot!=='tw'&&ot!=='t0'&&ot!=='t1')continue;var on=parseInt(or,10);if(!isNaN(on)&&on<=20&&mn<on)beaten.push(otn);}if(beaten.length>=3)results.push(c.id+': '+beaten.join('、'));});if(results.length>0)ach.push({id:'onetouchfive',tier:'gold',name:'一穿三',detail:results.join('\n')});})();
   if(mt.tier==='t2')ach.push({id:'max_t2',tier:'silver',name:'崭露头角',detail:''});
-
   // ---- 铜 ----
   (function(){var has=tc.some(function(e){var n=parseInt(e.rank,10);if(isNaN(n)){if(typeof e.rank==='string'&&e.rank.indexOf('50')!==-1)return true;return false;}return n>=50;});if(has)ach.push({id:'backrow',tier:'bronze',name:'后排俱乐部',detail:''});})();
   if(tc.length>=10)ach.push({id:'ten_battles',tier:'bronze',name:'十役',detail:tc.length+'场'});
   (function(){var pastComps=chronoComps.filter(function(c){return epochs[c.id]<=Date.now();});var firstIdx=-1;for(var i=0;i<pastComps.length;i++){if(tr[pastComps[i].id]!==null&&tr[pastComps[i].id]!==undefined&&tr[pastComps[i].id]!==''){firstIdx=i;break;}}if(firstIdx===-1)return;var maxMiss=0,curMiss=0;for(var i=firstIdx;i<pastComps.length;i++){var r=tr[pastComps[i].id];if(r===null||r===undefined||r===''){curMiss++;if(curMiss>maxMiss)maxMiss=curMiss;}else curMiss=0;}if(maxMiss<=1)ach.push({id:'follow_group',tier:'bronze',name:'有团必跟',detail:''});})();
   (function(){var merged=false;tc.forEach(function(e){if(isMerged(tn,e.compId))merged=true;});if(merged)ach.push({id:'merge_happy',tier:'bronze',name:'合作愉快',detail:''});})();
-  (function(){var yrs=fullYearYears(tn);if(yrs.length>0)ach.push({id:'full_year',tier:'bronze',name:'全年无休',detail:yrs.join('、')});})();
-  // 狙击手: list ALL qualifying comps, exclude debut
+  (function(){var yrs=fullYearYearsFromTr(tr);if(yrs.length>0)ach.push({id:'full_year',tier:'bronze',name:'全年无休',detail:yrs.join('、')});})();
   (function(){var results=[];chronoComps.forEach(function(c){var hr=histRankings[c.id];if(!hr||!hr.ranked)return;var myRank=tr[c.id];if(myRank===null||myRank===undefined||myRank===''||epochs[c.id]===firstEpoch)return;var mn=parseInt(myRank,10);if(isNaN(mn))return;var myIdx=-1;for(var ri=0;ri<hr.ranked.length;ri++){if(hr.ranked[ri]===tn){myIdx=ri;break;}}if(myIdx===-1)return;for(var ri=0;ri<myIdx;ri++){var otn=hr.ranked[ri],or=rankings[otn][c.id];if(or===null||or===undefined||or==='')continue;var on=parseInt(or,10);if(!isNaN(on)&&on-mn===1)results.push(c.id+' 超越'+otn+' (#'+mn+' vs #'+on+')');}});if(results.length>0)ach.push({id:'sniper',tier:'bronze',name:'狙击手',detail:results.join('\n')});})();
   if(mt.tier==='t3')ach.push({id:'max_t3',tier:'bronze',name:'脱颖而出',detail:''});
-
   var seen={},dedup=[];ach.forEach(function(a){if(!seen[a.id]){seen[a.id]=true;dedup.push(a);}});
-  teamAch[tn]=dedup;
+  return dedup;
+}
+
+function fullYearYearsFromTr(tr){
+  var yrs=compYears(),result=[];
+  yrs.forEach(function(y){
+    var allInYear=comps.filter(function(c){return new Date(epochs[c.id]).getFullYear()===y;});
+    if(allInYear.length===0)return;
+    var joined=allInYear.filter(function(c){var r=tr[c.id];return r!==null&&r!==undefined&&r!=='';});
+    if(joined.length===allInYear.length)result.push(String(y));
+  });
+  return result;
+}
+
+function teamCompsForTr(tn,tr){
+  return chronoComps.filter(function(c){var r=tr[c.id];return r!==null&&r!==undefined&&r!=='';}).map(function(c){return{compId:c.id,rank:tr[c.id],epoch:epochs[c.id]};});
+}
+
+for(var tn in rankings){
+  var tr=rankings[tn],tc=teamCompsForTr(tn,tr);
+  if(tc.length===0){teamAch[tn]=[];continue;}
+  var mt=maxTierEver(tn),firstEpoch=tc[0].epoch;
+  teamAch[tn]=computeOneTeamAch(tn,tr,tc,mt,firstEpoch);
 }
 
 // Render achievements for a team
@@ -3721,6 +3721,9 @@ sniper:'在一场比赛中超越了此前总分排名更高的队伍恰好1名'
 function renderAchievements(teamName){
   var ach=teamAch[teamName]||[];
   if(ach.length===0){achSection.style.display='none';return;}
+  renderAchList(ach);
+}
+function renderAchList(ach){
   achSection.style.display='block';achGrid.innerHTML='';
   var tierPriority={platinum:4,gold:3,silver:2,bronze:1};
   ach.sort(function(a,b){var tp=tierPriority[b.tier]-tierPriority[a.tier];if(tp!==0)return tp;var aMax=a.id.indexOf('max_')===0?0:1,bMax=b.id.indexOf('max_')===0?0:1;return aMax-bMax;});
@@ -3764,7 +3767,7 @@ document.querySelectorAll('.tab-btn').forEach(function(btn){btn.addEventListener
   document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
   document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active');});
   btn.classList.add('active');document.getElementById(btn.dataset.tab).classList.add('active');
-  document.getElementById('fabBtn').style.display=btn.dataset.tab==='tab1'?'':'none';
+  document.getElementById('fabBtn').style.display=(btn.dataset.tab==='tab1'||btn.dataset.tab==='tab2')?'':'none';
   var panel=document.getElementById('simPanel');if(btn.dataset.tab!=='tab1')panel.classList.remove('show');
   if(btn.dataset.tab==='tab2')buildTeamHistory(tsel.value);
 });});
@@ -3790,7 +3793,7 @@ function badgeText(r){if(r===null||r===undefined||r==='')return'-';if(typeof r==
 var app=document.getElementById('app');
 var simTeams=[];
 try{var saved=localStorage.getItem('hunt_sim_teams');if(saved)simTeams=JSON.parse(saved);}catch(e){}
-function saveSimTeams(){try{localStorage.setItem('hunt_sim_teams',JSON.stringify(simTeams));}catch(e){}}
+function saveSimTeams(){try{localStorage.setItem('hunt_sim_teams',JSON.stringify(simTeams));}catch(e){}populateSimTeams();}
 
 function simRanksToObj(ranks){var o={};ranks.forEach(function(e){o[e.c]=e.r;});return o;}
 
@@ -3964,6 +3967,13 @@ playBtn.addEventListener('click',function(){
 // TAB 2
 var tsel=document.getElementById('teamSelect');
 teams.forEach(function(t){var o=document.createElement('option');o.value=t.origName;o.textContent=t.name;tsel.appendChild(o);});
+function populateSimTeams(){
+  // Remove old sim options first
+  var opts=tsel.querySelectorAll('option.sim-opt');for(var i=0;i<opts.length;i++)opts[i].remove();
+  if(simTeams.length>0){var sep=document.createElement('option');sep.disabled=true;sep.textContent='\u2500\u2500 \u81EA\u5EFA\u961F\u4F0D \u2500\u2500';tsel.appendChild(sep);}
+  simTeams.forEach(function(st){var o=document.createElement('option');o.className='sim-opt';o.value='__sim__'+st.name;o.textContent=st.name;tsel.appendChild(o);});
+}
+populateSimTeams();
 var tinfo=document.getElementById('teamInfo'),thist=document.getElementById('teamHistory');
 var tchart=document.getElementById('teamChart');
 
@@ -3976,7 +3986,9 @@ function drawChart(tname){
   var cssW=thist.clientWidth;if(!cssW||cssW<500)cssW=500;
   canvas.style.width=cssW+'px';canvas.style.height=cssH+'px';
   canvas.width=cssW*dpr;canvas.height=cssH*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
-  var tr=rankings[tname]||{},pad={top:22,right:50,bottom:40,left:34};
+  var isSim=tname.indexOf('__sim__')===0;var simName=isSim?tname.slice(7):'';
+  var tr=isSim?simRanksToObj((simTeams.find(function(st){return st.name===simName;})||{}).ranks||[]):(rankings[tname]||{});
+  var pad={top:22,right:50,bottom:40,left:34};
   var fcomps=getFilteredComps();
   var pw=cssW-pad.left-pad.right,ph=cssH-pad.top-pad.bottom,maxR=50,maxScore=500;
 
@@ -4078,9 +4090,11 @@ function drawChart(tname){
 }
 
 function buildTeamHistory(tname){
-  var tr=rankings[tname]||{};var parts=0,frontSum=0,ss=0,sw=0;thist.innerHTML='';
+  var isSim=tname.indexOf('__sim__')===0;var simName=isSim?tname.slice(7):'';
+  var tr=isSim?simRanksToObj((simTeams.find(function(st){return st.name===simName;})||{}).ranks||[]):(rankings[tname]||{});
+  var parts=0,frontSum=0,ss=0,sw=0;thist.innerHTML='';
   var fcomps=getFilteredComps();
-  fcomps.forEach(function(c){var r=tr[c.id];if(r===null||r===undefined||r==='')return;parts++;var rs=rankScore(r),merged=isMerged(tname,c.id);if(merged)rs/=2;var dc=decayCoeff(c.id,compWeight(c.id)),rd=decayCoeff(c.id,1),integral=dc*rs;ss+=rd*rs;sw+=rd;frontSum+=integral;
+  fcomps.forEach(function(c){var r=tr[c.id];if(r===null||r===undefined||r==='')return;parts++;var rs=rankScore(r),merged=!isSim&&isMerged(tname,c.id);if(merged)rs/=2;var dc=decayCoeff(c.id,compWeight(c.id)),rd=decayCoeff(c.id,1),integral=dc*rs;ss+=rd*rs;sw+=rd;frontSum+=integral;
     var card=document.createElement('div');card.className='history-card';var strip=document.createElement('div');strip.className='hcard-strip';
     var n=parseInt(r,10);if(n===1)strip.className+=' s-1';else if(n<=3)strip.className+=' s-2';else if(n<=6)strip.className+=' s-4';else if(n<=10)strip.className+=' s-top10';else if(n<=20)strip.className+=' s-mid';else strip.className+=' s-low';
     if(merged)strip.className+=' sr-merged';
@@ -4098,7 +4112,20 @@ function buildTeamHistory(tname){
   var sa=sw>0?ss/sw:0;
   tinfo.innerHTML='\u53C2\u8D5B <strong>'+parts+'</strong> / '+fcomps.length+' \u573A &nbsp;|&nbsp; \u603B\u5206 <strong>'+(frontSum+sa).toFixed(1)+'</strong> &nbsp;|&nbsp; \u7D2F\u79EF\u5206 <strong>'+frontSum.toFixed(1)+'</strong> &nbsp;|&nbsp; \u7A33\u5B9A\u5206 <strong>'+sa.toFixed(1)+'</strong>';
   drawChart(tname);
-  renderAchievements(tname);
+  if(tname.indexOf('__sim__')===0){
+    var simTr=simRanksToObj((simTeams.find(function(st){return st.name===simName;})||{}).ranks||[]);
+    var simTc=teamCompsForTr(simName,simTr);
+    var simAch=[];
+    if(simTc.length>0){
+      var oldRk=rankings[simName];rankings[simName]=simTr;
+      var simMt=maxTierEver(simName),simFe=simTc[0].epoch;
+      simAch=computeOneTeamAch(simName,simTr,simTc,simMt,simFe);
+      if(oldRk===undefined)delete rankings[simName];else rankings[simName]=oldRk;
+    }
+    if(simAch.length===0){achSection.style.display='block';achGrid.innerHTML='<div style="font-size:12px;color:#ccc;padding:10px 0;">暂无成就</div>';}
+    else{achSection.style.display='block';renderAchList(simAch);}
+  }
+  else renderAchievements(tname);
 }
 tsel.addEventListener('change',function(){buildTeamHistory(tsel.value);});
 // Redraw on window resize
