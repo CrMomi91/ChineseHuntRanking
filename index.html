@@ -317,17 +317,24 @@ body {
 }
 .comp-card h3 { font-size: 17px; font-weight: 600; margin-bottom: 4px; }
 .comp-card h3 a:hover { color: #3A6EA5; }
-.comp-card .cmeta { font-size: 13px; color: #888; margin-bottom: 12px; }
+.comp-card .cmeta { font-size: 13px; color: #888; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
 
-.comp-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-.comp-table th { background: #f3f3f3; padding: 8px 10px; text-align: center; font-weight: 500; color: #666; border-bottom: 2px solid #e0e0e0; }
-.comp-table td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee; }
-.comp-table td:nth-child(3) { text-align: left; font-weight: 500; }
-.comp-table td:nth-child(4) { text-align: left; font-size: 12px; color: #888; max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tab3-wrap { max-width: 60%; margin: 0 auto; }
+.comp-table { width: 100%; border-collapse: collapse; font-size: 16px; table-layout: fixed; }
+.comp-table th { background: #f3f3f3; padding: 10px 4px; text-align: center; font-weight: 500; color: #666; border-bottom: 2px solid #e0e0e0; font-size: 15px; }
+.comp-table th:nth-child(1){ width: 7%; }
+.comp-table th:nth-child(3){ width: 18%; }
+.comp-table th:nth-child(4){ width: 12%; }
+.comp-table th:nth-child(5){ width: 10%; }
+.comp-table th:nth-child(6){ width: 10%; }
+.comp-table td { padding: 10px 4px; text-align: center; border-bottom: 1px solid #eee; }
+.comp-table td:nth-child(2) { text-align: left; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-left: 10px; }
+.comp-table td:last-child { font-weight: 700; }
 .comp-table td.cr-1 { color: #C0392B; background: #FADBD8; font-weight: 700; }
 .comp-table td.cr-2, .comp-table td.cr-3 { color: #D68910; background: #FDEBD0; font-weight: 700; }
 .comp-table td.cr-4, .comp-table td.cr-5, .comp-table td.cr-6 { color: #7D3C98; background: #E8DAEF; font-weight: 700; }
 .comp-table td.cr-7, .comp-table td.cr-8, .comp-table td.cr-9, .comp-table td.cr-10 { color: #2471A3; background: #D4E6F1; font-weight: 700; }
+.comp-table td.cr-11, .comp-table td.cr-12, .comp-table td.cr-13, .comp-table td.cr-14, .comp-table td.cr-15, .comp-table td.cr-16, .comp-table td.cr-17, .comp-table td.cr-18, .comp-table td.cr-19, .comp-table td.cr-20 { color: #2E7D32; background: #E0F0E0; font-weight: 700; }
 .comp-table td.cr-mid { font-weight: 400; }
 .comp-table td.merged { font-style: italic; font-weight: 400 !important; }
 
@@ -795,167 +802,321 @@ var COMPETITIONS = [
   {
     "id": "P&KU1",
     "date": "2022-06-24",
+    "time": "20:00",
     "url": "https://pnku1.pkupuzzle.art/",
     "rankingUrl": "https://pnku1.pkupuzzle.art/scoreboard"
   },
   {
     "id": "CCBC12",
     "date": "2022-08-12",
+    "time": "20:00",
     "url": "https://ccbc12.cipherpuzzles.com/",
     "rankingUrl": "https://archive.cipherpuzzles.com/index.html#/scoreboard?c=ccbc12/scoreboard"
   },
   {
     "id": "P&KU2",
     "date": "2023-04-28",
+    "time": "20:00",
     "url": "https://pnku2.pkupuzzle.art/",
     "rankingUrl": "https://pnku2.pkupuzzle.art/#/board/score_board"
   },
   {
     "id": "CCBCBA",
     "date": "2023-08-11",
+    "time": "20:00",
     "url": "https://ccbc13.cipherpuzzles.com/",
     "rankingUrl": "https://archive.cipherpuzzles.com/ccbc13/board14.html"
   },
   {
     "id": "MH2023",
     "date": "2023-12-29",
+    "time": "20:00",
     "url": "https://mh2023.puzzlehunt.cn/",
     "rankingUrl": "https://mh2023.puzzlehunt.cn/boards?key=score_board"
   },
   {
     "id": "JH2024",
     "date": "2024-02-23",
+    "time": "20:00",
     "url": "https://jh2024.jianghujiemi.fun/",
     "rankingUrl": "https://jh2024.jianghujiemi.fun/teams"
   },
   {
     "id": "P&KU3a",
     "date": "2024-07-19",
+    "time": "20:00",
     "url": "https://pnku3.pkupuzzle.art/",
     "rankingUrl": "https://pnku3.pkupuzzle.art/boards?key=score_board"
   },
   {
     "id": "CCBC15",
     "date": "2024-08-09",
+    "time": "20:00",
     "url": "https://ccbc15.cipherpuzzles.com/",
     "rankingUrl": "https://archive.cipherpuzzles.com/ccbc15/board15.html"
   },
   {
     "id": "JUST1",
     "date": "2024-09-06",
+    "time": "19:43",
     "url": "https://justhunt.cn/archive/just-one/",
     "rankingUrl": "https://justhunt.cn/#/rankings"
   },
   {
     "id": "GnPH",
     "date": "2025-07-18",
+    "time": "20:00",
     "url": "https://goldenph.art/",
     "rankingUrl": "https://goldenph.art/boards?key=score_board"
   },
   {
     "id": "CCBC16",
     "date": "2025-08-08",
+    "time": "20:00",
     "url": "https://ccbc16.cipherpuzzles.com/",
     "rankingUrl": "https://ccbc16.cipherpuzzles.com/leaderboard"
   },
   {
     "id": "US-TC",
     "date": "2025-10-06",
+    "time": "20:00",
     "url": "http://us-tc.top/",
     "rankingUrl": "http://us-tc.top/"
   },
   {
     "id": "ZJUPH1",
     "date": "2025-11-21",
+    "time": "20:00",
     "url": "https://2025.zjuph.fun/",
     "rankingUrl": "https://2025.zjuph.fun/"
   },
   {
     "id": "SECO2",
     "date": "2026-01-31",
+    "time": "20:00",
     "url": "https://archive.secopuzzle.com/#/main/seco2",
     "rankingUrl": "https://archive.secopuzzle.com/#/scoreboard/seco2"
   },
   {
     "id": "P&KU3b",
     "date": "2026-07-10",
+    "time": "20:00",
     "url": "https://pnku3.pkupuzzle.art/",
     "rankingUrl": "https://pnku3.pkupuzzle.art/"
   },
   {
     "id": "CCBC17",
     "date": "2026-08-14",
+    "time": "20:00",
     "url": "https://ccbc17.cipherpuzzles.com/",
     "rankingUrl": "https://ccbc17.cipherpuzzles.com/"
   }
 ];
 var RANKINGS = {
   "simplicissimus": {
-    "P&KU1": 4,
-    "CCBC12": 1,
-    "P&KU2": 2,
+    "P&KU1": {
+      "r": 4,
+      "t": "49.57"
+    },
+    "CCBC12": {
+      "r": 1,
+      "t": "15.93"
+    },
+    "P&KU2": {
+      "r": 2,
+      "t": "30:55:43"
+    },
     "CCBCBA": null,
-    "MH2023": 2,
-    "JH2024": 2,
-    "P&KU3a": 1,
-    "CCBC15": 1,
-    "JUST1": 6,
+    "MH2023": {
+      "r": 2,
+      "t": "28:35:42"
+    },
+    "JH2024": {
+      "r": 2,
+      "t": "41:41"
+    },
+    "P&KU3a": {
+      "r": 1,
+      "t": "25:26:15"
+    },
+    "CCBC15": {
+      "r": 1,
+      "t": "30.98"
+    },
+    "JUST1": {
+      "r": 6,
+      "t": "36.50"
+    },
     "GnPH": null,
     "CCBC16": null,
-    "US-TC": 1,
-    "ZJUPH1": 1,
+    "US-TC": {
+      "r": 1,
+      "t": null
+    },
+    "ZJUPH1": {
+      "r": 1,
+      "t": null
+    },
     "SECO2": null,
     "P&KU3b": null,
     "CCBC17": null
   },
   "灵境TES": {
     "P&KU1": null,
-    "CCBC12": 5,
-    "P&KU2": 4,
-    "CCBCBA": 6,
-    "MH2023": 3,
-    "JH2024": 6,
-    "P&KU3a": 3,
-    "CCBC15": 2,
-    "JUST1": 2,
-    "GnPH": 4,
-    "CCBC16": 5,
-    "US-TC": 3,
-    "ZJUPH1": 7,
-    "SECO2": 14,
+    "CCBC12": {
+      "r": 5,
+      "t": "51.08"
+    },
+    "P&KU2": {
+      "r": 4,
+      "t": "55:50:19"
+    },
+    "CCBCBA": {
+      "r": 6,
+      "t": "62.99"
+    },
+    "MH2023": {
+      "r": 3,
+      "t": "33:32:36"
+    },
+    "JH2024": {
+      "r": 6,
+      "t": "54:14"
+    },
+    "P&KU3a": {
+      "r": 3,
+      "t": "40:27:49"
+    },
+    "CCBC15": {
+      "r": 2,
+      "t": "32.25"
+    },
+    "JUST1": {
+      "r": 2,
+      "t": "22.01"
+    },
+    "GnPH": {
+      "r": 4,
+      "t": "16:06:37"
+    },
+    "CCBC16": {
+      "r": 5,
+      "t": "43:44"
+    },
+    "US-TC": {
+      "r": 3,
+      "t": null
+    },
+    "ZJUPH1": {
+      "r": 7,
+      "t": null
+    },
+    "SECO2": {
+      "r": 14,
+      "t": "52:17"
+    },
     "P&KU3b": null,
     "CCBC17": null
   },
   "识文解意的追迹者": {
-    "P&KU1": 9,
-    "CCBC12": 8,
-    "P&KU2": 9,
-    "CCBCBA": 7,
-    "MH2023": 8,
-    "JH2024": 12,
-    "P&KU3a": 19,
-    "CCBC15": 3,
-    "JUST1": 5,
-    "GnPH": 19,
-    "CCBC16": 1,
-    "US-TC": 69,
-    "ZJUPH1": 2,
-    "SECO2": 3,
+    "P&KU1": {
+      "r": 9,
+      "t": "64.50"
+    },
+    "CCBC12": {
+      "r": 8,
+      "t": "56.68"
+    },
+    "P&KU2": {
+      "r": 9,
+      "t": "68:52:59"
+    },
+    "CCBCBA": {
+      "r": 7,
+      "t": "65.16"
+    },
+    "MH2023": {
+      "r": 8,
+      "t": "49:40:32"
+    },
+    "JH2024": {
+      "r": 12,
+      "t": "73:44"
+    },
+    "P&KU3a": {
+      "r": 19,
+      "t": "83:10:18"
+    },
+    "CCBC15": {
+      "r": 3,
+      "t": "41.62"
+    },
+    "JUST1": {
+      "r": 5,
+      "t": "30.26"
+    },
+    "GnPH": {
+      "r": 19,
+      "t": "30:49:39"
+    },
+    "CCBC16": {
+      "r": 1,
+      "t": "33:52"
+    },
+    "US-TC": {
+      "r": 69,
+      "t": null
+    },
+    "ZJUPH1": {
+      "r": 2,
+      "t": null
+    },
+    "SECO2": {
+      "r": 3,
+      "t": "27:22"
+    },
     "P&KU3b": null,
     "CCBC17": null
   },
   "鸡": {
     "P&KU1": null,
-    "CCBC12": 7,
-    "P&KU2": 1,
-    "CCBCBA": 3,
-    "MH2023": 1,
-    "JH2024": 3,
-    "P&KU3a": 4,
-    "CCBC15": 7,
+    "CCBC12": {
+      "r": 7,
+      "t": null
+    },
+    "P&KU2": {
+      "r": 1,
+      "t": "30:42:40"
+    },
+    "CCBCBA": {
+      "r": 3,
+      "t": "52.45"
+    },
+    "MH2023": {
+      "r": 1,
+      "t": "28:12:41"
+    },
+    "JH2024": {
+      "r": 3,
+      "t": "48:16"
+    },
+    "P&KU3a": {
+      "r": 4,
+      "t": "41:59:18"
+    },
+    "CCBC15": {
+      "r": 7,
+      "t": "50.10"
+    },
     "JUST1": null,
-    "GnPH": 6,
-    "CCBC16": 13,
+    "GnPH": {
+      "r": 6,
+      "t": "20:16:59"
+    },
+    "CCBC16": {
+      "r": 13,
+      "t": "59:47"
+    },
     "US-TC": null,
     "ZJUPH1": null,
     "SECO2": null,
@@ -972,10 +1133,22 @@ var RANKINGS = {
     "P&KU3a": null,
     "CCBC15": null,
     "JUST1": null,
-    "GnPH": 1,
-    "CCBC16": 2,
-    "US-TC": 6,
-    "ZJUPH1": 9,
+    "GnPH": {
+      "r": 1,
+      "t": "12:06:51"
+    },
+    "CCBC16": {
+      "r": 2,
+      "t": "38:07"
+    },
+    "US-TC": {
+      "r": 6,
+      "t": null
+    },
+    "ZJUPH1": {
+      "r": 9,
+      "t": null
+    },
     "SECO2": null,
     "P&KU3b": null,
     "CCBC17": null
@@ -984,17 +1157,38 @@ var RANKINGS = {
     "P&KU1": null,
     "CCBC12": null,
     "P&KU2": null,
-    "CCBCBA": 16,
-    "MH2023": 6,
-    "JH2024": 4,
+    "CCBCBA": {
+      "r": 16,
+      "t": "81.10"
+    },
+    "MH2023": {
+      "r": 6,
+      "t": "48:45:02"
+    },
+    "JH2024": {
+      "r": 4,
+      "t": "48:17"
+    },
     "P&KU3a": null,
-    "CCBC15": 5,
-    "JUST1": 11,
-    "GnPH": 2,
+    "CCBC15": {
+      "r": 5,
+      "t": "43.60"
+    },
+    "JUST1": {
+      "r": 11,
+      "t": "46.68"
+    },
+    "GnPH": {
+      "r": 2,
+      "t": "13:47:26"
+    },
     "CCBC16": null,
     "US-TC": null,
     "ZJUPH1": null,
-    "SECO2": 2,
+    "SECO2": {
+      "r": 2,
+      "t": "25:56"
+    },
     "P&KU3b": null,
     "CCBC17": null
   },
@@ -1005,83 +1199,230 @@ var RANKINGS = {
     "CCBCBA": null,
     "MH2023": null,
     "JH2024": null,
-    "P&KU3a": 22,
-    "CCBC15": 22,
-    "JUST1": 10,
-    "GnPH": 5,
-    "CCBC16": 6,
-    "US-TC": 4,
-    "ZJUPH1": 4,
-    "SECO2": 1,
+    "P&KU3a": {
+      "r": 22,
+      "t": "89:44:44"
+    },
+    "CCBC15": {
+      "r": 22,
+      "t": "85.40"
+    },
+    "JUST1": {
+      "r": 10,
+      "t": "46.20"
+    },
+    "GnPH": {
+      "r": 5,
+      "t": "17:05:16"
+    },
+    "CCBC16": {
+      "r": 6,
+      "t": "48:36"
+    },
+    "US-TC": {
+      "r": 4,
+      "t": null
+    },
+    "ZJUPH1": {
+      "r": 4,
+      "t": null
+    },
+    "SECO2": {
+      "r": 1,
+      "t": "23:48"
+    },
     "P&KU3b": null,
     "CCBC17": null
   },
   "解谜怪盗团": {
-    "P&KU1": 2,
-    "CCBC12": 4,
+    "P&KU1": {
+      "r": 2,
+      "t": "22.57"
+    },
+    "CCBC12": {
+      "r": 4,
+      "t": "49.51"
+    },
     "P&KU2": null,
-    "CCBCBA": "50+",
-    "MH2023": 4,
-    "JH2024": 1,
-    "P&KU3a": 2,
-    "CCBC15": 37,
-    "JUST1": 12,
-    "GnPH": "50+",
-    "CCBC16": 7,
-    "US-TC": "50+",
-    "ZJUPH1": "50+",
+    "CCBCBA": {
+      "r": "50+",
+      "t": null
+    },
+    "MH2023": {
+      "r": 4,
+      "t": "40:06:47"
+    },
+    "JH2024": {
+      "r": 1,
+      "t": "41:29"
+    },
+    "P&KU3a": {
+      "r": 2,
+      "t": "31:27:37"
+    },
+    "CCBC15": {
+      "r": 37,
+      "t": "109.17"
+    },
+    "JUST1": {
+      "r": 12,
+      "t": "47.59"
+    },
+    "GnPH": {
+      "r": "50+",
+      "t": null
+    },
+    "CCBC16": {
+      "r": 7,
+      "t": "50:13"
+    },
+    "US-TC": {
+      "r": "50+",
+      "t": null
+    },
+    "ZJUPH1": {
+      "r": "50+",
+      "t": null
+    },
     "SECO2": null,
     "P&KU3b": null,
     "CCBC17": null
   },
   "海拉鲁野炊组": {
-    "P&KU1": 8,
+    "P&KU1": {
+      "r": 8,
+      "t": "60.20"
+    },
     "CCBC12": null,
-    "P&KU2": 3,
-    "CCBCBA": 9,
-    "MH2023": 7,
-    "JH2024": 7,
-    "P&KU3a": 5,
-    "CCBC15": 11,
-    "JUST1": 3,
-    "GnPH": 8,
-    "CCBC16": 9,
-    "US-TC": 15,
-    "ZJUPH1": 11,
-    "SECO2": 23,
+    "P&KU2": {
+      "r": 3,
+      "t": "54:33:28"
+    },
+    "CCBCBA": {
+      "r": 9,
+      "t": "69.32"
+    },
+    "MH2023": {
+      "r": 7,
+      "t": "48:54:46"
+    },
+    "JH2024": {
+      "r": 7,
+      "t": "60:45"
+    },
+    "P&KU3a": {
+      "r": 5,
+      "t": "45:56:43"
+    },
+    "CCBC15": {
+      "r": 11,
+      "t": "51.95"
+    },
+    "JUST1": {
+      "r": 3,
+      "t": "24.86"
+    },
+    "GnPH": {
+      "r": 8,
+      "t": "20:50:43"
+    },
+    "CCBC16": {
+      "r": 9,
+      "t": "51:54"
+    },
+    "US-TC": {
+      "r": 15,
+      "t": null
+    },
+    "ZJUPH1": {
+      "r": 11,
+      "t": null
+    },
+    "SECO2": {
+      "r": 23,
+      "t": "62:50"
+    },
     "P&KU3b": null,
     "CCBC17": null
   },
   "金牌线": {
     "P&KU1": null,
     "CCBC12": null,
-    "P&KU2": 10,
-    "CCBCBA": 12,
-    "MH2023": 9,
-    "JH2024": 10,
-    "P&KU3a": 10,
-    "CCBC15": 4,
+    "P&KU2": {
+      "r": 10,
+      "t": "69:00:03"
+    },
+    "CCBCBA": {
+      "r": 12,
+      "t": "71.81"
+    },
+    "MH2023": {
+      "r": 9,
+      "t": "51:28:27"
+    },
+    "JH2024": {
+      "r": 10,
+      "t": "70:57"
+    },
+    "P&KU3a": {
+      "r": 10,
+      "t": "57:59:40"
+    },
+    "CCBC15": {
+      "r": 4,
+      "t": "43.12"
+    },
     "JUST1": null,
     "GnPH": null,
-    "CCBC16": 3,
+    "CCBC16": {
+      "r": 3,
+      "t": "41:16"
+    },
     "US-TC": null,
-    "ZJUPH1": 5,
+    "ZJUPH1": {
+      "r": 5,
+      "t": null
+    },
     "SECO2": null,
     "P&KU3b": null,
     "CCBC17": null
   },
   "闲散解谜！": {
-    "P&KU1": 17,
-    "CCBC12": 13,
-    "P&KU2": 5,
-    "CCBCBA": 1,
+    "P&KU1": {
+      "r": 17,
+      "t": "108.85"
+    },
+    "CCBC12": {
+      "r": 13,
+      "t": "72.28"
+    },
+    "P&KU2": {
+      "r": 5,
+      "t": "55:57:11"
+    },
+    "CCBCBA": {
+      "r": 1,
+      "t": "46.52"
+    },
     "MH2023": null,
-    "JH2024": 8,
-    "P&KU3a": 9,
+    "JH2024": {
+      "r": 8,
+      "t": "63:11"
+    },
+    "P&KU3a": {
+      "r": 9,
+      "t": "54:37:57"
+    },
     "CCBC15": null,
     "JUST1": null,
-    "GnPH": 3,
-    "CCBC16": 8,
+    "GnPH": {
+      "r": 3,
+      "t": "16:00:39"
+    },
+    "CCBC16": {
+      "r": 8,
+      "t": "51:15"
+    },
     "US-TC": null,
     "ZJUPH1": null,
     "SECO2": null,
@@ -1089,37 +1430,91 @@ var RANKINGS = {
     "CCBC17": null
   },
   "喵喵喵": {
-    "P&KU1": 1,
-    "CCBC12": 6,
+    "P&KU1": {
+      "r": 1,
+      "t": "21.22"
+    },
+    "CCBC12": {
+      "r": 6,
+      "t": "55.80"
+    },
     "P&KU2": null,
-    "CCBCBA": 2,
+    "CCBCBA": {
+      "r": 2,
+      "t": "52.23"
+    },
     "MH2023": null,
     "JH2024": null,
     "P&KU3a": null,
-    "CCBC15": 12,
+    "CCBC15": {
+      "r": 12,
+      "t": "70.49"
+    },
     "JUST1": null,
     "GnPH": null,
-    "CCBC16": 14,
+    "CCBC16": {
+      "r": 14,
+      "t": "61:39"
+    },
     "US-TC": null,
-    "ZJUPH1": 10,
+    "ZJUPH1": {
+      "r": 10,
+      "t": null
+    },
     "SECO2": null,
     "P&KU3b": null,
     "CCBC17": null
   },
   "zitmen": {
-    "P&KU1": 19,
-    "CCBC12": 40,
-    "P&KU2": 13,
-    "CCBCBA": 8,
-    "MH2023": 5,
-    "JH2024": 26,
-    "P&KU3a": 8,
-    "CCBC15": 9,
+    "P&KU1": {
+      "r": 19,
+      "t": "114.15"
+    },
+    "CCBC12": {
+      "r": 40,
+      "t": "136.02"
+    },
+    "P&KU2": {
+      "r": 13,
+      "t": "75:34:08"
+    },
+    "CCBCBA": {
+      "r": 8,
+      "t": "67.14"
+    },
+    "MH2023": {
+      "r": 5,
+      "t": "44:12:11"
+    },
+    "JH2024": {
+      "r": 26,
+      "t": "110:43"
+    },
+    "P&KU3a": {
+      "r": 8,
+      "t": "52:14:59"
+    },
+    "CCBC15": {
+      "r": 9,
+      "t": "50.45"
+    },
     "JUST1": null,
-    "GnPH": 11,
-    "CCBC16": 4,
-    "US-TC": 7,
-    "ZJUPH1": 3,
+    "GnPH": {
+      "r": 11,
+      "t": "22:46:07"
+    },
+    "CCBC16": {
+      "r": 4,
+      "t": "41:27"
+    },
+    "US-TC": {
+      "r": 7,
+      "t": null
+    },
+    "ZJUPH1": {
+      "r": 3,
+      "t": null
+    },
     "SECO2": null,
     "P&KU3b": null,
     "CCBC17": null
@@ -1127,13 +1522,31 @@ var RANKINGS = {
   "谜途旅人": {
     "P&KU1": null,
     "CCBC12": null,
-    "P&KU2": 6,
-    "CCBCBA": 13,
-    "MH2023": 10,
-    "JH2024": 5,
+    "P&KU2": {
+      "r": 6,
+      "t": "55:58:34"
+    },
+    "CCBCBA": {
+      "r": 13,
+      "t": "75.14"
+    },
+    "MH2023": {
+      "r": 10,
+      "t": "51:42:57"
+    },
+    "JH2024": {
+      "r": 5,
+      "t": "48:28"
+    },
     "P&KU3a": null,
-    "CCBC15": 10,
-    "JUST1": 4,
+    "CCBC15": {
+      "r": 10,
+      "t": "50.88"
+    },
+    "JUST1": {
+      "r": 4,
+      "t": "27.89"
+    },
     "GnPH": null,
     "CCBC16": null,
     "US-TC": null,
@@ -1145,17 +1558,47 @@ var RANKINGS = {
   "JUSTeam": {
     "P&KU1": null,
     "CCBC12": null,
-    "P&KU2": 7,
-    "CCBCBA": 15,
-    "MH2023": 11,
-    "JH2024": 9,
-    "P&KU3a": 11,
-    "CCBC15": 6,
+    "P&KU2": {
+      "r": 7,
+      "t": "64:17:04"
+    },
+    "CCBCBA": {
+      "r": 15,
+      "t": "78.99"
+    },
+    "MH2023": {
+      "r": 11,
+      "t": "55:00:52"
+    },
+    "JH2024": {
+      "r": 9,
+      "t": "70:18"
+    },
+    "P&KU3a": {
+      "r": 11,
+      "t": "61:39:13"
+    },
+    "CCBC15": {
+      "r": 6,
+      "t": "48.44"
+    },
     "JUST1": null,
-    "GnPH": 9,
-    "CCBC16": 20,
-    "US-TC": 5,
-    "ZJUPH1": 8,
+    "GnPH": {
+      "r": 9,
+      "t": "21:20:11"
+    },
+    "CCBC16": {
+      "r": 20,
+      "t": "72:19"
+    },
+    "US-TC": {
+      "r": 5,
+      "t": null
+    },
+    "ZJUPH1": {
+      "r": 8,
+      "t": null
+    },
     "SECO2": null,
     "P&KU3b": null,
     "CCBC17": null
@@ -1165,34 +1608,94 @@ var RANKINGS = {
     "CCBC12": null,
     "P&KU2": null,
     "CCBCBA": null,
-    "MH2023": 34,
-    "JH2024": 19,
-    "P&KU3a": 29,
-    "CCBC15": 43,
-    "JUST1": 35,
-    "GnPH": 7,
-    "CCBC16": 47,
-    "US-TC": 2,
-    "ZJUPH1": 4,
-    "SECO2": 27,
+    "MH2023": {
+      "r": 34,
+      "t": "110:10:47"
+    },
+    "JH2024": {
+      "r": 19,
+      "t": "93:38"
+    },
+    "P&KU3a": {
+      "r": 29,
+      "t": "94:33:06"
+    },
+    "CCBC15": {
+      "r": 43,
+      "t": "116.62"
+    },
+    "JUST1": {
+      "r": 35,
+      "t": "70.35"
+    },
+    "GnPH": {
+      "r": 7,
+      "t": "20:50:41"
+    },
+    "CCBC16": {
+      "r": 47,
+      "t": "95:20"
+    },
+    "US-TC": {
+      "r": 2,
+      "t": null
+    },
+    "ZJUPH1": {
+      "r": 4,
+      "t": null
+    },
+    "SECO2": {
+      "r": 27,
+      "t": "67:56"
+    },
     "P&KU3b": null,
     "CCBC17": null
   },
   "世界美食official": {
     "P&KU1": null,
-    "CCBC12": 18,
-    "P&KU2": 8,
-    "CCBCBA": 18,
-    "MH2023": 17,
-    "JH2024": 11,
-    "P&KU3a": 7,
-    "CCBC15": 8,
+    "CCBC12": {
+      "r": 18,
+      "t": "77.76"
+    },
+    "P&KU2": {
+      "r": 8,
+      "t": "66:40:49"
+    },
+    "CCBCBA": {
+      "r": 18,
+      "t": "88.29"
+    },
+    "MH2023": {
+      "r": 17,
+      "t": "79:46:02"
+    },
+    "JH2024": {
+      "r": 11,
+      "t": "71:03"
+    },
+    "P&KU3a": {
+      "r": 7,
+      "t": "51:26:06"
+    },
+    "CCBC15": {
+      "r": 8,
+      "t": "50.42"
+    },
     "JUST1": null,
-    "GnPH": 10,
-    "CCBC16": 12,
+    "GnPH": {
+      "r": 10,
+      "t": "21:44:25"
+    },
+    "CCBC16": {
+      "r": 12,
+      "t": "57:25"
+    },
     "US-TC": null,
     "ZJUPH1": null,
-    "SECO2": 10,
+    "SECO2": {
+      "r": 10,
+      "t": "50:25"
+    },
     "P&KU3b": null,
     "CCBC17": null
   },
@@ -1206,11 +1709,26 @@ var RANKINGS = {
     "P&KU3a": null,
     "CCBC15": null,
     "JUST1": null,
-    "GnPH": 25,
-    "CCBC16": 50,
-    "US-TC": 10,
-    "ZJUPH1": 6,
-    "SECO2": 5,
+    "GnPH": {
+      "r": 25,
+      "t": "33:32:37"
+    },
+    "CCBC16": {
+      "r": 50,
+      "t": "96:34"
+    },
+    "US-TC": {
+      "r": 10,
+      "t": null
+    },
+    "ZJUPH1": {
+      "r": 6,
+      "t": null
+    },
+    "SECO2": {
+      "r": 5,
+      "t": "36:44"
+    },
     "P&KU3b": null,
     "CCBC17": null
   },
@@ -1224,11 +1742,26 @@ var RANKINGS = {
     "P&KU3a": null,
     "CCBC15": null,
     "JUST1": null,
-    "GnPH": 13,
-    "CCBC16": 17,
-    "US-TC": 11,
-    "ZJUPH1": 43,
-    "SECO2": 4,
+    "GnPH": {
+      "r": 13,
+      "t": "25:40:45"
+    },
+    "CCBC16": {
+      "r": 17,
+      "t": "63:53"
+    },
+    "US-TC": {
+      "r": 11,
+      "t": null
+    },
+    "ZJUPH1": {
+      "r": 43,
+      "t": null
+    },
+    "SECO2": {
+      "r": 4,
+      "t": "32:01"
+    },
     "P&KU3b": null,
     "CCBC17": null
   },
@@ -1242,10 +1775,22 @@ var RANKINGS = {
     "P&KU3a": null,
     "CCBC15": null,
     "JUST1": null,
-    "GnPH": 37,
-    "CCBC16": 16,
-    "US-TC": 7,
-    "ZJUPH1": 3,
+    "GnPH": {
+      "r": 37,
+      "t": "43:32:04"
+    },
+    "CCBC16": {
+      "r": 16,
+      "t": "63:29"
+    },
+    "US-TC": {
+      "r": 7,
+      "t": null
+    },
+    "ZJUPH1": {
+      "r": 3,
+      "t": null
+    },
     "SECO2": null,
     "P&KU3b": null,
     "CCBC17": null
@@ -1255,14 +1800,35 @@ var RANKINGS = {
     "CCBC12": null,
     "P&KU2": null,
     "CCBCBA": null,
-    "MH2023": 24,
-    "JH2024": 16,
-    "P&KU3a": 6,
+    "MH2023": {
+      "r": 24,
+      "t": "96:45:54"
+    },
+    "JH2024": {
+      "r": 16,
+      "t": "92:09"
+    },
+    "P&KU3a": {
+      "r": 6,
+      "t": "50:51:52"
+    },
     "CCBC15": null,
-    "JUST1": 19,
-    "GnPH": 46,
-    "CCBC16": 15,
-    "US-TC": 20,
+    "JUST1": {
+      "r": 19,
+      "t": "50.16"
+    },
+    "GnPH": {
+      "r": 46,
+      "t": "47:19:06"
+    },
+    "CCBC16": {
+      "r": 15,
+      "t": "63:01"
+    },
+    "US-TC": {
+      "r": 20,
+      "t": null
+    },
     "ZJUPH1": null,
     "SECO2": null,
     "P&KU3b": null,
@@ -1277,12 +1843,30 @@ var RANKINGS = {
     "JH2024": null,
     "P&KU3a": null,
     "CCBC15": null,
-    "JUST1": 30,
-    "GnPH": 48,
-    "CCBC16": 22,
-    "US-TC": 43,
-    "ZJUPH1": 26,
-    "SECO2": 6,
+    "JUST1": {
+      "r": 30,
+      "t": "63.52"
+    },
+    "GnPH": {
+      "r": 48,
+      "t": "49:34:40"
+    },
+    "CCBC16": {
+      "r": 22,
+      "t": "72:47"
+    },
+    "US-TC": {
+      "r": 43,
+      "t": null
+    },
+    "ZJUPH1": {
+      "r": 26,
+      "t": null
+    },
+    "SECO2": {
+      "r": 6,
+      "t": "42:56"
+    },
     "P&KU3b": null,
     "CCBC17": null
   },
@@ -1295,12 +1879,30 @@ var RANKINGS = {
     "JH2024": null,
     "P&KU3a": null,
     "CCBC15": null,
-    "JUST1": 45,
-    "GnPH": 12,
-    "CCBC16": 33,
-    "US-TC": 8,
-    "ZJUPH1": 16,
-    "SECO2": 17,
+    "JUST1": {
+      "r": 45,
+      "t": "77.98"
+    },
+    "GnPH": {
+      "r": 12,
+      "t": "24:35:31"
+    },
+    "CCBC16": {
+      "r": 33,
+      "t": "81:30"
+    },
+    "US-TC": {
+      "r": 8,
+      "t": null
+    },
+    "ZJUPH1": {
+      "r": 16,
+      "t": null
+    },
+    "SECO2": {
+      "r": 17,
+      "t": "53:57"
+    },
     "P&KU3b": null,
     "CCBC17": null
   },
@@ -1310,15 +1912,36 @@ var RANKINGS = {
     "P&KU2": null,
     "CCBCBA": null,
     "MH2023": null,
-    "JH2024": 41,
-    "P&KU3a": 91,
+    "JH2024": {
+      "r": 41,
+      "t": "162:39"
+    },
+    "P&KU3a": {
+      "r": 91,
+      "t": "200:18:12"
+    },
     "CCBC15": null,
     "JUST1": null,
-    "GnPH": 22,
-    "CCBC16": 34,
-    "US-TC": 42,
-    "ZJUPH1": 55,
-    "SECO2": 7,
+    "GnPH": {
+      "r": 22,
+      "t": "32:44:18"
+    },
+    "CCBC16": {
+      "r": 34,
+      "t": "82:54"
+    },
+    "US-TC": {
+      "r": 42,
+      "t": null
+    },
+    "ZJUPH1": {
+      "r": 55,
+      "t": null
+    },
+    "SECO2": {
+      "r": 7,
+      "t": "43:44"
+    },
     "P&KU3b": null,
     "CCBC17": null
   },
@@ -1334,26 +1957,65 @@ var RANKINGS = {
     "JUST1": null,
     "GnPH": null,
     "CCBC16": null,
-    "US-TC": 37,
-    "ZJUPH1": 30,
-    "SECO2": 9,
+    "US-TC": {
+      "r": 37,
+      "t": null
+    },
+    "ZJUPH1": {
+      "r": 30,
+      "t": null
+    },
+    "SECO2": {
+      "r": 9,
+      "t": "49:16"
+    },
     "P&KU3b": null,
     "CCBC17": null
   },
   "Puzzlesweeper": {
     "P&KU1": null,
     "CCBC12": null,
-    "P&KU2": 12,
-    "CCBCBA": 11,
-    "MH2023": 12,
-    "JH2024": 25,
-    "P&KU3a": 33,
-    "CCBC15": 17,
-    "JUST1": 9,
-    "GnPH": 63,
-    "CCBC16": 39,
+    "P&KU2": {
+      "r": 12,
+      "t": "72:24:45"
+    },
+    "CCBCBA": {
+      "r": 11,
+      "t": "71.69"
+    },
+    "MH2023": {
+      "r": 12,
+      "t": "56:10:36"
+    },
+    "JH2024": {
+      "r": 25,
+      "t": "96:27"
+    },
+    "P&KU3a": {
+      "r": 33,
+      "t": "98:38:49"
+    },
+    "CCBC15": {
+      "r": 17,
+      "t": "75.41"
+    },
+    "JUST1": {
+      "r": 9,
+      "t": "44.93"
+    },
+    "GnPH": {
+      "r": 63,
+      "t": "63:06:04"
+    },
+    "CCBC16": {
+      "r": 39,
+      "t": "89:21"
+    },
     "US-TC": null,
-    "ZJUPH1": 51,
+    "ZJUPH1": {
+      "r": 51,
+      "t": null
+    },
     "SECO2": null,
     "P&KU3b": null,
     "CCBC17": null
@@ -1363,16 +2025,40 @@ var RANKINGS = {
     "CCBC12": null,
     "P&KU2": null,
     "CCBCBA": null,
-    "MH2023": 21,
+    "MH2023": {
+      "r": 21,
+      "t": "93:55:31"
+    },
     "JH2024": null,
-    "P&KU3a": 18,
-    "CCBC15": 30,
-    "JUST1": 13,
-    "GnPH": 30,
-    "CCBC16": 10,
+    "P&KU3a": {
+      "r": 18,
+      "t": "79:53:18"
+    },
+    "CCBC15": {
+      "r": 30,
+      "t": "94.59"
+    },
+    "JUST1": {
+      "r": 13,
+      "t": "48.14"
+    },
+    "GnPH": {
+      "r": 30,
+      "t": "40:51:34"
+    },
+    "CCBC16": {
+      "r": 10,
+      "t": "52:15"
+    },
     "US-TC": null,
-    "ZJUPH1": 29,
-    "SECO2": 24,
+    "ZJUPH1": {
+      "r": 29,
+      "t": null
+    },
+    "SECO2": {
+      "r": 24,
+      "t": "66:29"
+    },
     "P&KU3b": null,
     "CCBC17": null
   },
@@ -1380,32 +2066,83 @@ var RANKINGS = {
     "P&KU1": null,
     "CCBC12": null,
     "P&KU2": null,
-    "CCBCBA": 50,
-    "MH2023": 37,
-    "JH2024": 23,
-    "P&KU3a": 16,
-    "CCBC15": 15,
-    "JUST1": 21,
-    "GnPH": 20,
-    "CCBC16": 69,
-    "US-TC": 22,
-    "ZJUPH1": 25,
-    "SECO2": 8,
+    "CCBCBA": {
+      "r": 50,
+      "t": "151.36"
+    },
+    "MH2023": {
+      "r": 37,
+      "t": "119:07:56"
+    },
+    "JH2024": {
+      "r": 23,
+      "t": "94:30"
+    },
+    "P&KU3a": {
+      "r": 16,
+      "t": "73:28:47"
+    },
+    "CCBC15": {
+      "r": 15,
+      "t": "75.28"
+    },
+    "JUST1": {
+      "r": 21,
+      "t": "53.01"
+    },
+    "GnPH": {
+      "r": 20,
+      "t": "31:52:28"
+    },
+    "CCBC16": {
+      "r": 69,
+      "t": "118:28"
+    },
+    "US-TC": {
+      "r": 22,
+      "t": null
+    },
+    "ZJUPH1": {
+      "r": 25,
+      "t": null
+    },
+    "SECO2": {
+      "r": 8,
+      "t": "48:39"
+    },
     "P&KU3b": null,
     "CCBC17": null
   },
   "耗": {
-    "P&KU1": 6,
-    "CCBC12": 2,
-    "P&KU2": 25,
-    "CCBCBA": 26,
+    "P&KU1": {
+      "r": 6,
+      "t": "52.99"
+    },
+    "CCBC12": {
+      "r": 2,
+      "t": "46.13"
+    },
+    "P&KU2": {
+      "r": 25,
+      "t": "92:00:55"
+    },
+    "CCBCBA": {
+      "r": 26,
+      "t": "110.11"
+    },
     "MH2023": null,
     "JH2024": null,
     "P&KU3a": null,
-    "CCBC15": 16,
+    "CCBC15": {
+      "r": 16,
+      "t": "75.35"
+    },
     "JUST1": null,
     "GnPH": null,
-    "CCBC16": 35,
+    "CCBC16": {
+      "r": 35,
+      "t": "86:17"
+    },
     "US-TC": null,
     "ZJUPH1": null,
     "SECO2": null,
@@ -1415,36 +2152,99 @@ var RANKINGS = {
   "FloorOfLava": {
     "P&KU1": null,
     "CCBC12": null,
-    "P&KU2": 56,
-    "CCBCBA": 29,
-    "MH2023": 14,
-    "JH2024": 20,
-    "P&KU3a": 15,
-    "CCBC15": 13,
+    "P&KU2": {
+      "r": 56,
+      "t": "148:12:36"
+    },
+    "CCBCBA": {
+      "r": 29,
+      "t": "111.12"
+    },
+    "MH2023": {
+      "r": 14,
+      "t": "72:09:55"
+    },
+    "JH2024": {
+      "r": 20,
+      "t": "93:40"
+    },
+    "P&KU3a": {
+      "r": 15,
+      "t": "73:02:38"
+    },
+    "CCBC15": {
+      "r": 13,
+      "t": "71.63"
+    },
     "JUST1": null,
-    "GnPH": 57,
-    "CCBC16": 18,
+    "GnPH": {
+      "r": 57,
+      "t": "56:18:40"
+    },
+    "CCBC16": {
+      "r": 18,
+      "t": "69:03"
+    },
     "US-TC": null,
-    "ZJUPH1": 40,
-    "SECO2": 42,
+    "ZJUPH1": {
+      "r": 40,
+      "t": null
+    },
+    "SECO2": {
+      "r": 42,
+      "t": "78:23"
+    },
     "P&KU3b": null,
     "CCBC17": null
   },
   "队名包含不适宜内容": {
     "P&KU1": null,
     "CCBC12": null,
-    "P&KU2": 20,
-    "CCBCBA": 47,
-    "MH2023": 16,
-    "JH2024": 13,
-    "P&KU3a": 36,
-    "CCBC15": 20,
-    "JUST1": 14,
-    "GnPH": 38,
-    "CCBC16": 26,
+    "P&KU2": {
+      "r": 20,
+      "t": "87:27:12"
+    },
+    "CCBCBA": {
+      "r": 47,
+      "t": "143.38"
+    },
+    "MH2023": {
+      "r": 16,
+      "t": "74:42:49"
+    },
+    "JH2024": {
+      "r": 13,
+      "t": "75:03"
+    },
+    "P&KU3a": {
+      "r": 36,
+      "t": "100:23:36"
+    },
+    "CCBC15": {
+      "r": 20,
+      "t": "79.96"
+    },
+    "JUST1": {
+      "r": 14,
+      "t": "48.44"
+    },
+    "GnPH": {
+      "r": 38,
+      "t": "44:18:23"
+    },
+    "CCBC16": {
+      "r": 26,
+      "t": "77:29"
+    },
     "US-TC": null,
-    "ZJUPH1": 19,
-    "SECO2": 39,
+    "ZJUPH1": {
+      "r": 19,
+      "t": null
+    },
+    "SECO2": {
+      "r": 39,
+      "t": "77:45"
+    },
     "P&KU3b": null,
     "CCBC17": null
   },
@@ -1454,28 +2254,73 @@ var RANKINGS = {
     "P&KU2": null,
     "CCBCBA": null,
     "MH2023": null,
-    "JH2024": 15,
-    "P&KU3a": 24,
-    "CCBC15": 18,
-    "JUST1": 15,
-    "GnPH": 50,
-    "CCBC16": 46,
-    "US-TC": 55,
-    "ZJUPH1": 28,
-    "SECO2": 46,
+    "JH2024": {
+      "r": 15,
+      "t": "89:39"
+    },
+    "P&KU3a": {
+      "r": 24,
+      "t": "91:05:51"
+    },
+    "CCBC15": {
+      "r": 18,
+      "t": "78.32"
+    },
+    "JUST1": {
+      "r": 15,
+      "t": "48.96"
+    },
+    "GnPH": {
+      "r": 50,
+      "t": "52:09:11"
+    },
+    "CCBC16": {
+      "r": 46,
+      "t": "95:04"
+    },
+    "US-TC": {
+      "r": 55,
+      "t": null
+    },
+    "ZJUPH1": {
+      "r": 28,
+      "t": null
+    },
+    "SECO2": {
+      "r": 46,
+      "t": "88:35"
+    },
     "P&KU3b": null,
     "CCBC17": null
   },
   "一车面包人": {
     "P&KU1": null,
-    "CCBC12": 19,
-    "P&KU2": 34,
-    "CCBCBA": 20,
+    "CCBC12": {
+      "r": 19,
+      "t": "79.57"
+    },
+    "P&KU2": {
+      "r": 34,
+      "t": "109:24:43"
+    },
+    "CCBCBA": {
+      "r": 20,
+      "t": "98.37"
+    },
     "MH2023": null,
-    "JH2024": 22,
+    "JH2024": {
+      "r": 22,
+      "t": "94:13"
+    },
     "P&KU3a": null,
-    "CCBC15": 21,
-    "JUST1": 17,
+    "CCBC15": {
+      "r": 21,
+      "t": "80.61"
+    },
+    "JUST1": {
+      "r": 17,
+      "t": "49.44"
+    },
     "GnPH": null,
     "CCBC16": null,
     "US-TC": null,
@@ -1486,17 +2331,50 @@ var RANKINGS = {
   },
   "NZND": {
     "P&KU1": null,
-    "CCBC12": 25,
-    "P&KU2": 18,
-    "CCBCBA": 57,
-    "MH2023": 47,
-    "JH2024": 29,
-    "P&KU3a": 13,
-    "CCBC15": 28,
-    "JUST1": 38,
-    "GnPH": 24,
-    "CCBC16": 148,
-    "US-TC": 109,
+    "CCBC12": {
+      "r": 25,
+      "t": "102.24"
+    },
+    "P&KU2": {
+      "r": 18,
+      "t": "80:56:17"
+    },
+    "CCBCBA": {
+      "r": 57,
+      "t": "159.44"
+    },
+    "MH2023": {
+      "r": 47,
+      "t": "140:06:11"
+    },
+    "JH2024": {
+      "r": 29,
+      "t": "116:21"
+    },
+    "P&KU3a": {
+      "r": 13,
+      "t": "68:35:16"
+    },
+    "CCBC15": {
+      "r": 28,
+      "t": "92.19"
+    },
+    "JUST1": {
+      "r": 38,
+      "t": "72.90"
+    },
+    "GnPH": {
+      "r": 24,
+      "t": "33:19:39"
+    },
+    "CCBC16": {
+      "r": 148,
+      "t": "166:20"
+    },
+    "US-TC": {
+      "r": 109,
+      "t": null
+    },
     "ZJUPH1": null,
     "SECO2": null,
     "P&KU3b": null,
@@ -1506,14 +2384,35 @@ var RANKINGS = {
     "P&KU1": null,
     "CCBC12": null,
     "P&KU2": null,
-    "CCBCBA": 4,
-    "MH2023": 18,
-    "JH2024": 30,
-    "P&KU3a": 14,
-    "CCBC15": 27,
+    "CCBCBA": {
+      "r": 4,
+      "t": "57.01"
+    },
+    "MH2023": {
+      "r": 18,
+      "t": "81:27:28"
+    },
+    "JH2024": {
+      "r": 30,
+      "t": "120:39"
+    },
+    "P&KU3a": {
+      "r": 14,
+      "t": "72:58:34"
+    },
+    "CCBC15": {
+      "r": 27,
+      "t": "91.88"
+    },
     "JUST1": null,
-    "GnPH": 26,
-    "CCBC16": 73,
+    "GnPH": {
+      "r": 26,
+      "t": "39:06:43"
+    },
+    "CCBC16": {
+      "r": 73,
+      "t": "120:12"
+    },
     "US-TC": null,
     "ZJUPH1": null,
     "SECO2": null,
@@ -1521,12 +2420,30 @@ var RANKINGS = {
     "CCBC17": null
   },
   "卡在那個題": {
-    "P&KU1": 25,
-    "CCBC12": 3,
-    "P&KU2": 32,
-    "CCBCBA": 10,
-    "MH2023": 32,
-    "JH2024": 59,
+    "P&KU1": {
+      "r": 25,
+      "t": "137.41"
+    },
+    "CCBC12": {
+      "r": 3,
+      "t": "46.53"
+    },
+    "P&KU2": {
+      "r": 32,
+      "t": "103:08:47"
+    },
+    "CCBCBA": {
+      "r": 10,
+      "t": "69.77"
+    },
+    "MH2023": {
+      "r": 32,
+      "t": "107:55:00"
+    },
+    "JH2024": {
+      "r": 59,
+      "t": "213:14"
+    },
     "P&KU3a": null,
     "CCBC15": null,
     "JUST1": null,
@@ -1539,17 +2456,44 @@ var RANKINGS = {
     "CCBC17": null
   },
   "有道法体育慕课答案": {
-    "P&KU1": 3,
+    "P&KU1": {
+      "r": 3,
+      "t": "47.04"
+    },
     "CCBC12": null,
-    "P&KU2": 30,
-    "CCBCBA": 54,
-    "MH2023": 15,
-    "JH2024": 36,
-    "P&KU3a": 34,
-    "CCBC15": 49,
-    "JUST1": 43,
+    "P&KU2": {
+      "r": 30,
+      "t": "101:10:13"
+    },
+    "CCBCBA": {
+      "r": 54,
+      "t": "157.07"
+    },
+    "MH2023": {
+      "r": 15,
+      "t": "73:42:23"
+    },
+    "JH2024": {
+      "r": 36,
+      "t": "141:57"
+    },
+    "P&KU3a": {
+      "r": 34,
+      "t": "98:56:43"
+    },
+    "CCBC15": {
+      "r": 49,
+      "t": "127.04"
+    },
+    "JUST1": {
+      "r": 43,
+      "t": "76.08"
+    },
     "GnPH": null,
-    "CCBC16": 61,
+    "CCBC16": {
+      "r": 61,
+      "t": "112:59"
+    },
     "US-TC": null,
     "ZJUPH1": null,
     "SECO2": null,
@@ -1558,34 +2502,76 @@ var RANKINGS = {
   },
   "真相猎人": {
     "P&KU1": null,
-    "CCBC12": 12,
-    "P&KU2": 26,
-    "CCBCBA": 27,
-    "MH2023": 28,
+    "CCBC12": {
+      "r": 12,
+      "t": "68.24"
+    },
+    "P&KU2": {
+      "r": 26,
+      "t": "92:08:09"
+    },
+    "CCBCBA": {
+      "r": 27,
+      "t": "110.30"
+    },
+    "MH2023": {
+      "r": 28,
+      "t": "102:08:37"
+    },
     "JH2024": null,
-    "P&KU3a": 41,
-    "CCBC15": 40,
+    "P&KU3a": {
+      "r": 41,
+      "t": "113:32:37"
+    },
+    "CCBC15": {
+      "r": 40,
+      "t": "114.98"
+    },
     "JUST1": null,
     "GnPH": null,
-    "CCBC16": 115,
+    "CCBC16": {
+      "r": 115,
+      "t": "146:18"
+    },
     "US-TC": null,
-    "ZJUPH1": 119,
+    "ZJUPH1": {
+      "r": 119,
+      "t": null
+    },
     "SECO2": null,
     "P&KU3b": null,
     "CCBC17": null
   },
   "东北一霸": {
     "P&KU1": null,
-    "CCBC12": 27,
-    "P&KU2": 14,
-    "CCBCBA": 17,
+    "CCBC12": {
+      "r": 27,
+      "t": "106.26"
+    },
+    "P&KU2": {
+      "r": 14,
+      "t": "75:52:33"
+    },
+    "CCBCBA": {
+      "r": 17,
+      "t": "84.23"
+    },
     "MH2023": null,
     "JH2024": null,
-    "P&KU3a": 21,
-    "CCBC15": 36,
+    "P&KU3a": {
+      "r": 21,
+      "t": "88:45:49"
+    },
+    "CCBC15": {
+      "r": 36,
+      "t": "108.73"
+    },
     "JUST1": null,
     "GnPH": null,
-    "CCBC16": 45,
+    "CCBC16": {
+      "r": 45,
+      "t": "94:34"
+    },
     "US-TC": null,
     "ZJUPH1": null,
     "SECO2": null,
@@ -1595,17 +2581,50 @@ var RANKINGS = {
   "Live Fast Die Young": {
     "P&KU1": null,
     "CCBC12": null,
-    "P&KU2": 48,
-    "CCBCBA": 37,
-    "MH2023": 22,
-    "JH2024": 14,
-    "P&KU3a": 23,
-    "CCBC15": 35,
-    "JUST1": 18,
-    "GnPH": 102,
-    "CCBC16": 58,
-    "US-TC": 26,
-    "ZJUPH1": 33,
+    "P&KU2": {
+      "r": 48,
+      "t": "128:46:48"
+    },
+    "CCBCBA": {
+      "r": 37,
+      "t": "128.50"
+    },
+    "MH2023": {
+      "r": 22,
+      "t": "94:15:23"
+    },
+    "JH2024": {
+      "r": 14,
+      "t": "76:17"
+    },
+    "P&KU3a": {
+      "r": 23,
+      "t": "90:32:47"
+    },
+    "CCBC15": {
+      "r": 35,
+      "t": "104.11"
+    },
+    "JUST1": {
+      "r": 18,
+      "t": "49.81"
+    },
+    "GnPH": {
+      "r": 102,
+      "t": "90:19:21"
+    },
+    "CCBC16": {
+      "r": 58,
+      "t": "103:33"
+    },
+    "US-TC": {
+      "r": 26,
+      "t": null
+    },
+    "ZJUPH1": {
+      "r": 33,
+      "t": null
+    },
     "SECO2": null,
     "P&KU3b": null,
     "CCBC17": null
@@ -1614,15 +2633,39 @@ var RANKINGS = {
     "P&KU1": null,
     "CCBC12": null,
     "P&KU2": null,
-    "CCBCBA": 33,
-    "MH2023": 54,
+    "CCBCBA": {
+      "r": 33,
+      "t": "117.60"
+    },
+    "MH2023": {
+      "r": 54,
+      "t": "162:39:20"
+    },
     "JH2024": null,
-    "P&KU3a": 59,
-    "CCBC15": 19,
-    "JUST1": 16,
-    "GnPH": 16,
-    "CCBC16": 27,
-    "US-TC": 35,
+    "P&KU3a": {
+      "r": 59,
+      "t": "154:54:48"
+    },
+    "CCBC15": {
+      "r": 19,
+      "t": "78.83"
+    },
+    "JUST1": {
+      "r": 16,
+      "t": "49.09"
+    },
+    "GnPH": {
+      "r": 16,
+      "t": "28:48:56"
+    },
+    "CCBC16": {
+      "r": 27,
+      "t": "77:59"
+    },
+    "US-TC": {
+      "r": 35,
+      "t": null
+    },
     "ZJUPH1": null,
     "SECO2": null,
     "P&KU3b": null,
@@ -1635,12 +2678,27 @@ var RANKINGS = {
     "CCBCBA": null,
     "MH2023": null,
     "JH2024": null,
-    "P&KU3a": 30,
-    "CCBC15": 48,
+    "P&KU3a": {
+      "r": 30,
+      "t": "94:58:34"
+    },
+    "CCBC15": {
+      "r": 48,
+      "t": "125.23"
+    },
     "JUST1": null,
-    "GnPH": 56,
-    "CCBC16": 32,
-    "US-TC": 16,
+    "GnPH": {
+      "r": 56,
+      "t": "55:49:03"
+    },
+    "CCBC16": {
+      "r": 32,
+      "t": "80:11"
+    },
+    "US-TC": {
+      "r": 16,
+      "t": null
+    },
     "ZJUPH1": null,
     "SECO2": null,
     "P&KU3b": null,
@@ -1653,12 +2711,27 @@ var RANKINGS = {
     "CCBCBA": null,
     "MH2023": null,
     "JH2024": null,
-    "P&KU3a": 17,
+    "P&KU3a": {
+      "r": 17,
+      "t": "74:04:54"
+    },
     "CCBC15": null,
-    "JUST1": 22,
-    "GnPH": 51,
-    "CCBC16": 30,
-    "US-TC": 178,
+    "JUST1": {
+      "r": 22,
+      "t": "54.02"
+    },
+    "GnPH": {
+      "r": 51,
+      "t": "54:13:22"
+    },
+    "CCBC16": {
+      "r": 30,
+      "t": "79:56"
+    },
+    "US-TC": {
+      "r": 178,
+      "t": null
+    },
     "ZJUPH1": null,
     "SECO2": null,
     "P&KU3b": null,
@@ -1668,17 +2741,50 @@ var RANKINGS = {
     "P&KU1": null,
     "CCBC12": null,
     "P&KU2": null,
-    "CCBCBA": 89,
-    "MH2023": 41,
-    "JH2024": 21,
-    "P&KU3a": 35,
-    "CCBC15": 26,
-    "JUST1": 25,
-    "GnPH": 49,
-    "CCBC16": 64,
-    "US-TC": 28,
-    "ZJUPH1": 12,
-    "SECO2": 21,
+    "CCBCBA": {
+      "r": 89,
+      "t": "196.25"
+    },
+    "MH2023": {
+      "r": 41,
+      "t": "132:08:34"
+    },
+    "JH2024": {
+      "r": 21,
+      "t": "94:11"
+    },
+    "P&KU3a": {
+      "r": 35,
+      "t": "99:08:41"
+    },
+    "CCBC15": {
+      "r": 26,
+      "t": "90.86"
+    },
+    "JUST1": {
+      "r": 25,
+      "t": "56.92"
+    },
+    "GnPH": {
+      "r": 49,
+      "t": "49:45:52"
+    },
+    "CCBC16": {
+      "r": 64,
+      "t": "115:14"
+    },
+    "US-TC": {
+      "r": 28,
+      "t": null
+    },
+    "ZJUPH1": {
+      "r": 12,
+      "t": null
+    },
+    "SECO2": {
+      "r": 21,
+      "t": "60.07"
+    },
     "P&KU3b": null,
     "CCBC17": null
   }
@@ -3644,16 +4750,57 @@ function getFilteredComps(){
 }
 function rankScore(r){
   if(r===null||r===undefined||r==='')return 0;
+  if(typeof r==='object'&&r!==null)r=r.r;
   var n=parseInt(r,10);if(isNaN(n))return 0;
   return 100/Math.exp((n-1)/6);
 }
+function getRank(r){if(r===null||r===undefined||r==='')return null;if(typeof r==='object'&&r!==null)return r.r;return r;}
+function getTime(r){if(r===null||r===undefined)return null;if(typeof r==='object'&&r!==null)return r.t||null;return null;}
+function hasRank(r){var v=getRank(r);return v!==null&&v!==undefined&&v!=='';}
+function parseRank(r){var v=getRank(r);if(v===null)return null;if(typeof v==='string'&&v.indexOf('50+')!==-1)return 50;var n=parseInt(v,10);return isNaN(n)?null:n;}
+function fmtTime(t){
+  if(!t)return'-';
+  // Already HH:MM or HH:MM:SS
+  if(/^\d+:\d{2}(:\d{2})?$/.test(t)){
+    var parts=t.split(':');var h=parseInt(parts[0]),m=parseInt(parts[1]);
+    if(parts.length>2)m+=Math.round(parseInt(parts[2])/60);
+    if(m>=60){h+=Math.floor(m/60);m=m%60;}
+    return h+':'+(m<10?'0':'')+m;
+  }
+  // Decimal hours like "21.22"
+  if(/^\d+\.\d+$/.test(t)){
+    var d=parseFloat(t);var h=Math.floor(d);var m=Math.round((d-h)*60);
+    if(m>=60){h+=Math.floor(m/60);m=m%60;}
+    return h+':'+(m<10?'0':'')+m;
+  }
+  return t;
+}
+function parseDuration(t){
+  if(!t)return null;
+  if(/^\d+:\d{2}(:\d{2})?$/.test(t)){
+    var parts=t.split(':');return parseInt(parts[0])*60+parseInt(parts[1])+(parts.length>2?Math.round(parseInt(parts[2])/60):0);
+  }
+  if(/^\d+\.\d+$/.test(t)){var d=parseFloat(t);return Math.round(d*60);}
+  return null;
+}
+function calcFinish(dateStr, timeStr, durationStr){
+  if(!timeStr||!durationStr)return'-';
+  var mins=parseDuration(durationStr);if(mins===null)return'-';
+  var parts=dateStr.split('-');
+  var h=0,m=0;if(timeStr){var tp=timeStr.split(':');h=parseInt(tp[0]);m=parseInt(tp[1]||'0');}
+  var dt=new Date(parseInt(parts[0]),parseInt(parts[1])-1,parseInt(parts[2]),h,m);
+  dt.setMinutes(dt.getMinutes()+mins);
+  var fy=dt.getFullYear(),fm=dt.getMonth()+1,fd=dt.getDate();
+  return fy+'-'+(fm<10?'0':'')+fm+'-'+(fd<10?'0':'')+fd+' '+
+    (dt.getHours()<10?'0':'')+dt.getHours()+':'+(dt.getMinutes()<10?'0':'')+dt.getMinutes();
+}
 
 var mergedMap={},rankBuckets={};
-for(var tn in rankings){for(var cid in rankings[tn]){var r=rankings[tn][cid];if(r===null||r===undefined||r===''||typeof r==='string')continue;if(typeof r==='number'){var key=cid+'_'+r;if(!rankBuckets[key])rankBuckets[key]=[];rankBuckets[key].push(tn);}}}
+for(var tn in rankings){for(var cid in rankings[tn]){var r=getRank(rankings[tn][cid]);if(r===null||typeof r==='string')continue;var n=parseInt(r,10);if(!isNaN(n)){var key=cid+'_'+n;if(!rankBuckets[key])rankBuckets[key]=[];rankBuckets[key].push(tn);}}}
 for(var key in rankBuckets){if(rankBuckets[key].length>1){var cid=key.split('_')[0];rankBuckets[key].forEach(function(tn){mergedMap[tn+'_'+cid]=true;});}}
 function isMerged(teamName,compId){return !!mergedMap[teamName+'_'+compId];}
 
-function rankCls(r){var n=parseInt(r,10);if(isNaN(n))return'cr-mid';if(n===1)return'cr-1';if(n<=3)return'cr-2';if(n<=6)return'cr-4';if(n<=10)return'cr-7';return'cr-mid';}
+function rankCls(r){var n=parseInt(r,10);if(isNaN(n))return'cr-mid';if(n===1)return'cr-1';if(n<=3)return'cr-2';if(n<=6)return'cr-4';if(n<=10)return'cr-7';if(n<=20)return'cr-11';return'cr-mid';}
 
 function computeScores(tr,tname,compsList){
   compsList=compsList||comps;
@@ -3710,7 +4857,7 @@ function maxTierEver(teamName){
 // Get all comps a team participated in, sorted chronologically, with ranks
 function teamComps(teamName){
   var tr=rankings[teamName];if(!tr)return[];
-  return chronoComps.filter(function(c){var r=tr[c.id];return r!==null&&r!==undefined&&r!=='';}).map(function(c){return{compId:c.id,rank:tr[c.id],epoch:epochs[c.id]};});
+  return chronoComps.filter(function(c){return hasRank(tr[c.id]);}).map(function(c){return{compId:c.id,rank:getRank(tr[c.id]),epoch:epochs[c.id]};});
 }
 
 // Get all unique competition years
@@ -3787,7 +4934,7 @@ function fullYearYearsFromTr(tr){
 }
 
 function teamCompsForTr(tn,tr){
-  return chronoComps.filter(function(c){var r=tr[c.id];return r!==null&&r!==undefined&&r!=='';}).map(function(c){return{compId:c.id,rank:tr[c.id],epoch:epochs[c.id]};});
+  return chronoComps.filter(function(c){return hasRank(tr[c.id]);}).map(function(c){return{compId:c.id,rank:getRank(tr[c.id]),epoch:epochs[c.id]};});
 }
 
 for(var tn in rankings){
@@ -3888,8 +5035,8 @@ function renderCompHeads(){
 }
 renderCompHeads();
 
-function badgeCls(r){if(r===null||r===undefined||r==='')return'bg-null';var n=parseInt(r,10);if(isNaN(n))return'bg-mid';if(n>=1&&n<=20)return'bg-'+n;return'bg-mid';}
-function badgeText(r){if(r===null||r===undefined||r==='')return'-';if(typeof r==='number'&&r>50)return'50+';return typeof r==='string'?r:String(r);}
+function badgeCls(r){var n=parseRank(r);if(n===null)return'bg-null';if(n>=1&&n<=20)return'bg-'+n;return'bg-mid';}
+function badgeText(r){var v=getRank(r);if(v===null||v===undefined||v==='')return'-';if(typeof v==='number'&&v>50)return'50+';return typeof v==='string'?v:String(v);}
 
 var app=document.getElementById('app');
 var simTeams=[];
@@ -4162,12 +5309,10 @@ function drawChart(tname){
   // Rank points & line (drawn on top, time-based X)
   var pts=[];
   fcompsSorted.forEach(function(c){
-    var r=tr[c.id];
-    if(r!==null&&r!==undefined&&r!==''){
-      var raw=r,is50=typeof r==='string'&&r.indexOf('50')!==-1;
-      var n=is50?50:parseInt(r,10);if(isNaN(n))return;
-      if(n>maxR)n=maxR;pts.push({x:tX(epochs[c.id]),y:chartY(n,ph,pad),r:n,raw:raw,is50:is50});
-    }
+    if(!hasRank(tr[c.id]))return;
+    var raw=getRank(tr[c.id]),is50=typeof raw==='string'&&raw.indexOf('50+')!==-1;
+    var n=is50?50:parseInt(raw,10);if(isNaN(n))return;
+    if(n>maxR)n=maxR;pts.push({x:tX(epochs[c.id]),y:chartY(n,ph,pad),r:n,raw:raw,is50:is50});
   });
 
   if(pts.length>1){
@@ -4199,7 +5344,7 @@ function buildTeamHistory(tname){
   var fcomps=getFilteredComps();
   fcomps.forEach(function(c){var r=tr[c.id];if(r===null||r===undefined||r==='')return;parts++;var rs=rankScore(r),merged=!isSim&&isMerged(tname,c.id);if(merged)rs/=2;var dc=decayCoeff(c.id,compWeight(c.id)),rd=decayCoeff(c.id,1),integral=dc*rs;ss+=rd*rs;sw+=rd;frontSum+=integral;
     var card=document.createElement('div');card.className='history-card';var strip=document.createElement('div');strip.className='hcard-strip';
-    var n=parseInt(r,10);if(n===1)strip.className+=' s-1';else if(n<=3)strip.className+=' s-2';else if(n<=6)strip.className+=' s-4';else if(n<=10)strip.className+=' s-top10';else if(n<=20)strip.className+=' s-mid';else strip.className+=' s-low';
+    var n=parseRank(r);if(n===null)n=999;if(n===1)strip.className+=' s-1';else if(n<=3)strip.className+=' s-2';else if(n<=6)strip.className+=' s-4';else if(n<=10)strip.className+=' s-top10';else if(n<=20)strip.className+=' s-mid';else strip.className+=' s-low';
     if(merged)strip.className+=' sr-merged';
     card.appendChild(strip);var body=document.createElement('div');body.className='hcard-body';
     var nm=document.createElement('a');nm.className='hcard-name';nm.innerHTML=boldComp(c.id);nm.href=links[c.id]||'#';nm.target='_blank';nm.rel='noopener';nm.style.cssText='text-decoration:none;color:inherit;';
@@ -4240,16 +5385,21 @@ comps.forEach(function(c){var o=document.createElement('option');o.value=c.id;o.
 var cdetail=document.getElementById('compDetail');
 function buildCompDetail(cid){
   var c=null;for(var i=0;i<comps.length;i++){if(comps[i].id===cid){c=comps[i];break;}}if(!c)return;
-  var data=compResults[cid]||[];data.sort(function(a,b){var ra=typeof a.rank==='number'?a.rank:999,rb=typeof b.rank==='number'?b.rank:999;return ra-rb;});
+  var data=[];for(var tn in rankings){var r=getRank(rankings[tn][cid]);var t=getTime(rankings[tn][cid]);if(r===null||typeof r==='string')continue;data.push({team:tn,rank:r,time:t});}
+  data.sort(function(a,b){return a.rank-b.rank;});
   var dc=decayCoeff(cid,compWeight(cid)),rawDecay=dc/compWeight(cid),w=compWeight(cid);
-  var compRanks={};for(var i=0;i<data.length;i++){var rk=data[i].rank;if(typeof rk==='number'){if(!compRanks[rk])compRanks[rk]=[];compRanks[rk].push(i);}}
-  var compMerged={};for(var rk in compRanks){if(compRanks[rk].length>1)compRanks[rk].forEach(function(idx){compMerged[idx]=true;});}
-  var html='<div class="comp-card"><h3><a href="'+(links[cid]||'#')+'" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">'+cid+'</a></h3>';
-  html+='<div class="cmeta">\u5F00\u8D5B\u65F6\u95F4\uff1a'+c.date+' &nbsp;|&nbsp; \u65F6\u5EF6\u7CFB\u6570 '+rawDecay.toFixed(2)+' \u00D7 '+w.toFixed(2)+' = \u6743\u91CD '+dc.toFixed(2)+'</div>';
-  html+='<table class="comp-table"><thead><tr><th>\u540D\u6B21</th><th>\u961F\u4F0D</th><th>\u961F\u5458</th><th>\u7528\u65F6</th><th>\u5F97\u5206</th><th>\u79EF\u5206</th></tr></thead><tbody>';
-  for(var i=0;i<Math.min(data.length,10);i++){var d=data[i],rs=rankScore(d.rank),integral=dc*rs,mrg=compMerged[i];if(mrg){rs/=2;integral/=2;}
-    html+='<tr><td class="'+rankCls(d.rank)+(mrg?' merged':'')+'">#'+d.rank+(mrg?'\u5E76':'')+'</td><td>'+esc(d.cleanName)+'</td><td>'+esc(d.members.join(', '))+'</td><td>'+esc(d.time)+'</td><td>'+rs.toFixed(1)+'</td><td>'+integral.toFixed(1)+'</td></tr>';}
-  html+='</tbody></table><p style="font-size:12px;color:#bbb;margin-top:12px;text-align:center;">\u961F\u5458\u7559\u7A7A\u4EE3\u8868\u4FE1\u606F\u7F3A\u5931\uFF0C\u4E0D\u4EE3\u8868\u771F\u5B9E\u6210\u5458\u6570\u91CF\u3002\u524D\u5341\u540D\u4EE5\u5916\u7684\u8BE6\u7EC6\u4FE1\u606F\u6682\u4E0D\u6536\u5F55\u3002</p></div>';cdetail.innerHTML=html;
+  var compRanks={};for(var i=0;i<data.length;i++){var rk=data[i].rank;if(!compRanks[rk])compRanks[rk]=[];compRanks[rk].push(i);}
+  var shown={};
+  var html='<div class=\"comp-card\"><h3><a href=\"'+(links[cid]||'#')+'\" target=\"_blank\" rel=\"noopener\" style=\"color:inherit;text-decoration:none;\">'+cid+'</a></h3>';
+  var totalTeams=0;for(var tn in rankings){totalTeams++;}
+  html+='<div class=\"cmeta\"><span>\u5F00\u8D5B\u65F6\u95F4\uff1a'+c.date+(c.time?' '+c.time:'')+' &nbsp;|&nbsp; \u65F6\u5EF6\u7CFB\u6570 '+rawDecay.toFixed(2)+' \u00D7 '+w.toFixed(2)+' = \u6743\u91CD '+dc.toFixed(2)+'</span><span>'+data.length+' / '+totalTeams+' \u961F</span></div>';
+  html+='<table class=\"comp-table\"><thead><tr><th>\u540D\u6B21</th><th>\u961F\u4F0D</th><th>\u5B8C\u8D5B\u65F6\u95F4</th><th>\u7528\u65F6</th><th>\u5F97\u5206</th><th>\u79EF\u5206</th></tr></thead><tbody>';
+  for(var i=0;i<data.length;i++){if(shown[i])continue;var d=data[i],rs=rankScore(d.rank),integral=dc*rs;
+    var mergedTeams=compRanks[d.rank];var teamName=d.team;
+    if(mergedTeams&&mergedTeams.length>1){teamName=mergedTeams.map(function(idx){shown[idx]=true;return data[idx].team;}).join(' & ');rs/=2;integral/=2;}
+    var timeStr=fmtTime(d.time);var finishStr=calcFinish(c.date,c.time,d.time);
+    html+='<tr><td class=\"'+rankCls(d.rank)+'\">#'+d.rank+'</td><td>'+esc(teamName)+'</td><td>'+esc(finishStr)+'</td><td>'+esc(timeStr)+'</td><td>'+rs.toFixed(1)+'</td><td>'+integral.toFixed(1)+'</td></tr>';}
+  html+='</tbody></table></div>';cdetail.innerHTML=html;
 }
 csel.addEventListener('change',function(){buildCompDetail(csel.value);});buildCompDetail(csel.value);
 

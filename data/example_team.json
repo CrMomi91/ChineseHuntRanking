@@ -1,19 +1,52 @@
 {
-  "队伍名": {
+  "给猫铲屎去了": {
     "P&KU1": null,
     "CCBC12": null,
     "P&KU2": null,
-    "CCBCBA": null,
-    "MH2023": null,
-    "JH2024": null,
-    "P&KU3a": null,
-    "CCBC15": null,
-    "JUST1": null,
-    "GnPH": null,
-    "CCBC16": null,
-    "US-TC": null,
-    "ZJUPH1": null,
-    "SECO2": null,
+    "CCBCBA": {
+      "r": 89,
+      "t": "196.25"
+    },
+    "MH2023": {
+      "r": 41,
+      "t": "132:08:34"
+    },
+    "JH2024": {
+      "r": 21,
+      "t": "94:11"
+    },
+    "P&KU3a": {
+      "r": 35,
+      "t": "99:08:41"
+    },
+    "CCBC15": {
+      "r": 26,
+      "t": "90.86"
+    },
+    "JUST1": {
+      "r": 25,
+      "t": "56.92"
+    },
+    "GnPH": {
+      "r": 49,
+      "t": "49:45:52"
+    },
+    "CCBC16": {
+      "r": 64,
+      "t": "115:14"
+    },
+    "US-TC": {
+      "r": 28,
+      "t": null
+    },
+    "ZJUPH1": {
+      "r": 12,
+      "t": null
+    },
+    "SECO2": {
+      "r": 21,
+      "t": "60.07"
+    },
     "P&KU3b": null,
     "CCBC17": null
   }
