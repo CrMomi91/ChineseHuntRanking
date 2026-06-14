@@ -102,6 +102,7 @@ body {
 .tsim .card-info { background: #f5f5f5; }
 
 .card-info span { display: flex; align-items: center; justify-content: center; }
+.card-info .card-name { justify-content: flex-start; }
 .tw .card-rank,
 .tw .card-name,
 .tw .card-total { color: #fff; }
@@ -109,7 +110,7 @@ body {
 .tw .card-stable { color: #ccc; }
 .card-rank  { width: 44px; font-size: 17px; font-weight: 700; color: #333; }
 .card-name  { width: 214px; font-size: 15px; font-weight: 500; color: #1a1a1a;
-              overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0 8px; }
+              overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0 8px; text-align: left; }
 .card-total { width: 68px; font-size: 15px; font-weight: 600; color: #111; }
 .card-front { width: 68px; font-size: 15px; font-weight: 500; color: #999; }
 .card-stable{ width: 68px; font-size: 15px; font-weight: 500; color: #999; }
@@ -431,53 +432,152 @@ body {
 .pk-ccbc-check.checked { color: #333; font-weight: 500; }
 
 /* Mobile responsive */
+.board-mobile { display: none; }
 @media (max-width: 768px) {
-  .wrap { padding: 16px 8px 40px; }
-  .page-header h1 { font-size: 22px; }
-  .tab-btn { padding: 6px 12px; font-size: 13px; }
-  .filter-bar { gap: 8px; padding: 6px 8px; }
-  .date-slider-wrap input[type="range"] { width: 100px; }
-  .date-label { font-size: 11px; min-width: 60px; }
-  .pk-ccbc-check { font-size: 12px; }
-  .col-heads { font-size: 11px; padding: 0 0 6px; }
-  .ch-spacer, .card-strip { width: 3px; }
-  .ch-rank, .card-rank { width: 30px; }
-  .ch-name, .card-name { width: 100px; }
-  .card-rank { font-size: 14px; }
-  .card-name { font-size: 13px; }
-  .ch-total, .ch-front, .ch-stable { width: 48px; }
-  .ch-count, .ch-ach { width: 38px; }
-  .card-total { width: 48px; font-size: 13px; }
-  .card-front, .card-stable { width: 48px; font-size: 13px; }
-  .card-count, .card-ach { width: 38px; font-size: 13px; }
-  .card { height: 46px; }
-  .badge { width: 30px; height: 30px; min-width: 30px; font-size: 13px; }
-  .comp-link { width: 30px; min-width: 30px; font-size: 10px; }
-  .card-badges { gap: 6px; padding: 0 6px; }
-  .comp-heads { gap: 6px; padding: 0 6px; }
-  .tab2-wrap, .tab3-wrap { max-width: 100%; }
-  .main-ach-row { flex-direction: column; }
-  .ach-col { width: 100%; }
-  .sel-row { flex-wrap: wrap; }
-  .sel-row select { min-width: 140px; }
-  .info-bar { margin-left: 0; font-size: 12px; }
-  #tab2, #tab3 { width: 100% !important; }
-  .comp-table { font-size: 13px; }
-  .comp-table th { font-size: 12px; padding: 6px 2px; }
-  .comp-table td { padding: 6px 2px; }
-  .history-header { font-size: 11px; padding: 0 8px 4px; }
-  .hh-name { width: 100px; }
-  .hh-date { width: 60px; }
-  .hcard-name { width: 100px; font-size: 14px; }
-  .hcard-date { width: 60px; font-size: 12px; }
-  .hcard-score { width: 44px; font-size: 13px; }
-  .hcard-weight { width: 48px; font-size: 12px; }
-  .hcard-integral { width: 48px; font-size: 13px; }
-  .fab { bottom: 16px; right: 16px; width: 40px; height: 40px; font-size: 18px; }
-  .sim-panel { right: 16px; bottom: 70px; width: 320px; }
+  html { overflow: clip; height: 100%; }
+  body { overflow: clip; height: 100%; }
+  .wrap { width: 100%; max-width: 100%; height: 100%; overflow-y: auto; overflow-x: clip; padding: 12px 6px 32px; -webkit-overflow-scrolling: touch; }
+  .center-col { display: block; width: 100%; max-width: 100%; overflow-x: clip; }
+  .page-header, .tab-bar, #tab1.active, .bar-chart-wrap, .board-mobile { width: 100%; }
+  #tab1.active, .tab-content.active { overflow-x: clip; }
+  .page-header h1 { font-size: 20px; margin-bottom: 8px; }
+  .page-header .subtitle { font-size: 11px; }
+  .tab-bar { gap: 2px; margin-bottom: 16px; }
+  .tab-btn { padding: 6px 10px; font-size: 12px; }
+  .bar-chart-wrap { padding: 8px 4px 6px; overflow: hidden; }
+  .bar-chart-wrap canvas { max-width: 100%; }
+  .filter-bar { gap: 6px; padding: 6px 8px; flex-wrap: wrap; font-size: 11px; max-width: calc(100% - 16px); }
+  .date-slider-wrap input[type="range"] { width: 80px; }
+  .date-label { font-size: 10px; min-width: 56px; }
+  .play-btn { width: 20px; height: 20px; font-size: 9px; }
+  .pk-ccbc-check { font-size: 11px; }
+  .pk-ccbc-check input[type="checkbox"] { width: 14px; height: 14px; }
+  .col-heads { font-size: 10px; padding: 0 0 4px 0; }
+  .col-heads .ch-spacer, .card .card-strip { width: 2px; }
+  .card .card-strip { min-width: 2px; }
+  .col-heads .ch-rank, .card .card-rank { width: 28px; }
+  .col-heads .ch-name, .card .card-name { width: 90px; }
+  .col-heads .ch-total, .col-heads .ch-front, .col-heads .ch-stable, .card .card-total, .card .card-front, .card .card-stable { width: 42px; }
+  .col-heads .ch-count, .col-heads .ch-ach, .card .card-count, .card .card-ach { width: 34px; }
+  .card { height: 42px; margin-bottom: 3px; }
+  .card-rank { font-size: 13px; }
+  .card-name { font-size: 10px; }
+  .card-total, .card-front, .card-stable, .card-count, .card-ach { font-size: 12px; }
+  .badge { width: 26px; height: 26px; min-width: 26px; font-size: 12px; border-radius: 4px; touch-action: manipulation; }
+  .comp-link { width: 26px; min-width: 26px; font-size: 9px; }
+  .card-badges { gap: 5px; padding: 0 5px; }
+  .comp-heads { gap: 5px; padding: 0 5px; }
 
-  .center-col { align-items: flex-start; }
-  .board-scroll { width: 100%; overflow-x: auto; }
+  .board-scroll { display: none; }
+  .board-mobile { display: block; overflow-x: clip; }
+
+  .bm-header { position: relative; height: 16px; margin-bottom: 2px; }
+  .bm-h-left {
+    position: absolute; left: 0; top: 0; bottom: 0; width: 163px; z-index: 2;
+    display: flex; align-items: flex-end;
+    font-size: 10px; color: #aaa; font-weight: 500; padding: 0 0 4px 0;
+  }
+  .bm-hl-spacer { width: 3px; }
+  .bm-hl-rank { width: 28px; text-align: center; }
+  .bm-hl-name { width: 90px; text-align: center; }
+  .bm-hl-total { width: 42px; text-align: center; }
+
+  .bm-h-right { position: absolute; left: 163px; right: 0; top: 0; bottom: 0; overflow-x: auto; overflow-y: hidden; }
+  .bm-h-right::-webkit-scrollbar { height: 0; }
+  .bm-h-right-inner { display: flex; gap: 5px; padding-left: 8px; align-items: flex-end; padding-bottom: 2px; }
+  .bm-h-right-inner .comp-link { width: 26px; min-width: 26px; font-size: 8px; }
+
+  .bm-body { display: flex; flex-direction: column; }
+  .bm-row { position: relative; height: 42px; margin-bottom: 3px; }
+  .bm-row-left {
+    position: absolute; left: 0; top: 0; bottom: 0; width: 163px; z-index: 2;
+    display: flex; align-items: stretch;
+    border-radius: 6px 0 0 6px; overflow: hidden;
+  }
+  .bm-row-left.t0 { background: #FDEDEC; }
+  .bm-row-left.t1 { background: #FEF2E4; }
+  .bm-row-left.t2 { background: #F4EEF8; }
+  .bm-row-left.t3 { background: #EEF2F8; }
+  .bm-row-left.t4 { background: #EEF5EE; }
+  .bm-row-left.tw { background: #333; color: #fff; }
+  .bm-row-left.tsim { background: #f5f5f5; }
+  .bm-row-left .card-strip { width: 3px; min-width: 3px; }
+  .bm-row-left .card-rank { width: 28px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+  .bm-row-left .card-name { width: 90px; display: flex; align-items: center; font-size: 10px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0 4px; }
+  .bm-row-left .card-total { width: 42px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; }
+
+  .bm-row-right { position: absolute; left: 163px; right: 0; top: 0; bottom: 0; overflow-x: auto; overflow-y: hidden; background: #fff; border-radius: 0 6px 6px 0; }
+  .bm-row-right::-webkit-scrollbar { height: 0; }
+  .bm-row-right-inner { display: flex; gap: 5px; padding-left: 8px; align-items: center; height: 42px; }
+  #tab1.active, #tab2.active, #tab3.active { width: 100%; }
+
+  /* Frozen columns on mobile: card children only (header fixed via parent sticky) */
+  .card .card-strip, .card .card-rank, .card .card-name, .card .card-total {
+    position: sticky; z-index: 2;
+  }
+  .card .card-strip { left: 0; }
+  .card.t0 .card-strip { background: #E74C3C; }
+  .card.t1 .card-strip { background: #F0A030; }
+  .card.t2 .card-strip { background: #9B7CB8; }
+  .card.t3 .card-strip { background: #5B9BD5; }
+  .card.t4 .card-strip { background: #5DA85D; }
+  .card.tw .card-strip { background: #222; }
+  .card.tsim .card-strip { background: #bbb; }
+  .card .card-rank { left: 2px; }
+  .card .card-name { left: 30px; }
+  .card .card-total { left: 120px; box-shadow: 2px 0 4px rgba(0,0,0,0.08); }
+  .card.t0 .card-rank, .card.t0 .card-name, .card.t0 .card-total { background: #FDEDEC; }
+  .card.t1 .card-rank, .card.t1 .card-name, .card.t1 .card-total { background: #FEF2E4; }
+  .card.t2 .card-rank, .card.t2 .card-name, .card.t2 .card-total { background: #F4EEF8; }
+  .card.t3 .card-rank, .card.t3 .card-name, .card.t3 .card-total { background: #EEF2F8; }
+  .card.t4 .card-rank, .card.t4 .card-name, .card.t4 .card-total { background: #EEF5EE; }
+  .card.tw .card-rank, .card.tw .card-name, .card.tw .card-total { background: #333; color: #fff; }
+  /* Hide extra header columns on mobile */
+  .col-heads .ch-front, .col-heads .ch-stable, .col-heads .ch-count, .col-heads .ch-ach,
+  .card .card-front, .card .card-stable, .card .card-count, .card .card-ach { display: none; }
+  .col-heads .comp-heads { display: none; }
+
+  /* Header frozen columns: backgrounds (parent .col-heads is sticky at left:0) */
+  .col-heads .ch-spacer, .col-heads .ch-rank, .col-heads .ch-name, .col-heads .ch-total {
+    background: #f5f5f7;
+  }
+  .card .card-strip { box-shadow: 1px 0 2px rgba(0,0,0,0.05); }
+
+  .tab2-wrap, .tab3-wrap { max-width: 100%; padding: 0 4px; }
+  .main-ach-row { flex-direction: column; gap: 12px; }
+  .ach-col { width: 100%; }
+  .sel-row { flex-wrap: wrap; gap: 8px; }
+  .sel-row select { min-width: 130px; font-size: 13px; }
+  .info-bar { margin-left: 0; font-size: 11px; }
+  #tab2, #tab3 { width: 100% !important; }
+  .comp-table { font-size: 12px; }
+  .comp-table th { font-size: 11px; padding: 5px 2px; }
+  .comp-table td { padding: 5px 2px; }
+  .comp-table td:nth-child(2) { padding-left: 6px; }
+  .comp-card { padding: 10px 8px; }
+  .comp-card h3 { font-size: 15px; }
+  .history-header { font-size: 10px; padding: 0 6px 4px; }
+  .hh-name { width: 90px; }
+  .hh-date { width: 55px; }
+  .hh-rank { width: 48px; }
+  .hh-score { width: 42px; }
+  .hh-weight { width: 44px; }
+  .hh-integral { width: 44px; }
+  .hcard-name { width: 90px; font-size: 13px; }
+  .hcard-date { width: 55px; font-size: 11px; }
+  .hcard-rank { width: 42px; height: 26px; font-size: 12px; margin: 0 6px; }
+  .hcard-score { width: 42px; font-size: 13px; }
+  .hcard-weight { width: 44px; font-size: 11px; }
+  .hcard-integral { width: 44px; font-size: 13px; }
+  .history-card { min-height: 40px; }
+  .hcard-body { padding: 0 8px; }
+  .fab { bottom: 12px; right: 12px; width: 38px; height: 38px; font-size: 16px; }
+  .sim-panel { right: 8px; bottom: 60px; width: 300px; max-height: 60vh; }
+  .ach-item { padding: 6px 8px; }
+  .ach-item-name { font-size: 12px; }
+  .ach-item-desc { font-size: 11px; }
+  .ach-item-detail { font-size: 10px; }
+  .ach-item-pct { font-size: 32px; right: -10px; bottom: -6px; }
 }
 </style>
 </head>
@@ -515,6 +615,18 @@ body {
         <div class="comp-heads" id="compHeads"></div>
       </div>
       <div id="app"></div>
+      </div>
+      <div class="board-mobile" id="boardMobile">
+        <div class="bm-header">
+          <div class="bm-h-left">
+            <span class="bm-hl-spacer"></span>
+            <span class="bm-hl-rank">排名</span>
+            <span class="bm-hl-name">队伍</span>
+            <span class="bm-hl-total">总分</span>
+          </div>
+          <div class="bm-h-right" id="bmHRight"></div>
+        </div>
+        <div class="bm-body" id="bmBody"></div>
       </div>
     </div>
 
@@ -5139,6 +5251,7 @@ function renderAll(){
   renderCompHeads();
   renderLeaderboard();
   drawBarChart();
+  if(window.innerWidth<=768){buildMobileBoard();}
 }
 
 // Bar chart
@@ -5152,7 +5265,8 @@ function drawBarChart(){
   all.forEach(function(t,i){t.rank=i+1;});
 
   var canvas=barCanvas,ctx=canvas.getContext('2d'),dpr=window.devicePixelRatio||1;
-  var cssW=Math.max(canvas.parentElement.clientWidth-20,560),cssH=250;
+  var minW=window.innerWidth<=768?280:560;
+  var cssW=Math.max(canvas.parentElement.clientWidth-20,minW),cssH=250;
   canvas.style.width=cssW+'px';canvas.style.height=cssH+'px';
   canvas.width=cssW*dpr;canvas.height=cssH*dpr;ctx.scale(dpr,dpr);
 
@@ -5247,13 +5361,131 @@ function renderCard(team){
     b.addEventListener('mouseleave',function(){this.style.opacity=alpha;});
     if(!isStaff&&hasRank(r)){
       var rs=rankScore(r);if(merged)rs/=2;var contrib=dc*rs;
-      b.addEventListener('mouseenter',function(e){showTT(e,c.id+' | \u5F97\u5206 '+rs.toFixed(1)+' | \u79EF\u5206 '+contrib.toFixed(1)+(merged?' | \u5E76\u961F':''),this);});
+      var tipText=c.id+' | \u5F97\u5206 '+rs.toFixed(1)+' | \u79EF\u5206 '+contrib.toFixed(1)+(merged?' | \u5E76\u961F':'');
+      b.setAttribute('data-tip',tipText);
+      b.addEventListener('mouseenter',function(e){showTT(e,tipText,this);});
       b.addEventListener('mouseleave',hideTT);
       b.addEventListener('click',function(){var u=links[c.id+'_rank']||links[c.id];if(u)window.open(u,'_blank');});
     }
     badges.appendChild(b);
   })(fcomps[k]);}
   card.appendChild(badges);app.appendChild(card);
+}
+
+// Mobile two-panel board
+function buildMobileBoard(){
+  if(window.innerWidth>768)return;
+  var bmHRight=document.getElementById('bmHRight');
+  var bmBody=document.getElementById('bmBody');
+  var fcomps=getFilteredComps();
+
+  // Build competition header
+  var hInner=document.createElement('div');
+  hInner.className='bm-h-right-inner';
+  fcomps.forEach(function(c){
+    var link=document.createElement('span');
+    link.className='comp-link';link.textContent=c.id;
+    var dc=decayCoeff(c.id,compWeight(c.id));
+    var tipText=c.id+' | '+c.date+' | \u6743\u91CD '+dc.toFixed(2);
+    link.addEventListener('click',function(e){
+      var tt=document.getElementById('tooltip');
+      if(tt.classList.contains('show')&&tt._bmTarget===link){
+        tt.classList.remove('show');tt._bmTarget=null;
+      }else{
+        if(tt._bmTarget)tt._bmTarget.style.opacity='';
+        showTT(e,tipText,link);
+        tt._bmTarget=link;
+      }
+    });
+    hInner.appendChild(link);
+  });
+  var hSpacer=document.createElement('div');
+  hSpacer.style.cssText='flex-shrink:0;min-width:4px;height:1px;';
+  hInner.appendChild(hSpacer);
+  bmHRight.innerHTML='';bmHRight.appendChild(hInner);
+
+  // Build rows from existing cards
+  var cards=document.querySelectorAll('#app .card');
+  bmBody.innerHTML='';
+  cards.forEach(function(card){
+    var row=document.createElement('div');row.className='bm-row';
+
+    // Left cell: frozen columns
+    var left=document.createElement('div');
+    var tierCls='';
+    card.classList.forEach(function(c){if(c.match(/^t/))tierCls=c;});
+    left.className='bm-row-left '+tierCls;
+
+    var strip=document.createElement('div');strip.className='card-strip';
+    strip.style.background=card.querySelector('.card-strip').style.background||'';
+    left.appendChild(strip);
+
+    ['card-rank','card-name','card-total'].forEach(function(cls){
+      var el=document.createElement('span');el.className=cls;
+      el.textContent=card.querySelector('.'+cls).textContent;
+      left.appendChild(el);
+    });
+    row.appendChild(left);
+
+    // Right cell: badges area
+    var right=document.createElement('div');right.className='bm-row-right';
+    var rInner=document.createElement('div');rInner.className='bm-row-right-inner';
+    var badges=card.querySelectorAll('.card-badges .badge');
+    badges.forEach(function(b){
+      var clone=b.cloneNode(true);
+      var tipText=b.getAttribute('data-tip');
+      if(tipText){
+        clone.addEventListener('click',function(e){
+          var tt=document.getElementById('tooltip');
+          if(tt.classList.contains('show')&&tt._bmTarget===clone){
+            tt.classList.remove('show');tt._bmTarget=null;clone.style.opacity='';
+          }else{
+            if(tt._bmTarget)tt._bmTarget.style.opacity='';
+            showTT(e,tipText,clone);
+            tt._bmTarget=clone;clone.style.opacity='1';
+          }
+        });
+      }
+      rInner.appendChild(clone);
+    });
+    // right edge spacer
+    var spacer=document.createElement('div');
+    spacer.style.cssText='flex-shrink:0;min-width:4px;height:42px;';
+    rInner.appendChild(spacer);
+    right.appendChild(rInner);row.appendChild(right);
+    bmBody.appendChild(row);
+  });
+
+  // Hide tooltip on outside tap (mobile)
+  document.addEventListener('click',function(e){
+    if(window.innerWidth>768)return;
+    var tt=document.getElementById('tooltip');
+    if(!tt.classList.contains('show'))return;
+    var badgeOrLink=e.target.closest('.bm-row-right-inner .badge')||e.target.closest('.bm-h-right-inner .comp-link');
+    if(badgeOrLink===tt._bmTarget)return;
+    if(tt._bmTarget)tt._bmTarget.style.opacity='';
+    tt.classList.remove('show');tt._bmTarget=null;
+  });
+  var syncing=false;
+  var rights=document.querySelectorAll('.bm-row-right,.bm-h-right');
+  rights.forEach(function(el){
+    el.addEventListener('scroll',function(){
+      if(syncing)return;
+      syncing=true;
+      var sl=el.scrollLeft;
+      rights.forEach(function(r){if(r!==el)r.scrollLeft=sl;});
+      syncing=false;
+    });
+  });
+
+  // Scroll to rightmost (newest competitions)
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){
+      var maxW=0;
+      rights.forEach(function(r){maxW=Math.max(maxW,r.scrollWidth-r.clientWidth);});
+      rights.forEach(function(r){r.scrollLeft=maxW;});
+    });
+  });
 }
 
 // Restore toggle + initial render
@@ -5316,7 +5548,7 @@ function drawChart(tname){
   var canvas=tchart,ctx=canvas.getContext('2d'),dpr=window.devicePixelRatio||1;
   var cssH=280;
   requestAnimationFrame(function(){
-  var cssW=thist.clientWidth;if(!cssW||cssW<500)cssW=500;
+  var cssW=thist.clientWidth;var minW=window.innerWidth<=768?280:500;if(!cssW||cssW<minW)cssW=minW;
   canvas.style.width=cssW+'px';canvas.style.height=cssH+'px';
   canvas.width=cssW*dpr;canvas.height=cssH*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
   var isSim=tname.indexOf('__sim__')===0;var simName=isSim?tname.slice(7):'';
