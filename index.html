@@ -271,8 +271,8 @@ body {
 }
 .history-header .hh-spacer { width: 4px; flex-shrink: 0; }
 .history-header span { flex-shrink: 0; }
-.hh-name { width: 160px; flex-shrink: 0; }
-.hh-date { width: 85px; }
+.hh-name { width: 120px; flex-shrink: 0; }
+.hh-date { width: 125px; }
 .hh-rank { width: 60px; text-align: center; }
 .hh-score { width: 62px; text-align: right; }
 .hh-weight{ width: 66px; text-align: right; }
@@ -297,10 +297,10 @@ body {
 .hcard-strip.s-staff { background: #555; }
 
 .hcard-body { display: flex; align-items: center; flex: 1; padding: 0 14px; gap: 0; }
-.hcard-name { width: 160px; flex-shrink: 0; font-size: 17px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hcard-name { width: 120px; flex-shrink: 0; font-size: 17px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .hcard-name:hover { color: #3A6EA5 !important; }
 .hcard-name b { font-weight: 700; }
-.hcard-date { width: 85px; font-size: 15px; color: #888; }
+.hcard-date { width: 125px; font-size: 15px; color: #888; }
 .hcard-rank { width: 52px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 4px; font-size: 15px; font-weight: 700; margin: 0 10px; }
 .hcard-rank.sr-1 { background: #FADBD8; color: #C0392B; }
 .hcard-rank.sr-2 { background: #FDEBD0; color: #D68910; }
@@ -319,7 +319,7 @@ body {
   background: #fff; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
   margin-bottom: 4px; overflow: hidden; padding: 14px 20px;
 }
-.comp-card h3 { font-size: 17px; font-weight: 600; margin-bottom: 4px; }
+.comp-card h3 { font-size: 17px; font-weight: 600; margin: 0 0 0 0; line-height: 1.3; }
 .comp-card h3 a:hover { color: #3A6EA5; }
 .comp-card .cmeta { font-size: 13px; color: #888; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
 
@@ -342,7 +342,7 @@ body {
 .comp-table td.cr-mid { font-weight: 400; }
 .comp-table td.merged { font-style: italic; font-weight: 400 !important; }
 
-.tab4-wrap { max-width: 700px; margin: 0 auto; }
+.tab4-wrap { max-width: 700px; margin: 0 auto; padding: 0 24px; }
 .readme { font-size: 15px; line-height: 1.8; color: #555; }
 .readme p { margin-bottom: 12px; }
 .readme a { color: #3A6EA5; text-decoration: none; }
@@ -436,7 +436,7 @@ body {
 @media (max-width: 768px) {
   html { overflow: clip; height: 100%; }
   body { overflow: clip; height: 100%; }
-  .wrap { width: 100%; max-width: 100%; height: 100%; overflow-y: auto; overflow-x: clip; padding: 12px 6px 32px; -webkit-overflow-scrolling: touch; }
+  .wrap { width: 100%; max-width: 100%; height: 100%; overflow-y: scroll; overflow-x: clip; padding: 24px 6px 32px; -webkit-overflow-scrolling: touch; }
   .center-col { display: block; width: 100%; max-width: 100%; overflow-x: clip; }
   .page-header, .tab-bar, #tab1.active, .bar-chart-wrap, .board-mobile { width: 100%; }
   #tab1.active, .tab-content.active { overflow-x: clip; }
@@ -446,6 +446,7 @@ body {
   .tab-btn { padding: 6px 10px; font-size: 12px; }
   .bar-chart-wrap { padding: 8px 4px 6px; overflow: hidden; }
   .bar-chart-wrap canvas { max-width: 100%; }
+  .chart-wrap { padding: 8px 0 6px; }
   .filter-bar { gap: 6px; padding: 6px 8px; flex-wrap: wrap; font-size: 11px; max-width: calc(100% - 16px); }
   .date-slider-wrap input[type="range"] { width: 80px; }
   .date-label { font-size: 10px; min-width: 56px; }
@@ -543,29 +544,33 @@ body {
   }
   .card .card-strip { box-shadow: 1px 0 2px rgba(0,0,0,0.05); }
 
-  .tab2-wrap, .tab3-wrap { max-width: 100%; padding: 0 4px; }
+  .tab2-wrap, .tab3-wrap { max-width: 100%; padding: 0; }
+  .main-col, .chart-wrap, #teamHistory, .history-card, .history-header { width: 100%; box-sizing: border-box; }
   .main-ach-row { flex-direction: column; gap: 12px; }
   .ach-col { width: 100%; }
-  .sel-row { flex-wrap: wrap; gap: 8px; }
+  .sel-row { flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
   .sel-row select { min-width: 130px; font-size: 13px; }
   .info-bar { margin-left: 0; font-size: 11px; }
   #tab2, #tab3 { width: 100% !important; }
   .comp-table { font-size: 12px; }
   .comp-table th { font-size: 11px; padding: 5px 2px; }
   .comp-table td { padding: 5px 2px; }
-  .comp-table td:nth-child(2) { padding-left: 6px; }
-  .comp-card { padding: 10px 8px; }
+.comp-table td:nth-child(2) { padding-left: 6px; }
+.comp-table th:nth-child(1) { width: 10%; }
+.comp-table th:nth-child(3) { width: 24%; }
+.comp-card { padding: 10px 8px; }
   .comp-card h3 { font-size: 15px; }
   .history-header { font-size: 10px; padding: 0 6px 4px; }
-  .hh-name { width: 90px; }
-  .hh-date { width: 55px; }
-  .hh-rank { width: 48px; }
+  .hh-name { width: 70px; }
+  .hh-date { width: 75px; }
+  .hh-rank { width: 54px; }
   .hh-score { width: 42px; }
   .hh-weight { width: 44px; }
   .hh-integral { width: 44px; }
-  .hcard-name { width: 90px; font-size: 13px; }
-  .hcard-date { width: 55px; font-size: 11px; }
+  .hcard-name { width: 70px; font-size: 13px; }
+  .hcard-date { width: 75px; font-size: 11px; }
   .hcard-rank { width: 42px; height: 26px; font-size: 12px; margin: 0 6px; }
+  .hcard-rank.sr-staff { font-size: 10px; }
   .hcard-score { width: 42px; font-size: 13px; }
   .hcard-weight { width: 44px; font-size: 11px; }
   .hcard-integral { width: 44px; font-size: 13px; }
@@ -577,14 +582,14 @@ body {
   .ach-item-name { font-size: 12px; }
   .ach-item-desc { font-size: 11px; }
   .ach-item-detail { font-size: 10px; }
-  .ach-item-pct { font-size: 32px; right: -10px; bottom: -6px; }
+  .ach-item-pct { font-size: 51px; right: -10px; bottom: -6px; }
 }
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="center-col">
-    <div class="page-header"><h1>中华 Puzzle Hunt 队伍数据统计</h1><div class="subtitle">野榜，纯属娱乐，可能存在误导</div></div>
+    <div class="page-header"><h1>中华 Puzzle Hunt 队伍数据统计</h1><div class="subtitle">纯属娱乐，可能存在误导</div></div>
 
     <div class="tab-bar">
       <button class="tab-btn active" data-tab="tab1">总榜</button>
@@ -702,171 +707,171 @@ body {
 var TEAMS = [
   {
     "name": "simplicissimus",
-    "tier": "T0",
-    "rank": "1",
-    "score": 460.23
+    "tier": "",
+    "rank": "",
+    "score": 0
   },
   {
     "name": "灵境TES",
     "tier": "",
-    "rank": "2",
-    "score": 360.94
+    "rank": "",
+    "score": 0
   },
   {
     "name": "识文解意的追迹者",
-    "tier": "T1",
-    "rank": "3",
-    "score": 289.52
+    "tier": "",
+    "rank": "",
+    "score": 0
   },
   {
     "name": "鸡",
     "tier": "",
-    "rank": "4",
-    "score": 254.14
+    "rank": "",
+    "score": 0
   },
   {
     "name": "杂鱼",
     "tier": "",
-    "rank": "5",
-    "score": 213.19
+    "rank": "",
+    "score": 0
   },
   {
     "name": "Anonymous",
-    "tier": "T2",
-    "rank": "6",
-    "score": 193.22
+    "tier": "",
+    "rank": "",
+    "score": 0
   },
   {
     "name": "Reviver Team",
     "tier": "",
-    "rank": "7",
-    "score": 189.46
+    "rank": "",
+    "score": 0
   },
   {
     "name": "解谜怪盗团",
     "tier": "",
-    "rank": "8",
-    "score": 185.21
+    "rank": "",
+    "score": 0
   },
   {
     "name": "海拉鲁野炊组",
     "tier": "",
-    "rank": "9",
-    "score": 165.65
+    "rank": "",
+    "score": 0
   },
   {
     "name": "金牌线",
     "tier": "",
-    "rank": "10",
-    "score": 164.85
+    "rank": "",
+    "score": 0
   },
   {
     "name": "闲散解谜！",
     "tier": "",
-    "rank": "11",
-    "score": 159.64
+    "rank": "",
+    "score": 0
   },
   {
     "name": "喵喵喵",
     "tier": "",
-    "rank": "12",
-    "score": 136.2
+    "rank": "",
+    "score": 0
   },
   {
     "name": "zitmen",
     "tier": "",
-    "rank": "13",
-    "score": 135.9
+    "rank": "",
+    "score": 0
   },
   {
     "name": "谜途旅人",
     "tier": "",
-    "rank": "14",
-    "score": 118.04
+    "rank": "",
+    "score": 0
   },
   {
     "name": "JUSTeam",
     "tier": "",
-    "rank": "15",
-    "score": 104.77
+    "rank": "",
+    "score": 0
   },
   {
     "name": "幼稚园的小猫咪",
-    "tier": "T3",
-    "rank": "16",
-    "score": 72.88
+    "tier": "",
+    "rank": "",
+    "score": 0
   },
   {
     "name": "世界美食official",
     "tier": "",
-    "rank": "17",
-    "score": 67.59
+    "rank": "",
+    "score": 0
   },
   {
     "name": "rusty lake rambler",
     "tier": "",
-    "rank": "18",
-    "score": 67.17
+    "rank": "",
+    "score": 0
   },
   {
     "name": "天翔战队ZOO连者！",
     "tier": "",
-    "rank": "19",
-    "score": 52.07
+    "rank": "",
+    "score": 0
   },
   {
     "name": "看看题",
     "tier": "",
-    "rank": "20",
-    "score": 37.86
+    "rank": "",
+    "score": 0
   },
   {
     "name": "反卷",
     "tier": "",
-    "rank": "不分上下",
-    "score": 20.0
+    "rank": "",
+    "score": 0
   },
   {
     "name": "何以为我",
     "tier": "",
     "rank": "",
-    "score": 17.69
+    "score": 0
   },
   {
     "name": "凑不出",
     "tier": "",
     "rank": "",
-    "score": 16.43
+    "score": 0
   },
   {
     "name": "深色墨点",
     "tier": "",
     "rank": "",
-    "score": 14.31
+    "score": 0
   },
   {
     "name": "绿色圆圈",
     "tier": "",
     "rank": "",
-    "score": 11.94
+    "score": 0
   },
   {
     "name": "Puzzlesweeper",
     "tier": "",
     "rank": "",
-    "score": 11.39
+    "score": 0
   },
   {
     "name": "Not A Hunter",
     "tier": "",
     "rank": "",
-    "score": 6.25
+    "score": 0
   },
   {
     "name": "Cyfur",
     "tier": "",
     "rank": "",
-    "score": 5.22
+    "score": 0
   },
   {
     "name": "耗",
@@ -965,3983 +970,23 @@ var TEAMS = [
     "score": 0
   }
 ];
-var COMPETITIONS = [
-  {
-    "id": "P&KU1",
-    "date": "2022-06-24",
-    "time": "20:00",
-    "url": "https://pnku1.pkupuzzle.art/",
-    "rankingUrl": "https://pnku1.pkupuzzle.art/scoreboard"
-  },
-  {
-    "id": "CCBC12",
-    "date": "2022-08-12",
-    "time": "20:00",
-    "url": "https://ccbc12.cipherpuzzles.com/",
-    "rankingUrl": "https://archive.cipherpuzzles.com/index.html#/scoreboard?c=ccbc12/scoreboard"
-  },
-  {
-    "id": "P&KU2",
-    "date": "2023-04-28",
-    "time": "20:00",
-    "url": "https://pnku2.pkupuzzle.art/",
-    "rankingUrl": "https://pnku2.pkupuzzle.art/#/board/score_board"
-  },
-  {
-    "id": "CCBCBA",
-    "date": "2023-08-11",
-    "time": "20:00",
-    "url": "https://ccbc13.cipherpuzzles.com/",
-    "rankingUrl": "https://archive.cipherpuzzles.com/ccbc13/board14.html"
-  },
-  {
-    "id": "MH2023",
-    "date": "2023-12-29",
-    "time": "20:00",
-    "url": "https://mh2023.puzzlehunt.cn/",
-    "rankingUrl": "https://mh2023.puzzlehunt.cn/boards?key=score_board"
-  },
-  {
-    "id": "JH2024",
-    "date": "2024-02-23",
-    "time": "20:00",
-    "url": "https://jh2024.jianghujiemi.fun/",
-    "rankingUrl": "https://jh2024.jianghujiemi.fun/teams"
-  },
-  {
-    "id": "P&KU3a",
-    "date": "2024-07-19",
-    "time": "20:00",
-    "url": "https://pnku3.pkupuzzle.art/",
-    "rankingUrl": "https://pnku3.pkupuzzle.art/boards?key=score_board"
-  },
-  {
-    "id": "CCBC15",
-    "date": "2024-08-09",
-    "time": "20:00",
-    "url": "https://ccbc15.cipherpuzzles.com/",
-    "rankingUrl": "https://archive.cipherpuzzles.com/ccbc15/board15.html"
-  },
-  {
-    "id": "JUST1",
-    "date": "2024-09-06",
-    "time": "19:43",
-    "url": "https://justhunt.cn/archive/just-one/",
-    "rankingUrl": "https://justhunt.cn/#/rankings"
-  },
-  {
-    "id": "GnPH",
-    "date": "2025-07-18",
-    "time": "20:00",
-    "url": "https://goldenph.art/",
-    "rankingUrl": "https://goldenph.art/boards?key=score_board"
-  },
-  {
-    "id": "CCBC16",
-    "date": "2025-08-08",
-    "time": "20:00",
-    "url": "https://ccbc16.cipherpuzzles.com/",
-    "rankingUrl": "https://ccbc16.cipherpuzzles.com/leaderboard"
-  },
-  {
-    "id": "US-TC",
-    "date": "2025-10-06",
-    "time": "20:00",
-    "url": "http://us-tc.top/",
-    "rankingUrl": "http://us-tc.top/"
-  },
-  {
-    "id": "ZJUPH1",
-    "date": "2025-11-21",
-    "time": "20:00",
-    "url": "https://2025.zjuph.fun/",
-    "rankingUrl": "https://2025.zjuph.fun/"
-  },
-  {
-    "id": "SECO2",
-    "date": "2026-01-31",
-    "time": "20:00",
-    "url": "https://archive.secopuzzle.com/#/main/seco2",
-    "rankingUrl": "https://archive.secopuzzle.com/#/scoreboard/seco2"
-  },
-  {
-    "id": "P&KU3b",
-    "date": "2026-07-10",
-    "time": "20:00",
-    "url": "https://pnku3.pkupuzzle.art/",
-    "rankingUrl": "https://pnku3.pkupuzzle.art/"
-  },
-  {
-    "id": "CCBC17",
-    "date": "2026-08-14",
-    "time": "20:00",
-    "url": "https://ccbc17.cipherpuzzles.com/",
-    "rankingUrl": "https://ccbc17.cipherpuzzles.com/"
-  }
-];
-var RANKINGS = {
-  "simplicissimus": {
-    "P&KU1": {
-      "rank": 4,
-      "time": "49.57"
-    },
-    "CCBC12": {
-      "rank": 1,
-      "time": "15.93"
-    },
-    "P&KU2": {
-      "rank": 2,
-      "time": "30:55:43"
-    },
-    "CCBCBA": {
-      "staff": true
-    },
-    "MH2023": {
-      "rank": 2,
-      "time": "28:35:42"
-    },
-    "JH2024": {
-      "rank": 2,
-      "time": "41:41"
-    },
-    "P&KU3a": {
-      "rank": 1,
-      "time": "25:26:15"
-    },
-    "CCBC15": {
-      "rank": 1,
-      "time": "30.98"
-    },
-    "JUST1": {
-      "rank": 6,
-      "time": "36.50"
-    },
-    "GnPH": {
-      "staff": true
-    },
-    "CCBC16": {
-      "staff": true
-    },
-    "US-TC": {
-      "rank": 1,
-      "time": null
-    },
-    "ZJUPH1": {
-      "rank": 1,
-      "time": null
-    },
-    "SECO2": null,
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "灵境TES": {
-    "P&KU1": null,
-    "CCBC12": {
-      "rank": 5,
-      "time": "51.08"
-    },
-    "P&KU2": {
-      "rank": 4,
-      "time": "55:50:19"
-    },
-    "CCBCBA": {
-      "rank": 6,
-      "time": "62.99"
-    },
-    "MH2023": {
-      "rank": 3,
-      "time": "33:32:36"
-    },
-    "JH2024": {
-      "rank": 6,
-      "time": "54:14"
-    },
-    "P&KU3a": {
-      "rank": 3,
-      "time": "40:27:49"
-    },
-    "CCBC15": {
-      "rank": 2,
-      "time": "32.25"
-    },
-    "JUST1": {
-      "rank": 2,
-      "time": "22.01"
-    },
-    "GnPH": {
-      "rank": 4,
-      "time": "16:06:37"
-    },
-    "CCBC16": {
-      "rank": 5,
-      "time": "43:44"
-    },
-    "US-TC": {
-      "rank": 3,
-      "time": null
-    },
-    "ZJUPH1": {
-      "rank": 7,
-      "time": null
-    },
-    "SECO2": {
-      "rank": 14,
-      "time": "52:17"
-    },
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "识文解意的追迹者": {
-    "P&KU1": {
-      "rank": 9,
-      "time": "64.50"
-    },
-    "CCBC12": {
-      "rank": 8,
-      "time": "56.68"
-    },
-    "P&KU2": {
-      "rank": 9,
-      "time": "68:52:59"
-    },
-    "CCBCBA": {
-      "rank": 7,
-      "time": "65.16"
-    },
-    "MH2023": {
-      "rank": 8,
-      "time": "49:40:32"
-    },
-    "JH2024": {
-      "rank": 12,
-      "time": "73:44"
-    },
-    "P&KU3a": {
-      "rank": 19,
-      "time": "83:10:18"
-    },
-    "CCBC15": {
-      "rank": 3,
-      "time": "41.62"
-    },
-    "JUST1": {
-      "rank": 5,
-      "time": "30.26"
-    },
-    "GnPH": {
-      "rank": 19,
-      "time": "30:49:39"
-    },
-    "CCBC16": {
-      "rank": 1,
-      "time": "33:52"
-    },
-    "US-TC": {
-      "rank": 69,
-      "time": null
-    },
-    "ZJUPH1": {
-      "rank": 2,
-      "time": null
-    },
-    "SECO2": {
-      "rank": 3,
-      "time": "27:22"
-    },
-    "P&KU3b": null,
-    "CCBC17": {
-      "staff": true
-    }
-  },
-  "鸡": {
-    "P&KU1": null,
-    "CCBC12": {
-      "rank": 7,
-      "time": "56.50"
-    },
-    "P&KU2": {
-      "rank": 1,
-      "time": "30:42:40"
-    },
-    "CCBCBA": {
-      "rank": 3,
-      "time": "52.45"
-    },
-    "MH2023": {
-      "rank": 1,
-      "time": "28:12:41"
-    },
-    "JH2024": {
-      "rank": 3,
-      "time": "48:16"
-    },
-    "P&KU3a": {
-      "rank": 4,
-      "time": "41:59:18"
-    },
-    "CCBC15": {
-      "rank": 7,
-      "time": "50.10"
-    },
-    "JUST1": null,
-    "GnPH": {
-      "rank": 6,
-      "time": "20:16:59"
-    },
-    "CCBC16": {
-      "rank": 13,
-      "time": "59:47"
-    },
-    "US-TC": null,
-    "ZJUPH1": null,
-    "SECO2": null,
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "杂鱼": {
-    "P&KU1": null,
-    "CCBC12": null,
-    "P&KU2": null,
-    "CCBCBA": null,
-    "MH2023": null,
-    "JH2024": null,
-    "P&KU3a": null,
-    "CCBC15": null,
-    "JUST1": null,
-    "GnPH": {
-      "rank": 1,
-      "time": "12:06:51"
-    },
-    "CCBC16": {
-      "rank": 2,
-      "time": "38:07"
-    },
-    "US-TC": {
-      "rank": 6,
-      "time": null
-    },
-    "ZJUPH1": {
-      "rank": 9,
-      "time": null
-    },
-    "SECO2": null,
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "Anonymous": {
-    "P&KU1": null,
-    "CCBC12": null,
-    "P&KU2": null,
-    "CCBCBA": {
-      "rank": 16,
-      "time": "81.10"
-    },
-    "MH2023": {
-      "rank": 6,
-      "time": "48:45:02"
-    },
-    "JH2024": {
-      "rank": 4,
-      "time": "48:17"
-    },
-    "P&KU3a": {
-      "staff": true
-    },
-    "CCBC15": {
-      "rank": 5,
-      "time": "43.60"
-    },
-    "JUST1": {
-      "rank": 11,
-      "time": "46.68"
-    },
-    "GnPH": {
-      "rank": 2,
-      "time": "13:47:26"
-    },
-    "CCBC16": null,
-    "US-TC": null,
-    "ZJUPH1": {
-      "staff": true
-    },
-    "SECO2": {
-      "rank": 2,
-      "time": "25:56"
-    },
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "Reviver Team": {
-    "P&KU1": null,
-    "CCBC12": null,
-    "P&KU2": null,
-    "CCBCBA": null,
-    "MH2023": null,
-    "JH2024": null,
-    "P&KU3a": {
-      "rank": 22,
-      "time": "89:44:44"
-    },
-    "CCBC15": {
-      "rank": 22,
-      "time": "85.40"
-    },
-    "JUST1": {
-      "rank": 10,
-      "time": "46.20"
-    },
-    "GnPH": {
-      "rank": 5,
-      "time": "17:05:16"
-    },
-    "CCBC16": {
-      "rank": 6,
-      "time": "48:36"
-    },
-    "US-TC": {
-      "rank": 4,
-      "time": null
-    },
-    "ZJUPH1": {
-      "rank": 4,
-      "time": null
-    },
-    "SECO2": {
-      "rank": 1,
-      "time": "23:48"
-    },
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "解谜怪盗团": {
-    "P&KU1": {
-      "rank": 2,
-      "time": "22.57"
-    },
-    "CCBC12": {
-      "rank": 4,
-      "time": "49.51"
-    },
-    "P&KU2": null,
-    "CCBCBA": {
-      "rank": "50+",
-      "time": null
-    },
-    "MH2023": {
-      "rank": 4,
-      "time": "40:06:47"
-    },
-    "JH2024": {
-      "rank": 1,
-      "time": "41:29"
-    },
-    "P&KU3a": {
-      "rank": 2,
-      "time": "31:27:37"
-    },
-    "CCBC15": {
-      "rank": 37,
-      "time": "109.17"
-    },
-    "JUST1": {
-      "rank": 12,
-      "time": "47.59"
-    },
-    "GnPH": {
-      "rank": "50+",
-      "time": null
-    },
-    "CCBC16": {
-      "rank": 7,
-      "time": "50:13"
-    },
-    "US-TC": {
-      "rank": "50+",
-      "time": null
-    },
-    "ZJUPH1": {
-      "rank": "50+",
-      "time": null
-    },
-    "SECO2": null,
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "海拉鲁野炊组": {
-    "P&KU1": {
-      "rank": 8,
-      "time": "60.20"
-    },
-    "CCBC12": null,
-    "P&KU2": {
-      "rank": 3,
-      "time": "54:33:28"
-    },
-    "CCBCBA": {
-      "rank": 9,
-      "time": "69.32"
-    },
-    "MH2023": {
-      "rank": 7,
-      "time": "48:54:46"
-    },
-    "JH2024": {
-      "rank": 7,
-      "time": "60:45"
-    },
-    "P&KU3a": {
-      "rank": 5,
-      "time": "45:56:43"
-    },
-    "CCBC15": {
-      "rank": 11,
-      "time": "51.95"
-    },
-    "JUST1": {
-      "rank": 3,
-      "time": "24.86"
-    },
-    "GnPH": {
-      "rank": 8,
-      "time": "20:50:43"
-    },
-    "CCBC16": {
-      "rank": 9,
-      "time": "51:54"
-    },
-    "US-TC": {
-      "rank": 15,
-      "time": null
-    },
-    "ZJUPH1": {
-      "rank": 11,
-      "time": null
-    },
-    "SECO2": {
-      "rank": 23,
-      "time": "62:50"
-    },
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "金牌线": {
-    "P&KU1": null,
-    "CCBC12": null,
-    "P&KU2": {
-      "rank": 10,
-      "time": "69:00:03"
-    },
-    "CCBCBA": {
-      "rank": 12,
-      "time": "71.81"
-    },
-    "MH2023": {
-      "rank": 9,
-      "time": "51:28:27"
-    },
-    "JH2024": {
-      "rank": 10,
-      "time": "70:57"
-    },
-    "P&KU3a": {
-      "rank": 10,
-      "time": "57:59:40"
-    },
-    "CCBC15": {
-      "rank": 4,
-      "time": "43.12"
-    },
-    "JUST1": null,
-    "GnPH": {
-      "staff": true
-    },
-    "CCBC16": {
-      "rank": 3,
-      "time": "41:16"
-    },
-    "US-TC": null,
-    "ZJUPH1": {
-      "rank": 5,
-      "time": null
-    },
-    "SECO2": null,
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "闲散解谜！": {
-    "P&KU1": {
-      "rank": 17,
-      "time": "108.85"
-    },
-    "CCBC12": {
-      "rank": 13,
-      "time": "72.28"
-    },
-    "P&KU2": {
-      "rank": 5,
-      "time": "55:57:11"
-    },
-    "CCBCBA": {
-      "rank": 1,
-      "time": "46.52"
-    },
-    "MH2023": null,
-    "JH2024": {
-      "rank": 8,
-      "time": "63:11"
-    },
-    "P&KU3a": {
-      "rank": 9,
-      "time": "54:37:57"
-    },
-    "CCBC15": {
-      "staff": true
-    },
-    "JUST1": null,
-    "GnPH": {
-      "rank": 3,
-      "time": "16:00:39"
-    },
-    "CCBC16": {
-      "rank": 8,
-      "time": "51:15"
-    },
-    "US-TC": null,
-    "ZJUPH1": null,
-    "SECO2": null,
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "喵喵喵": {
-    "P&KU1": {
-      "rank": 1,
-      "time": "21.22"
-    },
-    "CCBC12": {
-      "rank": 6,
-      "time": "55.80"
-    },
-    "P&KU2": null,
-    "CCBCBA": {
-      "rank": 2,
-      "time": "52.23"
-    },
-    "MH2023": {
-      "staff": true
-    },
-    "JH2024": null,
-    "P&KU3a": null,
-    "CCBC15": {
-      "rank": 12,
-      "time": "70.49"
-    },
-    "JUST1": null,
-    "GnPH": null,
-    "CCBC16": {
-      "rank": 14,
-      "time": "61:39"
-    },
-    "US-TC": null,
-    "ZJUPH1": {
-      "rank": 10,
-      "time": null
-    },
-    "SECO2": null,
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "zitmen": {
-    "P&KU1": {
-      "rank": 19,
-      "time": "114.15"
-    },
-    "CCBC12": {
-      "rank": 40,
-      "time": "136.02"
-    },
-    "P&KU2": {
-      "rank": 13,
-      "time": "75:34:08"
-    },
-    "CCBCBA": {
-      "rank": 8,
-      "time": "67.14"
-    },
-    "MH2023": {
-      "rank": 5,
-      "time": "44:12:11"
-    },
-    "JH2024": {
-      "rank": 26,
-      "time": "110:43"
-    },
-    "P&KU3a": {
-      "rank": 8,
-      "time": "52:14:59"
-    },
-    "CCBC15": {
-      "rank": 9,
-      "time": "50.45"
-    },
-    "JUST1": null,
-    "GnPH": {
-      "rank": 11,
-      "time": "22:46:07"
-    },
-    "CCBC16": {
-      "rank": 4,
-      "time": "41:27"
-    },
-    "US-TC": {
-      "rank": 7,
-      "time": null
-    },
-    "ZJUPH1": {
-      "rank": 3,
-      "time": null
-    },
-    "SECO2": null,
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "谜途旅人": {
-    "P&KU1": null,
-    "CCBC12": null,
-    "P&KU2": {
-      "rank": 6,
-      "time": "55:58:34"
-    },
-    "CCBCBA": {
-      "rank": 13,
-      "time": "75.14"
-    },
-    "MH2023": {
-      "rank": 10,
-      "time": "51:42:57"
-    },
-    "JH2024": {
-      "rank": 5,
-      "time": "48:28"
-    },
-    "P&KU3a": null,
-    "CCBC15": {
-      "rank": 10,
-      "time": "50.88"
-    },
-    "JUST1": {
-      "rank": 4,
-      "time": "27.89"
-    },
-    "GnPH": null,
-    "CCBC16": null,
-    "US-TC": null,
-    "ZJUPH1": null,
-    "SECO2": null,
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "JUSTeam": {
-    "P&KU1": null,
-    "CCBC12": null,
-    "P&KU2": {
-      "rank": 7,
-      "time": "64:17:04"
-    },
-    "CCBCBA": {
-      "rank": 15,
-      "time": "78.99"
-    },
-    "MH2023": {
-      "rank": 11,
-      "time": "55:00:52"
-    },
-    "JH2024": {
-      "rank": 9,
-      "time": "70:18"
-    },
-    "P&KU3a": {
-      "rank": 11,
-      "time": "61:39:13"
-    },
-    "CCBC15": {
-      "rank": 6,
-      "time": "48.44"
-    },
-    "JUST1": {
-      "staff": true
-    },
-    "GnPH": {
-      "rank": 9,
-      "time": "21:20:11"
-    },
-    "CCBC16": {
-      "rank": 20,
-      "time": "72:19"
-    },
-    "US-TC": {
-      "rank": 5,
-      "time": null
-    },
-    "ZJUPH1": {
-      "rank": 8,
-      "time": null
-    },
-    "SECO2": null,
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "幼稚园的小猫咪": {
-    "P&KU1": null,
-    "CCBC12": null,
-    "P&KU2": null,
-    "CCBCBA": null,
-    "MH2023": {
-      "rank": 34,
-      "time": "110:10:47"
-    },
-    "JH2024": {
-      "rank": 19,
-      "time": "93:38"
-    },
-    "P&KU3a": {
-      "rank": 29,
-      "time": "94:33:06"
-    },
-    "CCBC15": {
-      "rank": 43,
-      "time": "116.62"
-    },
-    "JUST1": {
-      "rank": 35,
-      "time": "70.35"
-    },
-    "GnPH": {
-      "rank": 7,
-      "time": "20:50:41"
-    },
-    "CCBC16": {
-      "rank": 47,
-      "time": "95:20"
-    },
-    "US-TC": {
-      "rank": 2,
-      "time": null
-    },
-    "ZJUPH1": {
-      "rank": 4,
-      "time": null
-    },
-    "SECO2": {
-      "rank": 27,
-      "time": "67:56"
-    },
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "世界美食official": {
-    "P&KU1": null,
-    "CCBC12": {
-      "rank": 18,
-      "time": "77.76"
-    },
-    "P&KU2": {
-      "rank": 8,
-      "time": "66:40:49"
-    },
-    "CCBCBA": {
-      "rank": 18,
-      "time": "88.29"
-    },
-    "MH2023": {
-      "rank": 17,
-      "time": "79:46:02"
-    },
-    "JH2024": {
-      "rank": 11,
-      "time": "71:03"
-    },
-    "P&KU3a": {
-      "rank": 7,
-      "time": "51:26:06"
-    },
-    "CCBC15": {
-      "rank": 8,
-      "time": "50.42"
-    },
-    "JUST1": null,
-    "GnPH": {
-      "rank": 10,
-      "time": "21:44:25"
-    },
-    "CCBC16": {
-      "rank": 12,
-      "time": "57:25"
-    },
-    "US-TC": null,
-    "ZJUPH1": {
-      "staff": true
-    },
-    "SECO2": {
-      "rank": 10,
-      "time": "50:25"
-    },
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "rusty lake rambler": {
-    "P&KU1": null,
-    "CCBC12": null,
-    "P&KU2": null,
-    "CCBCBA": null,
-    "MH2023": null,
-    "JH2024": null,
-    "P&KU3a": null,
-    "CCBC15": null,
-    "JUST1": null,
-    "GnPH": {
-      "rank": 25,
-      "time": "33:32:37"
-    },
-    "CCBC16": {
-      "rank": 50,
-      "time": "96:34"
-    },
-    "US-TC": {
-      "rank": 10,
-      "time": null
-    },
-    "ZJUPH1": {
-      "rank": 6,
-      "time": null
-    },
-    "SECO2": {
-      "rank": 5,
-      "time": "36:44"
-    },
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "天翔战队ZOO连者！": {
-    "P&KU1": null,
-    "CCBC12": null,
-    "P&KU2": null,
-    "CCBCBA": null,
-    "MH2023": null,
-    "JH2024": null,
-    "P&KU3a": null,
-    "CCBC15": null,
-    "JUST1": null,
-    "GnPH": {
-      "rank": 13,
-      "time": "25:40:45"
-    },
-    "CCBC16": {
-      "rank": 17,
-      "time": "63:53"
-    },
-    "US-TC": {
-      "rank": 11,
-      "time": null
-    },
-    "ZJUPH1": {
-      "rank": 43,
-      "time": null
-    },
-    "SECO2": {
-      "rank": 4,
-      "time": "32:01"
-    },
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "看看题": {
-    "P&KU1": null,
-    "CCBC12": null,
-    "P&KU2": null,
-    "CCBCBA": null,
-    "MH2023": null,
-    "JH2024": null,
-    "P&KU3a": null,
-    "CCBC15": null,
-    "JUST1": null,
-    "GnPH": {
-      "rank": 37,
-      "time": "43:32:04"
-    },
-    "CCBC16": {
-      "rank": 16,
-      "time": "63:29"
-    },
-    "US-TC": {
-      "rank": 7,
-      "time": null
-    },
-    "ZJUPH1": {
-      "rank": 3,
-      "time": null
-    },
-    "SECO2": null,
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "反卷": {
-    "P&KU1": null,
-    "CCBC12": null,
-    "P&KU2": null,
-    "CCBCBA": null,
-    "MH2023": {
-      "rank": 24,
-      "time": "96:45:54"
-    },
-    "JH2024": {
-      "rank": 16,
-      "time": "92:09"
-    },
-    "P&KU3a": {
-      "rank": 6,
-      "time": "50:51:52"
-    },
-    "CCBC15": null,
-    "JUST1": {
-      "rank": 19,
-      "time": "50.16"
-    },
-    "GnPH": {
-      "rank": 46,
-      "time": "47:19:06"
-    },
-    "CCBC16": {
-      "rank": 15,
-      "time": "63:01"
-    },
-    "US-TC": {
-      "rank": 20,
-      "time": null
-    },
-    "ZJUPH1": {
-      "staff": true
-    },
-    "SECO2": null,
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "何以为我": {
-    "P&KU1": null,
-    "CCBC12": null,
-    "P&KU2": null,
-    "CCBCBA": null,
-    "MH2023": null,
-    "JH2024": null,
-    "P&KU3a": null,
-    "CCBC15": null,
-    "JUST1": {
-      "rank": 30,
-      "time": "63.52"
-    },
-    "GnPH": {
-      "rank": 48,
-      "time": "49:34:40"
-    },
-    "CCBC16": {
-      "rank": 22,
-      "time": "72:47"
-    },
-    "US-TC": {
-      "rank": 43,
-      "time": null
-    },
-    "ZJUPH1": {
-      "rank": 26,
-      "time": null
-    },
-    "SECO2": {
-      "rank": 6,
-      "time": "42:56"
-    },
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "凑不出": {
-    "P&KU1": null,
-    "CCBC12": null,
-    "P&KU2": null,
-    "CCBCBA": null,
-    "MH2023": null,
-    "JH2024": null,
-    "P&KU3a": null,
-    "CCBC15": null,
-    "JUST1": {
-      "rank": 45,
-      "time": "77.98"
-    },
-    "GnPH": {
-      "rank": 12,
-      "time": "24:35:31"
-    },
-    "CCBC16": {
-      "rank": 33,
-      "time": "81:30"
-    },
-    "US-TC": {
-      "rank": 8,
-      "time": null
-    },
-    "ZJUPH1": {
-      "rank": 16,
-      "time": null
-    },
-    "SECO2": {
-      "rank": 17,
-      "time": "53:57"
-    },
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "深色墨点": {
-    "P&KU1": null,
-    "CCBC12": null,
-    "P&KU2": null,
-    "CCBCBA": null,
-    "MH2023": null,
-    "JH2024": {
-      "rank": 41,
-      "time": "162:39"
-    },
-    "P&KU3a": {
-      "rank": 91,
-      "time": "200:18:12"
-    },
-    "CCBC15": null,
-    "JUST1": null,
-    "GnPH": {
-      "rank": 22,
-      "time": "32:44:18"
-    },
-    "CCBC16": {
-      "rank": 34,
-      "time": "82:54"
-    },
-    "US-TC": {
-      "rank": 42,
-      "time": null
-    },
-    "ZJUPH1": {
-      "rank": 55,
-      "time": null
-    },
-    "SECO2": {
-      "rank": 7,
-      "time": "43:44"
-    },
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "绿色圆圈": {
-    "P&KU1": null,
-    "CCBC12": null,
-    "P&KU2": null,
-    "CCBCBA": null,
-    "MH2023": null,
-    "JH2024": null,
-    "P&KU3a": null,
-    "CCBC15": null,
-    "JUST1": null,
-    "GnPH": null,
-    "CCBC16": null,
-    "US-TC": {
-      "rank": 37,
-      "time": null
-    },
-    "ZJUPH1": {
-      "rank": 30,
-      "time": null
-    },
-    "SECO2": {
-      "rank": 9,
-      "time": "49:16"
-    },
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "Puzzlesweeper": {
-    "P&KU1": null,
-    "CCBC12": null,
-    "P&KU2": {
-      "rank": 12,
-      "time": "72:24:45"
-    },
-    "CCBCBA": {
-      "rank": 11,
-      "time": "71.69"
-    },
-    "MH2023": {
-      "rank": 12,
-      "time": "56:10:36"
-    },
-    "JH2024": {
-      "rank": 25,
-      "time": "96:27"
-    },
-    "P&KU3a": {
-      "rank": 33,
-      "time": "98:38:49"
-    },
-    "CCBC15": {
-      "rank": 17,
-      "time": "75.41"
-    },
-    "JUST1": {
-      "rank": 9,
-      "time": "44.93"
-    },
-    "GnPH": {
-      "rank": 63,
-      "time": "63:06:04"
-    },
-    "CCBC16": {
-      "rank": 39,
-      "time": "89:21"
-    },
-    "US-TC": null,
-    "ZJUPH1": {
-      "rank": 51,
-      "time": null
-    },
-    "SECO2": null,
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "Not A Hunter": {
-    "P&KU1": null,
-    "CCBC12": null,
-    "P&KU2": null,
-    "CCBCBA": null,
-    "MH2023": {
-      "rank": 21,
-      "time": "93:55:31"
-    },
-    "JH2024": null,
-    "P&KU3a": {
-      "rank": 18,
-      "time": "79:53:18"
-    },
-    "CCBC15": {
-      "rank": 30,
-      "time": "94.59"
-    },
-    "JUST1": {
-      "rank": 13,
-      "time": "48.14"
-    },
-    "GnPH": {
-      "rank": 30,
-      "time": "40:51:34"
-    },
-    "CCBC16": {
-      "rank": 10,
-      "time": "52:15"
-    },
-    "US-TC": null,
-    "ZJUPH1": {
-      "rank": 29,
-      "time": null
-    },
-    "SECO2": {
-      "rank": 24,
-      "time": "66:29"
-    },
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "Cyfur": {
-    "P&KU1": null,
-    "CCBC12": null,
-    "P&KU2": null,
-    "CCBCBA": {
-      "rank": 50,
-      "time": "151.36"
-    },
-    "MH2023": {
-      "rank": 37,
-      "time": "119:07:56"
-    },
-    "JH2024": {
-      "rank": 23,
-      "time": "94:30"
-    },
-    "P&KU3a": {
-      "rank": 16,
-      "time": "73:28:47"
-    },
-    "CCBC15": {
-      "rank": 15,
-      "time": "75.28"
-    },
-    "JUST1": {
-      "rank": 21,
-      "time": "53.01"
-    },
-    "GnPH": {
-      "rank": 20,
-      "time": "31:52:28"
-    },
-    "CCBC16": {
-      "rank": 69,
-      "time": "118:28"
-    },
-    "US-TC": {
-      "rank": 22,
-      "time": null
-    },
-    "ZJUPH1": {
-      "rank": 25,
-      "time": null
-    },
-    "SECO2": {
-      "rank": 8,
-      "time": "48:39"
-    },
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "耗": {
-    "P&KU1": {
-      "rank": 6,
-      "time": "52.99"
-    },
-    "CCBC12": {
-      "rank": 2,
-      "time": "46.13"
-    },
-    "P&KU2": {
-      "rank": 25,
-      "time": "92:00:55"
-    },
-    "CCBCBA": {
-      "rank": 26,
-      "time": "110.11"
-    },
-    "MH2023": null,
-    "JH2024": null,
-    "P&KU3a": null,
-    "CCBC15": {
-      "rank": 16,
-      "time": "75.35"
-    },
-    "JUST1": null,
-    "GnPH": null,
-    "CCBC16": {
-      "rank": 35,
-      "time": "86:17"
-    },
-    "US-TC": null,
-    "ZJUPH1": null,
-    "SECO2": null,
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "FloorOfLava": {
-    "P&KU1": null,
-    "CCBC12": null,
-    "P&KU2": {
-      "rank": 56,
-      "time": "148:12:36"
-    },
-    "CCBCBA": {
-      "rank": 29,
-      "time": "111.12"
-    },
-    "MH2023": {
-      "rank": 14,
-      "time": "72:09:55"
-    },
-    "JH2024": {
-      "rank": 20,
-      "time": "93:40"
-    },
-    "P&KU3a": {
-      "rank": 15,
-      "time": "73:02:38"
-    },
-    "CCBC15": {
-      "rank": 13,
-      "time": "71.63"
-    },
-    "JUST1": null,
-    "GnPH": {
-      "rank": 57,
-      "time": "56:18:40"
-    },
-    "CCBC16": {
-      "rank": 18,
-      "time": "69:03"
-    },
-    "US-TC": null,
-    "ZJUPH1": {
-      "rank": 40,
-      "time": null
-    },
-    "SECO2": {
-      "rank": 42,
-      "time": "78:23"
-    },
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "队名包含不适宜内容": {
-    "P&KU1": null,
-    "CCBC12": null,
-    "P&KU2": {
-      "rank": 20,
-      "time": "87:27:12"
-    },
-    "CCBCBA": {
-      "rank": 47,
-      "time": "143.38"
-    },
-    "MH2023": {
-      "rank": 16,
-      "time": "74:42:49"
-    },
-    "JH2024": {
-      "rank": 13,
-      "time": "75:03"
-    },
-    "P&KU3a": {
-      "rank": 36,
-      "time": "100:23:36"
-    },
-    "CCBC15": {
-      "rank": 20,
-      "time": "79.96"
-    },
-    "JUST1": {
-      "rank": 14,
-      "time": "48.44"
-    },
-    "GnPH": {
-      "rank": 38,
-      "time": "44:18:23"
-    },
-    "CCBC16": {
-      "rank": 26,
-      "time": "77:29"
-    },
-    "US-TC": null,
-    "ZJUPH1": {
-      "rank": 19,
-      "time": null
-    },
-    "SECO2": {
-      "rank": 39,
-      "time": "77:45"
-    },
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "你在为难我胖虎": {
-    "P&KU1": null,
-    "CCBC12": null,
-    "P&KU2": null,
-    "CCBCBA": null,
-    "MH2023": null,
-    "JH2024": {
-      "rank": 15,
-      "time": "89:39"
-    },
-    "P&KU3a": {
-      "rank": 24,
-      "time": "91:05:51"
-    },
-    "CCBC15": {
-      "rank": 18,
-      "time": "78.32"
-    },
-    "JUST1": {
-      "rank": 15,
-      "time": "48.96"
-    },
-    "GnPH": {
-      "rank": 50,
-      "time": "52:09:11"
-    },
-    "CCBC16": {
-      "rank": 46,
-      "time": "95:04"
-    },
-    "US-TC": {
-      "rank": 55,
-      "time": null
-    },
-    "ZJUPH1": {
-      "rank": 28,
-      "time": null
-    },
-    "SECO2": {
-      "rank": 46,
-      "time": "88:35"
-    },
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "一车面包人": {
-    "P&KU1": null,
-    "CCBC12": {
-      "rank": 19,
-      "time": "79.57"
-    },
-    "P&KU2": {
-      "rank": 34,
-      "time": "109:24:43"
-    },
-    "CCBCBA": {
-      "rank": 20,
-      "time": "98.37"
-    },
-    "MH2023": {
-      "rank": 13,
-      "time": "56:37:27"
-    },
-    "JH2024": {
-      "rank": 22,
-      "time": "94:13"
-    },
-    "P&KU3a": null,
-    "CCBC15": {
-      "rank": 21,
-      "time": "80.61"
-    },
-    "JUST1": {
-      "rank": 17,
-      "time": "49.44"
-    },
-    "GnPH": null,
-    "CCBC16": null,
-    "US-TC": null,
-    "ZJUPH1": null,
-    "SECO2": null,
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "NZND": {
-    "P&KU1": null,
-    "CCBC12": {
-      "rank": 25,
-      "time": "102.24"
-    },
-    "P&KU2": {
-      "rank": 18,
-      "time": "80:56:17"
-    },
-    "CCBCBA": {
-      "rank": 57,
-      "time": "159.44"
-    },
-    "MH2023": {
-      "rank": 47,
-      "time": "140:06:11"
-    },
-    "JH2024": {
-      "rank": 29,
-      "time": "116:21"
-    },
-    "P&KU3a": {
-      "rank": 13,
-      "time": "68:35:16"
-    },
-    "CCBC15": {
-      "rank": 28,
-      "time": "92.19"
-    },
-    "JUST1": {
-      "rank": 38,
-      "time": "72.90"
-    },
-    "GnPH": {
-      "rank": 24,
-      "time": "33:19:39"
-    },
-    "CCBC16": {
-      "rank": 148,
-      "time": "166:20"
-    },
-    "US-TC": {
-      "rank": 109,
-      "time": null
-    },
-    "ZJUPH1": null,
-    "SECO2": null,
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "幼齒": {
-    "P&KU1": null,
-    "CCBC12": null,
-    "P&KU2": null,
-    "CCBCBA": {
-      "rank": 4,
-      "time": "57.01"
-    },
-    "MH2023": {
-      "rank": 18,
-      "time": "81:27:28"
-    },
-    "JH2024": {
-      "rank": 30,
-      "time": "120:39"
-    },
-    "P&KU3a": {
-      "rank": 14,
-      "time": "72:58:34"
-    },
-    "CCBC15": {
-      "rank": 27,
-      "time": "91.88"
-    },
-    "JUST1": null,
-    "GnPH": {
-      "rank": 26,
-      "time": "39:06:43"
-    },
-    "CCBC16": {
-      "rank": 73,
-      "time": "120:12"
-    },
-    "US-TC": null,
-    "ZJUPH1": null,
-    "SECO2": null,
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "卡在那個題": {
-    "P&KU1": {
-      "rank": 25,
-      "time": "137.41"
-    },
-    "CCBC12": {
-      "rank": 3,
-      "time": "46.53"
-    },
-    "P&KU2": {
-      "rank": 32,
-      "time": "103:08:47"
-    },
-    "CCBCBA": {
-      "rank": 10,
-      "time": "69.77"
-    },
-    "MH2023": {
-      "rank": 32,
-      "time": "107:55:00"
-    },
-    "JH2024": {
-      "rank": 59,
-      "time": "213:14"
-    },
-    "P&KU3a": null,
-    "CCBC15": null,
-    "JUST1": null,
-    "GnPH": null,
-    "CCBC16": null,
-    "US-TC": null,
-    "ZJUPH1": null,
-    "SECO2": null,
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "有道法体育慕课答案": {
-    "P&KU1": {
-      "rank": 3,
-      "time": "47.04"
-    },
-    "CCBC12": null,
-    "P&KU2": {
-      "rank": 30,
-      "time": "101:10:13"
-    },
-    "CCBCBA": {
-      "rank": 54,
-      "time": "157.07"
-    },
-    "MH2023": {
-      "rank": 15,
-      "time": "73:42:23"
-    },
-    "JH2024": {
-      "rank": 36,
-      "time": "141:57"
-    },
-    "P&KU3a": {
-      "rank": 34,
-      "time": "98:56:43"
-    },
-    "CCBC15": {
-      "rank": 49,
-      "time": "127.04"
-    },
-    "JUST1": {
-      "rank": 43,
-      "time": "76.08"
-    },
-    "GnPH": null,
-    "CCBC16": {
-      "rank": 61,
-      "time": "112:59"
-    },
-    "US-TC": null,
-    "ZJUPH1": null,
-    "SECO2": null,
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "真相猎人": {
-    "P&KU1": null,
-    "CCBC12": {
-      "rank": 12,
-      "time": "68.24"
-    },
-    "P&KU2": {
-      "rank": 26,
-      "time": "92:08:09"
-    },
-    "CCBCBA": {
-      "rank": 27,
-      "time": "110.30"
-    },
-    "MH2023": {
-      "rank": 28,
-      "time": "102:08:37"
-    },
-    "JH2024": null,
-    "P&KU3a": {
-      "rank": 41,
-      "time": "113:32:37"
-    },
-    "CCBC15": {
-      "rank": 40,
-      "time": "114.98"
-    },
-    "JUST1": null,
-    "GnPH": null,
-    "CCBC16": {
-      "rank": 115,
-      "time": "146:18"
-    },
-    "US-TC": null,
-    "ZJUPH1": {
-      "rank": 119,
-      "time": null
-    },
-    "SECO2": null,
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "东北一霸": {
-    "P&KU1": null,
-    "CCBC12": {
-      "rank": 27,
-      "time": "106.26"
-    },
-    "P&KU2": {
-      "rank": 14,
-      "time": "75:52:33"
-    },
-    "CCBCBA": {
-      "rank": 17,
-      "time": "84.23"
-    },
-    "MH2023": null,
-    "JH2024": null,
-    "P&KU3a": {
-      "rank": 21,
-      "time": "88:45:49"
-    },
-    "CCBC15": {
-      "rank": 36,
-      "time": "108.73"
-    },
-    "JUST1": null,
-    "GnPH": null,
-    "CCBC16": {
-      "rank": 45,
-      "time": "94:34"
-    },
-    "US-TC": null,
-    "ZJUPH1": null,
-    "SECO2": null,
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "Live Fast Die Young": {
-    "P&KU1": null,
-    "CCBC12": null,
-    "P&KU2": {
-      "rank": 48,
-      "time": "128:46:48"
-    },
-    "CCBCBA": {
-      "rank": 37,
-      "time": "128.50"
-    },
-    "MH2023": {
-      "rank": 22,
-      "time": "94:15:23"
-    },
-    "JH2024": {
-      "rank": 14,
-      "time": "76:17"
-    },
-    "P&KU3a": {
-      "rank": 23,
-      "time": "90:32:47"
-    },
-    "CCBC15": {
-      "rank": 35,
-      "time": "104.11"
-    },
-    "JUST1": {
-      "rank": 18,
-      "time": "49.81"
-    },
-    "GnPH": {
-      "rank": 102,
-      "time": "90:19:21"
-    },
-    "CCBC16": {
-      "rank": 58,
-      "time": "103:33"
-    },
-    "US-TC": {
-      "rank": 26,
-      "time": null
-    },
-    "ZJUPH1": {
-      "rank": 33,
-      "time": null
-    },
-    "SECO2": null,
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "Omega5": {
-    "P&KU1": null,
-    "CCBC12": null,
-    "P&KU2": null,
-    "CCBCBA": {
-      "rank": 33,
-      "time": "117.60"
-    },
-    "MH2023": {
-      "rank": 54,
-      "time": "162:39:20"
-    },
-    "JH2024": null,
-    "P&KU3a": {
-      "rank": 59,
-      "time": "154:54:48"
-    },
-    "CCBC15": {
-      "rank": 19,
-      "time": "78.83"
-    },
-    "JUST1": {
-      "rank": 16,
-      "time": "49.09"
-    },
-    "GnPH": {
-      "rank": 16,
-      "time": "28:48:56"
-    },
-    "CCBC16": {
-      "rank": 27,
-      "time": "77:59"
-    },
-    "US-TC": {
-      "rank": 35,
-      "time": null
-    },
-    "ZJUPH1": null,
-    "SECO2": null,
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "Hungergame": {
-    "P&KU1": null,
-    "CCBC12": null,
-    "P&KU2": null,
-    "CCBCBA": null,
-    "MH2023": null,
-    "JH2024": null,
-    "P&KU3a": {
-      "rank": 30,
-      "time": "94:58:34"
-    },
-    "CCBC15": {
-      "rank": 48,
-      "time": "125.23"
-    },
-    "JUST1": null,
-    "GnPH": {
-      "rank": 56,
-      "time": "55:49:03"
-    },
-    "CCBC16": {
-      "rank": 32,
-      "time": "80:11"
-    },
-    "US-TC": {
-      "rank": 16,
-      "time": null
-    },
-    "ZJUPH1": null,
-    "SECO2": null,
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "丁香鱼徒步运动": {
-    "P&KU1": null,
-    "CCBC12": null,
-    "P&KU2": null,
-    "CCBCBA": null,
-    "MH2023": null,
-    "JH2024": null,
-    "P&KU3a": {
-      "rank": 17,
-      "time": "74:04:54"
-    },
-    "CCBC15": null,
-    "JUST1": {
-      "rank": 22,
-      "time": "54.02"
-    },
-    "GnPH": {
-      "rank": 51,
-      "time": "54:13:22"
-    },
-    "CCBC16": {
-      "rank": 30,
-      "time": "79:56"
-    },
-    "US-TC": {
-      "rank": 178,
-      "time": null
-    },
-    "ZJUPH1": null,
-    "SECO2": null,
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "给猫铲屎去了": {
-    "P&KU1": null,
-    "CCBC12": null,
-    "P&KU2": null,
-    "CCBCBA": {
-      "rank": 89,
-      "time": "196.25"
-    },
-    "MH2023": {
-      "rank": 41,
-      "time": "132:08:34"
-    },
-    "JH2024": {
-      "rank": 21,
-      "time": "94:11"
-    },
-    "P&KU3a": {
-      "rank": 35,
-      "time": "99:08:41"
-    },
-    "CCBC15": {
-      "rank": 26,
-      "time": "90.86"
-    },
-    "JUST1": {
-      "rank": 25,
-      "time": "56.92"
-    },
-    "GnPH": {
-      "rank": 49,
-      "time": "49:45:52"
-    },
-    "CCBC16": {
-      "rank": 64,
-      "time": "115:14"
-    },
-    "US-TC": {
-      "rank": 28,
-      "time": null
-    },
-    "ZJUPH1": {
-      "rank": 12,
-      "time": null
-    },
-    "SECO2": {
-      "rank": 21,
-      "time": "60.07"
-    },
-    "P&KU3b": null,
-    "CCBC17": null
-  }
-};
-var COMP_RESULTS = {
-  "P&KU1": [
-    {
-      "rank": 1,
-      "rawName": "MiaoMiaoMeowe",
-      "cleanName": "喵喵喵",
-      "time": "21.22",
-      "members": []
-    },
-    {
-      "rank": 2,
-      "rawName": "解谜怪盗团",
-      "cleanName": "解谜怪盗团",
-      "time": "22.57",
-      "members": []
-    },
-    {
-      "rank": 3,
-      "rawName": "有道法体育慕课答案",
-      "cleanName": "有道法体育慕课答案",
-      "time": "47.04",
-      "members": []
-    },
-    {
-      "rank": 4,
-      "rawName": "simplicissimus",
-      "cleanName": "simplicissimus",
-      "time": "49.57",
-      "members": []
-    },
-    {
-      "rank": 5,
-      "rawName": "ㅤ",
-      "cleanName": "ㅤ",
-      "time": "51.19",
-      "members": []
-    },
-    {
-      "rank": 6,
-      "rawName": "普雷菲尔议员后勤部",
-      "cleanName": "耗",
-      "time": "52.99",
-      "members": []
-    },
-    {
-      "rank": 7,
-      "rawName": "龟兔喵雨中爬",
-      "cleanName": "龟兔喵雨中爬",
-      "time": "53.56",
-      "members": []
-    },
-    {
-      "rank": 8,
-      "rawName": "【变】啥也观测不到队",
-      "cleanName": "【变】啥也观测不到队",
-      "time": "60.20",
-      "members": []
-    },
-    {
-      "rank": 9,
-      "rawName": "识文解意的追迹者",
-      "cleanName": "识文解意的追迹者",
-      "time": "64.50",
-      "members": []
-    },
-    {
-      "rank": 10,
-      "rawName": "一壶奶油",
-      "cleanName": "一壶奶油",
-      "time": "66.09",
-      "members": []
-    }
-  ],
-  "CCBC12": [
-    {
-      "rank": 1,
-      "rawName": "simplicissimus",
-      "cleanName": "simplicissimus",
-      "time": "15.93",
-      "members": [
-        "ES8730",
-        "sevenkplus",
-        "温",
-        "jjhdj",
-        "落葉子"
-      ]
-    },
-    {
-      "rank": 2,
-      "rawName": "Central Ocean Hotel",
-      "cleanName": "耗",
-      "time": "46.13",
-      "members": [
-        "迟墨哲",
-        "耗子",
-        "blackhistory"
-      ]
-    },
-    {
-      "rank": 3,
-      "rawName": "卡在那個題",
-      "cleanName": "卡在那個題",
-      "time": "46.53",
-      "members": [
-        "InvalidD",
-        "benji",
-        "Dan",
-        "sushi322"
-      ]
-    },
-    {
-      "rank": 4,
-      "rawName": "年轻人不讲武德",
-      "cleanName": "解谜怪盗团",
-      "time": "49.51",
-      "members": [
-        "Winfrid"
-      ]
-    },
-    {
-      "rank": 5,
-      "rawName": "5A级双星【郭兰双星】",
-      "cleanName": "灵境TES",
-      "time": "51.08",
-      "members": [
-        "五月",
-        "友人A",
-        "希希",
-        "兰儿",
-        "八卦郭嘉"
-      ]
-    },
-    {
-      "rank": 6,
-      "rawName": "喵喵喵",
-      "cleanName": "喵喵喵",
-      "time": "55.8",
-      "members": [
-        "美恒",
-        "秋水仙素",
-        "TCF",
-        "恩特",
-        "雪儿"
-      ]
-    },
-    {
-      "rank": 7,
-      "rawName": "418 I'm a teapot",
-      "cleanName": "418 I'm a teapot",
-      "time": "56.5",
-      "members": [
-        "星星",
-        "mutsuki"
-      ]
-    },
-    {
-      "rank": 8,
-      "rawName": "识文解意的追迹者",
-      "cleanName": "识文解意的追迹者",
-      "time": "56.68",
-      "members": [
-        "榆木华",
-        "D3D4",
-        "古明地上的彗星",
-        "Te",
-        "5tyu6f"
-      ]
-    },
-    {
-      "rank": 9,
-      "rawName": "一壶奶油",
-      "cleanName": "一壶奶油",
-      "time": "60.12",
-      "members": [
-        "ifyou",
-        "奶油酱",
-        "tangjqjq",
-        "深渊的侦探"
-      ]
-    },
-    {
-      "rank": 10,
-      "rawName": "🐔✅",
-      "cleanName": "🐔✅",
-      "time": "65.97",
-      "members": []
-    }
-  ],
-  "P&KU2": [
-    {
-      "rank": 1,
-      "rawName": "呜呜呜",
-      "cleanName": "鸡",
-      "time": "30:42:40",
-      "members": [
-        "美恒",
-        "yyao",
-        "秋水仙素",
-        "mutsuki",
-        "xsj",
-        "星星"
-      ]
-    },
-    {
-      "rank": 2,
-      "rawName": "simplicissimus",
-      "cleanName": "simplicissimus",
-      "time": "30:55:43",
-      "members": [
-        "ES",
-        "落葉子",
-        "sevenkplus",
-        "jjhdj",
-        "温",
-        "xxxigua"
-      ]
-    },
-    {
-      "rank": 3,
-      "rawName": "海拉鲁野炊组",
-      "cleanName": "海拉鲁野炊组",
-      "time": "54:33:28",
-      "members": []
-    },
-    {
-      "rank": 4,
-      "rawName": "E希友嘉圆",
-      "cleanName": "灵境TES",
-      "time": "55:50:19",
-      "members": [
-        "八卦郭嘉",
-        "小汤圆",
-        "/",
-        "希希",
-        "友人A",
-        "Havelieyu"
-      ]
-    },
-    {
-      "rank": 5,
-      "rawName": "闲散解谜！",
-      "cleanName": "闲散解谜！",
-      "time": "55:57:11",
-      "members": [
-        "COL",
-        "CallMeMushroom",
-        "Fivero",
-        "小白狐九月",
-        "piggy2503",
-        "数一"
-      ]
-    },
-    {
-      "rank": 6,
-      "rawName": "谜途旅人",
-      "cleanName": "谜途旅人",
-      "time": "55:58:34",
-      "members": [
-        "Ender_nor",
-        "空气新人",
-        "Atheist",
-        "屑abandon",
-        "阿妍",
-        "明夜"
-      ]
-    },
-    {
-      "rank": 7,
-      "rawName": "SJTU推理协会吧大概",
-      "cleanName": "JUSTeam",
-      "time": "64:17:04",
-      "members": [
-        "日常的癫狂",
-        "esc",
-        "Arya",
-        "Cheney"
-      ]
-    },
-    {
-      "rank": 8,
-      "rawName": "世界美食official",
-      "cleanName": "世界美食official",
-      "time": "66:40:49",
-      "members": [
-        "Rivekon",
-        "creeperqwq",
-        "茶唱星",
-        "肥鱼",
-        "Kizuna",
-        "kks"
-      ]
-    },
-    {
-      "rank": 9,
-      "rawName": "识文解意的追迹者",
-      "cleanName": "识文解意的追迹者",
-      "time": "68:52:59",
-      "members": [
-        "D3D4",
-        "VinstaG173",
-        "YQ",
-        "xysdd",
-        "5tyu6f",
-        "古明地上的彗星"
-      ]
-    },
-    {
-      "rank": 10,
-      "rawName": "public_team_name",
-      "cleanName": "金牌线",
-      "time": "69:00:03",
-      "members": [
-        "Etaoin"
-      ]
-    }
-  ],
-  "CCBCBA": [
-    {
-      "rank": 1,
-      "rawName": "闲散解谜！",
-      "cleanName": "闲散解谜！",
-      "time": "46.52",
-      "members": [
-        "Fivero",
-        "COL",
-        "piggy2503",
-        "CallMeMushroom",
-        "小白狐九月"
-      ]
-    },
-    {
-      "rank": 2,
-      "rawName": "喵喵喵",
-      "cleanName": "喵喵喵",
-      "time": "52.23",
-      "members": [
-        "美恒",
-        "恩特",
-        "TCF",
-        "秋水仙素",
-        "Jalapeno"
-      ]
-    },
-    {
-      "rank": 3,
-      "rawName": "simplicissimus",
-      "cleanName": "鸡",
-      "time": "52.45",
-      "members": [
-        "各种",
-        "mutsuki",
-        "xsj",
-        "kinami",
-        "星星"
-      ]
-    },
-    {
-      "rank": 4,
-      "rawName": "幼齒",
-      "cleanName": "幼齒",
-      "time": "57.01",
-      "members": [
-        "InvalidD",
-        "katian",
-        "thamblurr",
-        "Felix",
-        "stuts"
-      ]
-    },
-    {
-      "rank": 5,
-      "rawName": "特级山芋",
-      "cleanName": "特级山芋",
-      "time": "62.43",
-      "members": [
-        "薯仔",
-        "友人A",
-        "五月",
-        "Eva",
-        "Winfrid"
-      ]
-    },
-    {
-      "rank": 6,
-      "rawName": "哈希马嘉圆",
-      "cleanName": "灵境TES",
-      "time": "62.99",
-      "members": [
-        "Havelieyu",
-        "天马",
-        "希希",
-        "八卦郭嘉",
-        "小汤圆"
-      ]
-    },
-    {
-      "rank": 7,
-      "rawName": "识文解意的追迹者",
-      "cleanName": "识文解意的追迹者",
-      "time": "65.16",
-      "members": [
-        "榆木华",
-        "D3D4",
-        "YQ",
-        "古明地上的彗星",
-        "5tyu6f"
-      ]
-    },
-    {
-      "rank": 8,
-      "rawName": "zitmen",
-      "cleanName": "zitmen",
-      "time": "67.14",
-      "members": [
-        "Euphonium",
-        "粉",
-        "Daviscartes",
-        "Selenium",
-        "zitman"
-      ]
-    },
-    {
-      "rank": 9,
-      "rawName": "海拉鲁野炊组",
-      "cleanName": "海拉鲁野炊组",
-      "time": "69.32",
-      "members": [
-        "水帝",
-        "深渊的侦探",
-        "奶油酱",
-        "WJ"
-      ]
-    },
-    {
-      "rank": 10,
-      "rawName": "卡在那個題",
-      "cleanName": "卡在那個題",
-      "time": "69.77",
-      "members": [
-        "sushi322",
-        "benji",
-        "Dan",
-        "Buck",
-        "ayy"
-      ]
-    }
-  ],
-  "MH2023": [
-    {
-      "rank": 1,
-      "rawName": "我是最神奇的猫咪！",
-      "cleanName": "鸡",
-      "time": "28:12:41",
-      "members": [
-        "星星",
-        "xsj",
-        "宽容",
-        "Rivekon",
-        "mutsuki"
-      ]
-    },
-    {
-      "rank": 2,
-      "rawName": "夕阳红",
-      "cleanName": "simplicissimus",
-      "time": "28:35:42",
-      "members": [
-        "sevenkplus",
-        "温",
-        "落葉子",
-        "荠菜",
-        "火冬"
-      ]
-    },
-    {
-      "rank": 3,
-      "rawName": "Superboys Utopia",
-      "cleanName": "灵境TES",
-      "time": "33:32:36",
-      "members": [
-        "希希",
-        "Havelieyu",
-        "小汤圆",
-        "友人A"
-      ]
-    },
-    {
-      "rank": 4,
-      "rawName": "今天也想当第一名",
-      "cleanName": "解谜怪盗团",
-      "time": "40:06:47",
-      "members": [
-        "yyao"
-      ]
-    },
-    {
-      "rank": 5,
-      "rawName": "ZitMeow",
-      "cleanName": "Zitmen",
-      "time": "44:12:11",
-      "members": [
-        "Euphonium",
-        "Selenium",
-        "zitman",
-        "Daviscartes",
-        "粉"
-      ]
-    },
-    {
-      "rank": 6,
-      "rawName": "suomynonA",
-      "cleanName": "Anonymous",
-      "time": "48:45:02",
-      "members": [
-        "MyriadL",
-        "Brightly_",
-        "xxuurruuii",
-        "小大圣"
-      ]
-    },
-    {
-      "rank": 7,
-      "rawName": "提瓦特野炊组",
-      "cleanName": "海拉鲁野炊组",
-      "time": "48:54:46",
-      "members": [
-        "WJ"
-      ]
-    },
-    {
-      "rank": 8,
-      "rawName": "识文解意的追迹者",
-      "cleanName": "识文解意的追迹者",
-      "time": "49:40:32",
-      "members": [
-        "榆木华",
-        "Winfrid",
-        "D3D4",
-        "VinstaG173",
-        "YQ"
-      ]
-    },
-    {
-      "rank": 9,
-      "rawName": "-------🥇🥇🥇-------",
-      "cleanName": "金牌线",
-      "time": "51:28:27",
-      "members": [
-        "Inferno",
-        "skyline",
-        "WYXkk",
-        "Starxcc",
-        "Suika_predator"
-      ]
-    },
-    {
-      "rank": 10,
-      "rawName": "谜途旅人",
-      "cleanName": "谜途旅人",
-      "time": "51:42:57",
-      "members": [
-        "Ender_nor",
-        "明夜",
-        "屑abandon",
-        "阿妍",
-        "空气新人"
-      ]
-    }
-  ],
-  "JH2024": [
-    {
-      "rank": 1,
-      "rawName": "怪盗解谜团",
-      "cleanName": "解谜怪盗团",
-      "time": "41:29",
-      "members": [
-        "方伯",
-        "兰扎特",
-        "大灰狼",
-        "yyao",
-        "风怒大汉堡"
-      ]
-    },
-    {
-      "rank": 2,
-      "rawName": "十步杀一题，千里不留行",
-      "cleanName": "simplicissimus",
-      "time": "41:41",
-      "members": [
-        "ES8730",
-        "温",
-        "落葉子",
-        "Jalapeno",
-        "火冬"
-      ]
-    },
-    {
-      "rank": 3,
-      "rawName": "花田水划吃江次通发超普鱼踢侠是拉里会群惹包队果娃谜宝桶谜吧睡汪观卷会育等先芳多赏论逻觉午配题行小腹队一无江野留红选巡格普林只如天法许旅偶剑环的到力杀小开狗千天全轶唯小不级但是择偷餐体特菇十饼宗今独罚谜吃题人手点题想反客课就死月恶案朗光一风芋在象混天弱敢人一湖组孤雀不军通岛的华仙盟丹唯解道第杂答如称打尔孬有鸡案跑你不花武辈了之长级你我将笑积对尊山上菜谜队分什合汪队兽潜主闲有善呃菜套出棉文队是算组探独",
-      "cleanName": "鸡",
-      "time": "48:16",
-      "members": []
-    },
-    {
-      "rank": 4,
-      "rawName": "Anonymous",
-      "cleanName": "Anonymous",
-      "time": "48:17",
-      "members": [
-        "MyriadL",
-        "xxuurruuii",
-        "Brightly_",
-        "CAT-FISH",
-        "J.R."
-      ]
-    },
-    {
-      "rank": 5,
-      "rawName": "谜途旅人",
-      "cleanName": "谜途旅人",
-      "time": "48:28",
-      "members": []
-    },
-    {
-      "rank": 6,
-      "rawName": "华山论剑",
-      "cleanName": "灵境TES",
-      "time": "54:14",
-      "members": []
-    },
-    {
-      "rank": 7,
-      "rawName": "武当山野炊组",
-      "cleanName": "海拉鲁野炊组",
-      "time": "60:45",
-      "members": [
-        "WJ",
-        "奶油酱",
-        "只是路过",
-        "zyx",
-        "水帝WaterKing"
-      ]
-    },
-    {
-      "rank": 8,
-      "rawName": "闲散解谜！",
-      "cleanName": "闲散解谜！",
-      "time": "63:11",
-      "members": [
-        "Fivero",
-        "五月",
-        "CallMeMushroom",
-        "COL",
-        "Sonic"
-      ]
-    },
-    {
-      "rank": 9,
-      "rawName": "Bacteriophage University",
-      "cleanName": "JUSTeam",
-      "time": "70:18",
-      "members": [
-        "dailycrazy",
-        "Logistick",
-        "Cheney",
-        "Arya",
-        "hahahaHAha"
-      ]
-    },
-    {
-      "rank": 10,
-      "rawName": "-------🥇🥇🥇-------",
-      "cleanName": "金牌线",
-      "time": "70:57",
-      "members": [
-        "skyline",
-        "WYXkk",
-        "Inferno",
-        "Suika_predator",
-        "Starxcc"
-      ]
-    }
-  ],
-  "P&KU3a": [
-    {
-      "rank": 1,
-      "rawName": "simplicissimus",
-      "cleanName": "simplicissimus",
-      "time": "25:26:15",
-      "members": [
-        "温",
-        "inequality",
-        "落葉子",
-        "sevenkplus",
-        "荠菜",
-        "ES8730"
-      ]
-    },
-    {
-      "rank": 2,
-      "rawName": "焖肉面不配姜丝醋不好吃",
-      "cleanName": "解谜怪盗团",
-      "time": "31:27:37",
-      "members": [
-        "方伯",
-        "兰扎特",
-        "大灰狼",
-        "yyao",
-        "风怒大汉堡"
-      ]
-    },
-    {
-      "rank": 3,
-      "rawName": "A hAsh ArcAdiA",
-      "cleanName": "灵境TES",
-      "time": "40:27:49",
-      "members": [
-        "八卦郭嘉",
-        "Havelieyu",
-        "五月fy",
-        "友人A",
-        "希希",
-        "小汤圆"
-      ]
-    },
-    {
-      "rank": 4,
-      "rawName": "睡眠不足互联网技术有限公司",
-      "cleanName": "鸡",
-      "time": "41:59:18",
-      "members": [
-        "星星",
-        "xsj"
-      ]
-    },
-    {
-      "rank": 5,
-      "rawName": "野炊旅人",
-      "cleanName": "海拉鲁野炊组",
-      "time": "45:56:43",
-      "members": [
-        "WJ",
-        "Ender_nor",
-        "凌风cold",
-        "tangjqjq",
-        "水帝WaterKing",
-        "奶油酱"
-      ]
-    },
-    {
-      "rank": 6,
-      "rawName": "ZJU反卷猫猫桶",
-      "cleanName": "反卷",
-      "time": "50:51:52",
-      "members": [
-        "npl",
-        "Star",
-        "林中及时雨",
-        "Satori5",
-        "Seekr",
-        "alaya"
-      ]
-    },
-    {
-      "rank": 7,
-      "rawName": "世界美食official",
-      "cleanName": "世界美食official",
-      "time": "51:26:06",
-      "members": [
-        "Rivekon",
-        "Kizuna",
-        "肥鱼",
-        "Blackey",
-        "creeperqwq",
-        "Aurora"
-      ]
-    },
-    {
-      "rank": 8,
-      "rawName": "zitmen",
-      "cleanName": "zitmen",
-      "time": "52:14:59",
-      "members": [
-        "Euphonium",
-        "粉",
-        "Daviscartes",
-        "Selenium",
-        "四方巡",
-        "zitman"
-      ]
-    },
-    {
-      "rank": 9,
-      "rawName": "龙小组解谜！",
-      "cleanName": "闲散解谜！",
-      "time": "54:37:57",
-      "members": [
-        "小白狐九月",
-        "兔子古",
-        "Terry",
-        "Fivero",
-        "CallMeMushroom",
-        "piggy2503"
-      ]
-    },
-    {
-      "rank": 10,
-      "rawName": "--------金牌线--------",
-      "cleanName": "金牌线",
-      "time": "57:59:40",
-      "members": [
-        "skyline",
-        "Inferno",
-        "Starxcc",
-        "Etaoin",
-        "Suika_predator",
-        "FR"
-      ]
-    }
-  ],
-  "CCBC15": [
-    {
-      "rank": 1,
-      "rawName": "simplicissimus",
-      "cleanName": "simplicissimus",
-      "time": "30.98",
-      "members": [
-        "ES8730",
-        "sevenkplus",
-        "温",
-        "落葉子",
-        "荠菜"
-      ]
-    },
-    {
-      "rank": 2,
-      "rawName": "Beginners' Utopia",
-      "cleanName": "灵境TES",
-      "time": "32.25",
-      "members": [
-        "八卦郭嘉",
-        "Havelieyu",
-        "希希",
-        "小汤圆",
-        "whiteqwq"
-      ]
-    },
-    {
-      "rank": 3,
-      "rawName": "识文解意的追迹者",
-      "cleanName": "识文解意的追迹者",
-      "time": "41.62",
-      "members": [
-        "榆木华",
-        "Winfrid",
-        "D3D4",
-        "VinstaG173",
-        "LA"
-      ]
-    },
-    {
-      "rank": 4,
-      "rawName": "--------------金牌线--------------",
-      "cleanName": "金牌线",
-      "time": "43.12",
-      "members": [
-        "Inferno",
-        "skyline",
-        "Suika_predator",
-        "Starxcc",
-        "FR"
-      ]
-    },
-    {
-      "rank": 5,
-      "rawName": "Anonymous.PPTx",
-      "cleanName": "Anonymous",
-      "time": "43.6",
-      "members": [
-        "MyriadL",
-        "CAT-FISH",
-        "Ender_nor",
-        "xxuurruuii",
-        "Brightly_"
-      ]
-    },
-    {
-      "rank": 6,
-      "rawName": "Sr./Jr. Talented Undergrads",
-      "cleanName": "JUSTeam",
-      "time": "48.44",
-      "members": [
-        "Logistick",
-        "dailycrazy",
-        "hahahaHAha",
-        "Arya",
-        "yux"
-      ]
-    },
-    {
-      "rank": 7,
-      "rawName": "愚公单推人",
-      "cleanName": "鸡",
-      "time": "50.1",
-      "members": [
-        "星星",
-        "mutsuki",
-        "kinami",
-        "各种",
-        "xsj"
-      ]
-    },
-    {
-      "rank": 8,
-      "rawName": "世界美食official",
-      "cleanName": "世界美食official",
-      "time": "50.42",
-      "members": [
-        "kizuna",
-        "肥鱼",
-        "Rivekon",
-        "creeperqwq",
-        "Blackey"
-      ]
-    },
-    {
-      "rank": 9,
-      "rawName": "zitmen",
-      "cleanName": "zitmen",
-      "time": "50.45",
-      "members": [
-        "Euphonium",
-        "粉",
-        "Daviscartes",
-        "小大圣",
-        "Selenium"
-      ]
-    },
-    {
-      "rank": 10,
-      "rawName": "谜途旅人",
-      "cleanName": "谜途旅人",
-      "time": "50.88",
-      "members": [
-        "空气新人",
-        "屑abandon",
-        "凌风cold",
-        "琳奈",
-        "Atheist"
-      ]
-    }
-  ],
-  "JUST1": [
-    {
-      "rank": 1,
-      "rawName": "🫡",
-      "cleanName": "拼团",
-      "time": "21.56",
-      "members": [
-        "美恒",
-        "wilsey",
-        "xsj",
-        "Brightly_"
-      ]
-    },
-    {
-      "rank": 2,
-      "rawName": "An UltrA ArcAdiA",
-      "cleanName": "灵境TES",
-      "time": "22.01",
-      "members": [
-        "五月",
-        "八卦郭嘉",
-        "小汤圆",
-        "友人A",
-        "希希"
-      ]
-    },
-    {
-      "rank": 3,
-      "rawName": "JUST野炊组",
-      "cleanName": "海拉鲁野炊组",
-      "time": "24.86",
-      "members": [
-        "WJ",
-        "奶油酱",
-        "水帝WaterKing"
-      ]
-    },
-    {
-      "rank": 4,
-      "rawName": "谜途旅人 pro版",
-      "cleanName": "谜途旅人",
-      "time": "27.89",
-      "members": [
-        "空气新人",
-        "Atheist",
-        "CALS",
-        "Fivero",
-        "明夜"
-      ]
-    },
-    {
-      "rank": 5,
-      "rawName": "识文解意的追迹者",
-      "cleanName": "识文解意的追迹者",
-      "time": "30.26",
-      "members": [
-        "YQ",
-        "D3D4",
-        "Te",
-        "LA",
-        "榆木华"
-      ]
-    },
-    {
-      "rank": 6,
-      "rawName": "Five Stages of Grief",
-      "cleanName": "simplicissimus",
-      "time": "36.50",
-      "members": []
-    },
-    {
-      "rank": 7,
-      "rawName": "黑解谜·卡题",
-      "cleanName": "拼团",
-      "time": "37.22",
-      "members": [
-        "Ender_nor",
-        "kinami",
-        "星星",
-        "卡布"
-      ]
-    },
-    {
-      "rank": 8,
-      "rawName": "奇妙狮雨炫狂少女团，夜音见。",
-      "cleanName": "拼团",
-      "time": "41.21",
-      "members": [
-        "mutsuki",
-        "Inferno",
-        "Winfrid",
-        "小大圣",
-        "COL"
-      ]
-    },
-    {
-      "rank": 9,
-      "rawName": "Puzzlesweeper",
-      "cleanName": "Puzzlesweeper",
-      "time": "44.93",
-      "members": [
-        "zyy",
-        "鸡肉卷",
-        "生煎",
-        "tonyXFY"
-      ]
-    },
-    {
-      "rank": 10,
-      "rawName": "Reviver Team",
-      "cleanName": "Reviver Team",
-      "time": "46.20",
-      "members": [
-        "Lazy_Labs",
-        "SpadeA261",
-        "孔明七星"
-      ]
-    }
-  ],
-  "SECO1": [
-    {
-      "rank": 1,
-      "rawName": "🖖Unsaluted Speculation",
-      "cleanName": "",
-      "time": "4:46",
-      "members": []
-    },
-    {
-      "rank": 2,
-      "rawName": "反卷月牙湾",
-      "cleanName": "反卷",
-      "time": "5:03",
-      "members": [
-        "npl",
-        "林中及时雨",
-        "myy",
-        "天火同人"
-      ]
-    },
-    {
-      "rank": 3,
-      "rawName": "A hAsh ArcAdiA",
-      "cleanName": "灵境TES",
-      "time": "5:35",
-      "members": [
-        "五月",
-        "友人A",
-        "希希",
-        "小汤圆"
-      ]
-    },
-    {
-      "rank": 4,
-      "rawName": "识文解意的追迹者",
-      "cleanName": "识文解意的追迹者",
-      "time": "5:52",
-      "members": [
-        "榆木华",
-        "D3D4",
-        "LA",
-        "Inferno",
-        "YQ",
-        "Te"
-      ]
-    },
-    {
-      "rank": 5,
-      "rawName": "RWBY",
-      "cleanName": "",
-      "time": "6:23",
-      "members": []
-    },
-    {
-      "rank": 6,
-      "rawName": "海拉鲁野炊组",
-      "cleanName": "海拉鲁野炊组",
-      "time": "7:03",
-      "members": [
-        "tangjqjq",
-        "WJ"
-      ]
-    },
-    {
-      "rank": 7,
-      "rawName": "爆宗门",
-      "cleanName": "",
-      "time": "7:09",
-      "members": [
-        "alaya",
-        "mutsuki"
-      ]
-    },
-    {
-      "rank": 8,
-      "rawName": "🐺🦊🐱CyFur🐟🐶🐺",
-      "cleanName": "CyFur",
-      "time": "7:23",
-      "members": []
-    },
-    {
-      "rank": 9,
-      "rawName": "ЯƎTИUH A TOИ",
-      "cleanName": "Not A Hunter",
-      "time": "7:25",
-      "members": [
-        "驯龙高手"
-      ]
-    },
-    {
-      "rank": 10,
-      "rawName": "story teller",
-      "cleanName": "",
-      "time": "7:32",
-      "members": []
-    }
-  ],
-  "FDUPH": [
-    {
-      "rank": 1,
-      "rawName": "New York City",
-      "cleanName": "拼团",
-      "time": "15:46",
-      "members": [
-        "JP",
-        "Brightly",
-        "TCF",
-        "温",
-        "小白狐九月",
-        "-",
-        "-"
-      ]
-    },
-    {
-      "rank": 2,
-      "rawName": "Reviver Team",
-      "cleanName": "Reviver Team",
-      "time": "19:59",
-      "members": [
-        "SpadeA261",
-        "孔明七星",
-        "Winfrid",
-        "[ds]",
-        "meli",
-        "Lazy_Labs",
-        "cff"
-      ]
-    },
-    {
-      "rank": 3,
-      "rawName": "-------🥇🥇🥇-------",
-      "cleanName": "金牌线",
-      "time": "23:54",
-      "members": [
-        "skyline",
-        "Wildfire",
-        "Inferno",
-        "oscar",
-        "Starxcc",
-        "-",
-        "-"
-      ]
-    },
-    {
-      "rank": 4,
-      "rawName": "Alteleid",
-      "cleanName": "杂鱼",
-      "time": "26:39",
-      "members": [
-        "Remi",
-        "Acetyl",
-        "dodomos",
-        "布莱斯恩",
-        "-",
-        "-"
-      ]
-    },
-    {
-      "rank": 5,
-      "rawName": "超酷贝斯手出场",
-      "cleanName": "凑不出",
-      "time": "28:55",
-      "members": [
-        "夜莺厨",
-        "无色魁",
-        "STELLAR",
-        "-SIG-",
-        "pancake",
-        "HENG天痕"
-      ]
-    },
-    {
-      "rank": 6,
-      "rawName": "反卷没破轮",
-      "cleanName": "反卷",
-      "time": "29:58",
-      "members": [
-        "Star",
-        "Satori5",
-        "alaya",
-        "林中及时雨",
-        "Seekr",
-        "-",
-        "-"
-      ]
-    },
-    {
-      "rank": 7,
-      "rawName": "FloorOfLava",
-      "cleanName": "FloorOfLava",
-      "time": "30:00",
-      "members": [
-        "LargoDream",
-        "cl1694",
-        "Mr.Raindrop",
-        "Aqua Cat",
-        "-",
-        "-"
-      ]
-    },
-    {
-      "rank": 8,
-      "rawName": "R.W.B.Y.",
-      "cleanName": "RWBY",
-      "time": "32:27",
-      "members": [
-        "Flâneur.",
-        "Sierra",
-        "星海",
-        "GraviCe",
-        "普通的解谜人",
-        "-",
-        "-"
-      ]
-    },
-    {
-      "rank": 9,
-      "rawName": "求求你让我看一眼题吧我什么都会做的",
-      "cleanName": "看看题",
-      "time": "33:59",
-      "members": [
-        "磐绿薄绒荷",
-        "神经菇",
-        "Light",
-        "Garadox7",
-        "半次获释者",
-        "-",
-        "-"
-      ]
-    },
-    {
-      "rank": 10,
-      "rawName": "闲散解谜！",
-      "cleanName": "闲散解谜！",
-      "time": "34:25",
-      "members": [
-        "Fivero",
-        "CallMeMushroom",
-        "esc",
-        "COL",
-        "sonic",
-        "-",
-        "-"
-      ]
-    }
-  ],
-  "GnPH": [
-    {
-      "rank": 1,
-      "rawName": "玉牌解谜",
-      "cleanName": "杂鱼",
-      "time": "12:06:51",
-      "members": [
-        "布莱斯恩",
-        "nightmeow",
-        "Remi",
-        "Clash",
-        "Acetyl"
-      ]
-    },
-    {
-      "rank": 2,
-      "rawName": "Anonymous",
-      "cleanName": "Anonymous",
-      "time": "13:47:26",
-      "members": [
-        "Brightly_",
-        "小大圣",
-        "xxuurruuii"
-      ]
-    },
-    {
-      "rank": 3,
-      "rawName": "Cézanne解谜",
-      "cleanName": "闲散解谜",
-      "time": "16:00:39",
-      "members": [
-        "COL",
-        "esc",
-        "HENG天痕",
-        "CallMeMushroom",
-        "Seter"
-      ]
-    },
-    {
-      "rank": 4,
-      "rawName": "灵境TES",
-      "cleanName": "灵境TES",
-      "time": "16:06:37",
-      "members": [
-        "Havelieyu",
-        "八卦郭嘉",
-        "小汤圆",
-        "希希"
-      ]
-    },
-    {
-      "rank": 5,
-      "rawName": "Reviver Team",
-      "cleanName": "Reviver Team",
-      "time": "17:05:16",
-      "members": [
-        "孔明七星",
-        "cff_0102",
-        "Lazy_Labs",
-        "Daiari",
-        "SpadeA261"
-      ]
-    },
-    {
-      "rank": 6,
-      "rawName": "已被强制修改、封禁账号或追究责任",
-      "cleanName": "鸡",
-      "time": "20:16:59",
-      "members": []
-    },
-    {
-      "rank": 7,
-      "rawName": "子时四又三分之十二刻，幼稚园的小猫咪见、",
-      "cleanName": "幼稚园的小猫咪",
-      "time": "20:50:41",
-      "members": [
-        "Tom22l",
-        "nov",
-        "Zeldaxlove64ever"
-      ]
-    },
-    {
-      "rank": 8,
-      "rawName": "鸡排野炊组",
-      "cleanName": "海拉鲁野炊组",
-      "time": "20:50:43",
-      "members": [
-        "奶油酱",
-        "tangjqjq",
-        "WJ",
-        "水帝WaterKing"
-      ]
-    },
-    {
-      "rank": 9,
-      "rawName": "JUSTeam",
-      "cleanName": "JUSTeam",
-      "time": "21:20:11",
-      "members": [
-        "dailycrazy",
-        "Logistick",
-        "Andantino",
-        "hahahaHAha",
-        "Arya"
-      ]
-    },
-    {
-      "rank": 10,
-      "rawName": "世界美食欧肥show",
-      "cleanName": "世界美食official",
-      "time": "21:44:25",
-      "members": [
-        "Kizuna",
-        "肥鱼",
-        "薯仔",
-        "creeperqwq",
-        "杨"
-      ]
-    }
-  ],
-  "CCBC16": [
-    {
-      "rank": 1,
-      "rawName": "沉向空中的追迹者",
-      "cleanName": "识文解意的追迹者",
-      "time": "33.87",
-      "members": [
-        "Winfrid",
-        "榆木华",
-        "D3D4",
-        "小白狐九月",
-        "LA"
-      ]
-    },
-    {
-      "rank": 2,
-      "rawName": "杂鱼薯条",
-      "cleanName": "杂鱼",
-      "time": "38.12",
-      "members": [
-        "布莱斯恩",
-        "nightmeow",
-        "Acetyl",
-        "Clash",
-        "Remi"
-      ]
-    },
-    {
-      "rank": 3,
-      "rawName": "-------------金牌线-------------",
-      "cleanName": "金牌线",
-      "time": "41.27",
-      "members": [
-        "Inferno",
-        "skyline",
-        "Suika_predator",
-        "Starxcc",
-        "Wildfire"
-      ]
-    },
-    {
-      "rank": 4,
-      "rawName": "zitmen",
-      "cleanName": "zitmen",
-      "time": "41.45",
-      "members": [
-        "Euphonium",
-        "粉",
-        "Ender_nor",
-        "Selenium",
-        "Seleclipse"
-      ]
-    },
-    {
-      "rank": 5,
-      "rawName": "灵境TES",
-      "cleanName": "灵境TES",
-      "time": "43.73",
-      "members": [
-        "Havelieyu",
-        "希希",
-        "八卦郭嘉",
-        "小汤圆",
-        "whiteqwq"
-      ]
-    },
-    {
-      "rank": 6,
-      "rawName": "Reviver Team",
-      "cleanName": "Reviver Team",
-      "time": "48.6",
-      "members": [
-        "SpadeA261",
-        "cff_0102",
-        "WYXkk",
-        "孔明七星",
-        "Lazy_Labs"
-      ]
-    },
-    {
-      "rank": 7,
-      "rawName": "鲍师傅家今天吃什么？",
-      "cleanName": "解谜怪盗团",
-      "time": "50.21",
-      "members": [
-        "兰扎特",
-        "方伯",
-        "yyao",
-        "yuwr",
-        "大灰狼"
-      ]
-    },
-    {
-      "rank": 8,
-      "rawName": "闲散解谜！- 副本 (自动保存的) (已恢复) (兼容模式)",
-      "cleanName": "闲散解谜",
-      "time": "51.25",
-      "members": [
-        "COL",
-        "CallMeMushroom",
-        "esc",
-        "空气新人",
-        "HENG天痕"
-      ]
-    },
-    {
-      "rank": 9,
-      "rawName": "吸石榴野炊组",
-      "cleanName": "海拉鲁野炊组",
-      "time": "51.89",
-      "members": [
-        "水帝WaterKing",
-        "tangjqjq",
-        "深渊的侦探",
-        "奶油酱",
-        "WJ"
-      ]
-    },
-    {
-      "rank": 10,
-      "rawName": "Not A Hunter",
-      "cleanName": "Not A Hunter",
-      "time": "52.25",
-      "members": [
-        "Not A Number"
-      ]
-    }
-  ],
-  "US-TC": [
-    {
-      "rank": 1,
-      "rawName": "San Francisco",
-      "cleanName": "simplicissimus",
-      "time": "26:02:23",
-      "members": []
-    },
-    {
-      "rank": 2,
-      "rawName": "反卷的小猫咪",
-      "cleanName": "幼稚园的小猫咪",
-      "time": "30:32:29",
-      "members": [
-        "Tom22l",
-        "Kagami",
-        "一叶知秋",
-        "mutsuki",
-        "肆月"
-      ]
-    },
-    {
-      "rank": 3,
-      "rawName": "灵境TES",
-      "cleanName": "灵境TES",
-      "time": "32:13:51",
-      "members": []
-    },
-    {
-      "rank": 4,
-      "rawName": "Reviver Team",
-      "cleanName": "Reviver Team",
-      "time": "33:00:23",
-      "members": []
-    },
-    {
-      "rank": 5,
-      "rawName": "JUSTeam",
-      "cleanName": "JUSTeam",
-      "time": "34:10:26",
-      "members": []
-    },
-    {
-      "rank": 6,
-      "rawName": "切香蕉比赛 (4)",
-      "cleanName": "杂鱼",
-      "time": "35:30:14",
-      "members": []
-    },
-    {
-      "rank": 7,
-      "rawName": "看看题US-TC肉鸽联合寻访分队开局（吗",
-      "cleanName": "zitmen + 看看题",
-      "time": "42:04:33",
-      "members": []
-    },
-    {
-      "rank": 8,
-      "rawName": "凑不出 any - sure case",
-      "cleanName": "凑不出",
-      "time": "44:57:31",
-      "members": []
-    },
-    {
-      "rank": 9,
-      "rawName": "魔法少女ノ魔女裁判",
-      "cleanName": "魔女裁判",
-      "time": "45:58:56",
-      "members": []
-    },
-    {
-      "rank": 10,
-      "rawName": "rusty lake rambler",
-      "cleanName": "rusty lake rambler",
-      "time": "46:16:47",
-      "members": []
-    }
-  ],
-  "ZJUPH1": [
-    {
-      "rank": 1,
-      "rawName": "满船清梦",
-      "cleanName": "simplicissimus",
-      "time": "41:46:59",
-      "members": [
-        "温",
-        "Inferno",
-        "落葉子",
-        "selenium",
-        "ES8730",
-        "荠菜"
-      ]
-    },
-    {
-      "rank": 2,
-      "rawName": "小小欲望的追迹者",
-      "cleanName": "识文解意的追迹者",
-      "time": "45:38:49",
-      "members": [
-        "榆木华",
-        "D3D4",
-        "Zaimey",
-        "Te",
-        "LA",
-        "Aphasia"
-      ]
-    },
-    {
-      "rank": 3,
-      "rawName": "zitmen看看题ZJUPH卫戍协议（吗",
-      "cleanName": "zitmen + 看看题",
-      "time": "46:50:47",
-      "members": [
-        "Daviscartes",
-        "廃棄物",
-        "Euphonium",
-        "磬绿薄绒荷",
-        "粉",
-        "半次获释者"
-      ]
-    },
-    {
-      "rank": 4,
-      "rawName": "ohno猫咪河EV",
-      "cleanName": "幼稚园的小猫咪 + Reviver Team",
-      "time": "50:03:33",
-      "members": [
-        "孔明七星",
-        "Tom22l",
-        "一叶知秋",
-        "Kagami",
-        "鑫森淼焱垚",
-        "Lazy_Labs"
-      ]
-    },
-    {
-      "rank": 5,
-      "rawName": "Flashback",
-      "cleanName": "金牌线",
-      "time": "52:06:29",
-      "members": [
-        "skyline",
-        "Wildfire",
-        "小白狐九月",
-        "空气新人",
-        "oscar",
-        "tiger2005"
-      ]
-    },
-    {
-      "rank": 6,
-      "rawName": "RustyLakeTrailblazer",
-      "cleanName": "rusty lake rambler",
-      "time": "54:25:34",
-      "members": [
-        "明月何曾是两乡",
-        "Cy_ExH",
-        "Kown",
-        "迟墨哲",
-        "kartal",
-        "Remi"
-      ]
-    },
-    {
-      "rank": 7,
-      "rawName": "灵境TES",
-      "cleanName": "灵境TES",
-      "time": "56:51:43",
-      "members": [
-        "Havelieyu",
-        "五月",
-        "小汤圆",
-        "八卦郭嘉",
-        "希希"
-      ]
-    },
-    {
-      "rank": 8,
-      "rawName": "JUSTeam",
-      "cleanName": "JUSTeam",
-      "time": "58:08:46",
-      "members": [
-        "Logistick",
-        "hahahaHAha",
-        "Cheney",
-        "dailycrazy",
-        "yux",
-        "Fluittene"
-      ]
-    },
-    {
-      "rank": 9,
-      "rawName": "西溪觅鱼杂",
-      "cleanName": "杂鱼",
-      "time": "60:56:32",
-      "members": [
-        "Clash",
-        "布莱斯恩",
-        "Acetyl",
-        "nightmeow",
-        "-"
-      ]
-    },
-    {
-      "rank": 10,
-      "rawName": "喵好奇质检组",
-      "cleanName": "喵喵喵",
-      "time": "61:41:53",
-      "members": [
-        "TCF",
-        "秋水仙素",
-        "HileMeow",
-        "上弦之月"
-      ]
-    }
-  ],
-  "SECO2": [
-    {
-      "rank": 1,
-      "rawName": "Reviver Team",
-      "cleanName": "Reviver Team",
-      "time": "23:48",
-      "members": [
-        "孔明七星",
-        "skyline",
-        "Daiari",
-        "鑫森淼焱垚",
-        "WYXkk",
-        "cff_0102"
-      ]
-    },
-    {
-      "rank": 2,
-      "rawName": "Unsaluted Dehydration",
-      "cleanName": "Anonymous",
-      "time": "25:56",
-      "members": [
-        "Brightly_",
-        "JP",
-        "xxuurruuii",
-        "Blackhistory",
-        "xsj",
-        "mutsuki"
-      ]
-    },
-    {
-      "rank": 3,
-      "rawName": "含苞待放的追迹者",
-      "cleanName": "识文解意的追迹者",
-      "time": "27:22",
-      "members": [
-        "榆木华",
-        "D3D4",
-        "LA",
-        "Te",
-        "0jacky0",
-        "驯龙高手"
-      ]
-    },
-    {
-      "rank": 4,
-      "rawName": "商业战队卖货连者！",
-      "cleanName": "天翔战队ZOO连者！",
-      "time": "32:01",
-      "members": [
-        "风怒大汉堡",
-        "救赎F-D",
-        "Ender_hz",
-        "钇钒"
-      ]
-    },
-    {
-      "rank": 5,
-      "rawName": "Rusty Lake Meta-stucker",
-      "cleanName": "rusty lake rambler",
-      "time": "36:44",
-      "members": [
-        "Kown",
-        "Cy_ExH",
-        "DriKe",
-        "HakabaRemi",
-        "Partico",
-        "Selena"
-      ]
-    },
-    {
-      "rank": 6,
-      "rawName": "何以为我",
-      "cleanName": "何以为我",
-      "time": "42:56",
-      "members": [
-        "Alez",
-        "Krain",
-        "wymcaT"
-      ]
-    },
-    {
-      "rank": 7,
-      "rawName": "深色墨点",
-      "cleanName": "深色墨点",
-      "time": "43:44",
-      "members": [
-        "135_Morisummer",
-        "Rosmarinus",
-        "爬爬",
-        "Sand"
-      ]
-    },
-    {
-      "rank": 8,
-      "rawName": "CyFur",
-      "cleanName": "CyFur",
-      "time": "48:39",
-      "members": [
-        "COlDAiR",
-        "HanaNeko",
-        "柏律木星",
-        "3708",
-        "UrsaKUMA15",
-        "Yuge0w0"
-      ]
-    },
-    {
-      "rank": 9,
-      "rawName": "绿色圆圈",
-      "cleanName": "绿色圆圈",
-      "time": "49:16",
-      "members": [
-        "mianTzQwQ",
-        "阳光",
-        "liyufish",
-        "Leafy",
-        "rikimaruyyds",
-        "VerictBBB"
-      ]
-    },
-    {
-      "rank": 10,
-      "rawName": "狮姐妹是凹肥瘦",
-      "cleanName": "世界美食official",
-      "time": "50:25",
-      "members": [
-        "Rivekon",
-        "kizuna",
-        "肥鱼",
-        "creeperqwq",
-        "Seter",
-        "凡才肌"
-      ]
-    }
-  ]
-};
-var LINKS = {"P&KU1": "https://pnku1.pkupuzzle.art/", "P&KU1_rank": "https://pnku1.pkupuzzle.art/scoreboard", "CCBC12": "https://ccbc12.cipherpuzzles.com/", "CCBC12_rank": "https://archive.cipherpuzzles.com/index.html#/scoreboard?c=ccbc12/scoreboard", "P&KU2": "https://pnku2.pkupuzzle.art/", "P&KU2_rank": "https://pnku2.pkupuzzle.art/#/board/score_board", "CCBCBA": "https://ccbc13.cipherpuzzles.com/", "CCBCBA_rank": "https://archive.cipherpuzzles.com/ccbc13/board14.html", "MH2023": "https://mh2023.puzzlehunt.cn/", "MH2023_rank": "https://mh2023.puzzlehunt.cn/boards?key=score_board", "JH2024": "https://jh2024.jianghujiemi.fun/", "JH2024_rank": "https://jh2024.jianghujiemi.fun/teams", "P&KU3a": "https://pnku3.pkupuzzle.art/", "P&KU3a_rank": "https://pnku3.pkupuzzle.art/boards?key=score_board", "CCBC15": "https://ccbc15.cipherpuzzles.com/", "CCBC15_rank": "https://archive.cipherpuzzles.com/ccbc15/board15.html", "JUST1": "https://justhunt.cn/archive/just-one/", "JUST1_rank": "https://justhunt.cn/#/rankings", "GnPH": "https://goldenph.art/", "GnPH_rank": "https://goldenph.art/boards?key=score_board", "CCBC16": "https://ccbc16.cipherpuzzles.com/", "CCBC16_rank": "https://ccbc16.cipherpuzzles.com/leaderboard", "US-TC": "http://us-tc.top/", "US-TC_rank": "http://us-tc.top/", "ZJUPH1": "https://2025.zjuph.fun/", "ZJUPH1_rank": "https://2025.zjuph.fun/", "SECO2": "https://archive.secopuzzle.com/#/main/seco2", "SECO2_rank": "https://archive.secopuzzle.com/#/scoreboard/seco2", "P&KU3b": "https://pnku3.pkupuzzle.art/", "P&KU3b_rank": "https://pnku3.pkupuzzle.art/", "CCBC17": "https://ccbc17.cipherpuzzles.com/", "CCBC17_rank": "https://ccbc17.cipherpuzzles.com/"};
+var COMPETITIONS = [{"id": "P&KU1", "date": "2022-06-24", "time": "20:00", "url": "https://pnku1.pkupuzzle.art/", "rankingUrl": "https://pnku1.pkupuzzle.art/scoreboard"}, {"id": "CCBC12", "date": "2022-08-12", "time": "20:00", "url": "https://ccbc12.cipherpuzzles.com/", "rankingUrl": "https://archive.cipherpuzzles.com/index.html#/scoreboard?c=ccbc12/scoreboard"}, {"id": "P&KU2", "date": "2023-04-28", "time": "20:00", "url": "https://pnku2.pkupuzzle.art/", "rankingUrl": "https://pnku2.pkupuzzle.art/#/board/score_board"}, {"id": "CCBCBA", "date": "2023-08-11", "time": "20:00", "url": "https://ccbc13.cipherpuzzles.com/", "rankingUrl": "https://archive.cipherpuzzles.com/ccbc13/board14.html"}, {"id": "MH2023", "date": "2023-12-29", "time": "20:00", "url": "https://mh2023.puzzlehunt.cn/", "rankingUrl": "https://mh2023.puzzlehunt.cn/boards?key=score_board"}, {"id": "JH2024", "date": "2024-02-23", "time": "20:00", "url": "https://jh2024.jianghujiemi.fun/", "rankingUrl": "https://jh2024.jianghujiemi.fun/teams"}, {"id": "P&KU3a", "date": "2024-07-19", "time": "20:00", "url": "https://pnku3a.pkupuzzle.art/", "rankingUrl": "https://pnku3a.pkupuzzle.art/boards?key=score_board"}, {"id": "CCBC15", "date": "2024-08-09", "time": "20:00", "url": "https://ccbc15.cipherpuzzles.com/", "rankingUrl": "https://archive.cipherpuzzles.com/ccbc15/board15.html"}, {"id": "JUST1", "date": "2024-09-06", "time": "19:43", "url": "https://justhunt.cn/archive/just-one/", "rankingUrl": "https://justhunt.cn/#/rankings"}, {"id": "GnPH", "date": "2025-07-18", "time": "20:00", "url": "https://goldenph.art/", "rankingUrl": "https://goldenph.art/boards?key=score_board"}, {"id": "CCBC16", "date": "2025-08-08", "time": "20:00", "url": "https://ccbc16.cipherpuzzles.com/", "rankingUrl": "https://ccbc16.cipherpuzzles.com/leaderboard"}, {"id": "US-TC", "date": "2025-10-06", "time": "20:00", "url": "http://us-tc.top/", "rankingUrl": "http://us-tc.top/"}, {"id": "ZJUPH1", "date": "2025-11-21", "time": "20:00", "url": "https://2025.zjuph.fun/", "rankingUrl": "https://2025.zjuph.fun/"}, {"id": "SECO2", "date": "2026-01-31", "time": "20:00", "url": "https://archive.secopuzzle.com/#/main/seco2", "rankingUrl": "https://archive.secopuzzle.com/#/scoreboard/seco2"}, {"id": "P&KU3b", "date": "2026-07-10", "time": "20:00", "url": "https://pnku3.pkupuzzle.art/", "rankingUrl": "https://pnku3.pkupuzzle.art/"}, {"id": "CCBC17", "date": "2026-08-14", "time": "20:00", "url": "https://ccbc17.cipherpuzzles.com/", "rankingUrl": "https://ccbc17.cipherpuzzles.com/"}];
+var RANKINGS = {"simplicissimus": {"P&KU1": {"rank": 4, "time": "49.57"}, "CCBC12": {"rank": 1, "time": "15.93"}, "P&KU2": {"rank": 2, "time": "30:55:43"}, "CCBCBA": {"staff": true}, "MH2023": {"rank": 2, "time": "28:35:42"}, "JH2024": {"rank": 2, "time": "41:41"}, "P&KU3a": {"rank": 1, "time": "25:26:15"}, "CCBC15": {"rank": 1, "time": "30.98"}, "JUST1": {"rank": 6, "time": "36.50"}, "GnPH": {"staff": true}, "CCBC16": {"staff": true}, "US-TC": {"rank": 1, "time": null}, "ZJUPH1": {"rank": 1, "time": null}, "SECO2": null, "P&KU3b": null, "CCBC17": null}, "灵境TES": {"P&KU1": null, "CCBC12": {"rank": 5, "time": "51.08"}, "P&KU2": {"rank": 4, "time": "55:50:19"}, "CCBCBA": {"rank": 6, "time": "62.99"}, "MH2023": {"rank": 3, "time": "33:32:36"}, "JH2024": {"rank": 6, "time": "54:14"}, "P&KU3a": {"rank": 3, "time": "40:27:49"}, "CCBC15": {"rank": 2, "time": "32.25"}, "JUST1": {"rank": 2, "time": "22.01"}, "GnPH": {"rank": 4, "time": "16:06:37"}, "CCBC16": {"rank": 5, "time": "43:44"}, "US-TC": {"rank": 3, "time": null}, "ZJUPH1": {"rank": 7, "time": null}, "SECO2": {"rank": 14, "time": "52:17"}, "P&KU3b": null, "CCBC17": null}, "识文解意的追迹者": {"P&KU1": {"rank": 9, "time": "64.50"}, "CCBC12": {"rank": 8, "time": "56.68"}, "P&KU2": {"rank": 9, "time": "68:52:59"}, "CCBCBA": {"rank": 7, "time": "65.16"}, "MH2023": {"rank": 8, "time": "49:40:32"}, "JH2024": {"rank": 12, "time": "73:44"}, "P&KU3a": {"rank": 19, "time": "83:10:18"}, "CCBC15": {"rank": 3, "time": "41.62"}, "JUST1": {"rank": 5, "time": "30.26"}, "GnPH": {"rank": 19, "time": "30:49:39"}, "CCBC16": {"rank": 1, "time": "33:52"}, "US-TC": {"rank": 69, "time": null}, "ZJUPH1": {"rank": 2, "time": null}, "SECO2": {"rank": 3, "time": "27:22"}, "P&KU3b": null, "CCBC17": {"staff": true}}, "鸡": {"P&KU1": null, "CCBC12": {"rank": 7, "time": "56.50"}, "P&KU2": {"rank": 1, "time": "30:42:40"}, "CCBCBA": {"rank": 3, "time": "52.45"}, "MH2023": {"rank": 1, "time": "28:12:41"}, "JH2024": {"rank": 3, "time": "48:16"}, "P&KU3a": {"rank": 4, "time": "41:59:18"}, "CCBC15": {"rank": 7, "time": "50.10"}, "JUST1": null, "GnPH": {"rank": 6, "time": "20:16:59"}, "CCBC16": {"rank": 13, "time": "59:47"}, "US-TC": null, "ZJUPH1": null, "SECO2": null, "P&KU3b": null, "CCBC17": null}, "杂鱼": {"P&KU1": null, "CCBC12": null, "P&KU2": null, "CCBCBA": null, "MH2023": null, "JH2024": null, "P&KU3a": null, "CCBC15": null, "JUST1": null, "GnPH": {"rank": 1, "time": "12:06:51"}, "CCBC16": {"rank": 2, "time": "38:07"}, "US-TC": {"rank": 6, "time": null}, "ZJUPH1": {"rank": 9, "time": null}, "SECO2": null, "P&KU3b": null, "CCBC17": null}, "Anonymous": {"P&KU1": null, "CCBC12": null, "P&KU2": null, "CCBCBA": {"rank": 16, "time": "81.10"}, "MH2023": {"rank": 6, "time": "48:45:02"}, "JH2024": {"rank": 4, "time": "48:17"}, "P&KU3a": {"staff": true}, "CCBC15": {"rank": 5, "time": "43.60"}, "JUST1": {"rank": 11, "time": "46.68"}, "GnPH": {"rank": 2, "time": "13:47:26"}, "CCBC16": null, "US-TC": null, "ZJUPH1": {"staff": true}, "SECO2": {"rank": 2, "time": "25:56"}, "P&KU3b": null, "CCBC17": null}, "Reviver Team": {"P&KU1": null, "CCBC12": null, "P&KU2": null, "CCBCBA": null, "MH2023": null, "JH2024": null, "P&KU3a": {"rank": 22, "time": "89:44:44"}, "CCBC15": {"rank": 22, "time": "85.40"}, "JUST1": {"rank": 10, "time": "46.20"}, "GnPH": {"rank": 5, "time": "17:05:16"}, "CCBC16": {"rank": 6, "time": "48:36"}, "US-TC": {"rank": 4, "time": null}, "ZJUPH1": {"rank": 4, "time": null}, "SECO2": {"rank": 1, "time": "23:48"}, "P&KU3b": null, "CCBC17": null}, "解谜怪盗团": {"P&KU1": {"rank": 2, "time": "22.57"}, "CCBC12": {"rank": 4, "time": "49.51"}, "P&KU2": null, "CCBCBA": {"rank": "50+", "time": null}, "MH2023": {"rank": 4, "time": "40:06:47"}, "JH2024": {"rank": 1, "time": "41:29"}, "P&KU3a": {"rank": 2, "time": "31:27:37"}, "CCBC15": {"rank": 37, "time": "109.17"}, "JUST1": {"rank": 12, "time": "47.59"}, "GnPH": {"rank": "50+", "time": null}, "CCBC16": {"rank": 7, "time": "50:13"}, "US-TC": {"rank": "50+", "time": null}, "ZJUPH1": {"rank": "50+", "time": null}, "SECO2": null, "P&KU3b": null, "CCBC17": null}, "海拉鲁野炊组": {"P&KU1": {"rank": 8, "time": "60.20"}, "CCBC12": null, "P&KU2": {"rank": 3, "time": "54:33:28"}, "CCBCBA": {"rank": 9, "time": "69.32"}, "MH2023": {"rank": 7, "time": "48:54:46"}, "JH2024": {"rank": 7, "time": "60:45"}, "P&KU3a": {"rank": 5, "time": "45:56:43"}, "CCBC15": {"rank": 11, "time": "51.95"}, "JUST1": {"rank": 3, "time": "24.86"}, "GnPH": {"rank": 8, "time": "20:50:43"}, "CCBC16": {"rank": 9, "time": "51:54"}, "US-TC": {"rank": 15, "time": null}, "ZJUPH1": {"rank": 11, "time": null}, "SECO2": {"rank": 23, "time": "62:50"}, "P&KU3b": null, "CCBC17": null}, "金牌线": {"P&KU1": null, "CCBC12": null, "P&KU2": {"rank": 10, "time": "69:00:03"}, "CCBCBA": {"rank": 12, "time": "71.81"}, "MH2023": {"rank": 9, "time": "51:28:27"}, "JH2024": {"rank": 10, "time": "70:57"}, "P&KU3a": {"rank": 10, "time": "57:59:40"}, "CCBC15": {"rank": 4, "time": "43.12"}, "JUST1": null, "GnPH": {"staff": true}, "CCBC16": {"rank": 3, "time": "41:16"}, "US-TC": null, "ZJUPH1": {"rank": 5, "time": null}, "SECO2": null, "P&KU3b": null, "CCBC17": null}, "闲散解谜！": {"P&KU1": {"rank": 17, "time": "108.85"}, "CCBC12": {"rank": 13, "time": "72.28"}, "P&KU2": {"rank": 5, "time": "55:57:11"}, "CCBCBA": {"rank": 1, "time": "46.52"}, "MH2023": null, "JH2024": {"rank": 8, "time": "63:11"}, "P&KU3a": {"rank": 9, "time": "54:37:57"}, "CCBC15": {"staff": true}, "JUST1": null, "GnPH": {"rank": 3, "time": "16:00:39"}, "CCBC16": {"rank": 8, "time": "51:15"}, "US-TC": null, "ZJUPH1": null, "SECO2": null, "P&KU3b": null, "CCBC17": null}, "喵喵喵": {"P&KU1": {"rank": 1, "time": "21.22"}, "CCBC12": {"rank": 6, "time": "55.80"}, "P&KU2": null, "CCBCBA": {"rank": 2, "time": "52.23"}, "MH2023": {"staff": true}, "JH2024": null, "P&KU3a": null, "CCBC15": {"rank": 12, "time": "70.49"}, "JUST1": null, "GnPH": null, "CCBC16": {"rank": 14, "time": "61:39"}, "US-TC": null, "ZJUPH1": {"rank": 10, "time": null}, "SECO2": null, "P&KU3b": null, "CCBC17": null}, "zitmen": {"P&KU1": {"rank": 19, "time": "114.15"}, "CCBC12": {"rank": 40, "time": "136.02"}, "P&KU2": {"rank": 13, "time": "75:34:08"}, "CCBCBA": {"rank": 8, "time": "67.14"}, "MH2023": {"rank": 5, "time": "44:12:11"}, "JH2024": {"rank": 26, "time": "110:43"}, "P&KU3a": {"rank": 8, "time": "52:14:59"}, "CCBC15": {"rank": 9, "time": "50.45"}, "JUST1": null, "GnPH": {"rank": 11, "time": "22:46:07"}, "CCBC16": {"rank": 4, "time": "41:27"}, "US-TC": {"rank": 7, "time": null}, "ZJUPH1": {"rank": 3, "time": null}, "SECO2": null, "P&KU3b": null, "CCBC17": null}, "谜途旅人": {"P&KU1": null, "CCBC12": null, "P&KU2": {"rank": 6, "time": "55:58:34"}, "CCBCBA": {"rank": 13, "time": "75.14"}, "MH2023": {"rank": 10, "time": "51:42:57"}, "JH2024": {"rank": 5, "time": "48:28"}, "P&KU3a": null, "CCBC15": {"rank": 10, "time": "50.88"}, "JUST1": {"rank": 4, "time": "27.89"}, "GnPH": null, "CCBC16": null, "US-TC": null, "ZJUPH1": null, "SECO2": null, "P&KU3b": null, "CCBC17": null}, "JUSTeam": {"P&KU1": null, "CCBC12": null, "P&KU2": {"rank": 7, "time": "64:17:04"}, "CCBCBA": {"rank": 15, "time": "78.99"}, "MH2023": {"rank": 11, "time": "55:00:52"}, "JH2024": {"rank": 9, "time": "70:18"}, "P&KU3a": {"rank": 11, "time": "61:39:13"}, "CCBC15": {"rank": 6, "time": "48.44"}, "JUST1": {"staff": true}, "GnPH": {"rank": 9, "time": "21:20:11"}, "CCBC16": {"rank": 20, "time": "72:19"}, "US-TC": {"rank": 5, "time": null}, "ZJUPH1": {"rank": 8, "time": null}, "SECO2": null, "P&KU3b": null, "CCBC17": null}, "幼稚园的小猫咪": {"P&KU1": null, "CCBC12": null, "P&KU2": null, "CCBCBA": null, "MH2023": {"rank": 34, "time": "110:10:47"}, "JH2024": {"rank": 19, "time": "93:38"}, "P&KU3a": {"rank": 29, "time": "94:33:06"}, "CCBC15": {"rank": 43, "time": "116.62"}, "JUST1": {"rank": 35, "time": "70.35"}, "GnPH": {"rank": 7, "time": "20:50:41"}, "CCBC16": {"rank": 47, "time": "95:20"}, "US-TC": {"rank": 2, "time": null}, "ZJUPH1": {"rank": 4, "time": null}, "SECO2": {"rank": 27, "time": "67:56"}, "P&KU3b": null, "CCBC17": null}, "世界美食official": {"P&KU1": null, "CCBC12": {"rank": 18, "time": "77.76"}, "P&KU2": {"rank": 8, "time": "66:40:49"}, "CCBCBA": {"rank": 18, "time": "88.29"}, "MH2023": {"rank": 17, "time": "79:46:02"}, "JH2024": {"rank": 11, "time": "71:03"}, "P&KU3a": {"rank": 7, "time": "51:26:06"}, "CCBC15": {"rank": 8, "time": "50.42"}, "JUST1": null, "GnPH": {"rank": 10, "time": "21:44:25"}, "CCBC16": {"rank": 12, "time": "57:25"}, "US-TC": null, "ZJUPH1": {"staff": true}, "SECO2": {"rank": 10, "time": "50:25"}, "P&KU3b": null, "CCBC17": null}, "rusty lake rambler": {"P&KU1": null, "CCBC12": null, "P&KU2": null, "CCBCBA": null, "MH2023": null, "JH2024": null, "P&KU3a": null, "CCBC15": null, "JUST1": null, "GnPH": {"rank": 25, "time": "33:32:37"}, "CCBC16": {"rank": 50, "time": "96:34"}, "US-TC": {"rank": 10, "time": null}, "ZJUPH1": {"rank": 6, "time": null}, "SECO2": {"rank": 5, "time": "36:44"}, "P&KU3b": null, "CCBC17": null}, "天翔战队ZOO连者！": {"P&KU1": null, "CCBC12": null, "P&KU2": null, "CCBCBA": null, "MH2023": null, "JH2024": null, "P&KU3a": null, "CCBC15": null, "JUST1": null, "GnPH": {"rank": 13, "time": "25:40:45"}, "CCBC16": {"rank": 17, "time": "63:53"}, "US-TC": {"rank": 11, "time": null}, "ZJUPH1": {"rank": 43, "time": null}, "SECO2": {"rank": 4, "time": "32:01"}, "P&KU3b": null, "CCBC17": null}, "看看题": {"P&KU1": null, "CCBC12": null, "P&KU2": null, "CCBCBA": null, "MH2023": null, "JH2024": null, "P&KU3a": null, "CCBC15": null, "JUST1": null, "GnPH": {"rank": 37, "time": "43:32:04"}, "CCBC16": {"rank": 16, "time": "63:29"}, "US-TC": {"rank": 7, "time": null}, "ZJUPH1": {"rank": 3, "time": null}, "SECO2": null, "P&KU3b": null, "CCBC17": null}, "反卷": {"P&KU1": null, "CCBC12": null, "P&KU2": null, "CCBCBA": null, "MH2023": {"rank": 24, "time": "96:45:54"}, "JH2024": {"rank": 16, "time": "92:09"}, "P&KU3a": {"rank": 6, "time": "50:51:52"}, "CCBC15": {"staff": true}, "JUST1": {"rank": 19, "time": "50.16"}, "GnPH": {"staff": true}, "CCBC16": {"rank": 15, "time": "63:01"}, "US-TC": {"rank": 20, "time": null}, "ZJUPH1": {"staff": true}, "SECO2": null, "P&KU3b": null, "CCBC17": null}, "何以为我": {"P&KU1": null, "CCBC12": null, "P&KU2": null, "CCBCBA": null, "MH2023": null, "JH2024": null, "P&KU3a": null, "CCBC15": null, "JUST1": {"rank": 30, "time": "63.52"}, "GnPH": {"rank": 48, "time": "49:34:40"}, "CCBC16": {"rank": 22, "time": "72:47"}, "US-TC": {"rank": 43, "time": null}, "ZJUPH1": {"rank": 26, "time": null}, "SECO2": {"rank": 6, "time": "42:56"}, "P&KU3b": null, "CCBC17": null}, "凑不出": {"P&KU1": null, "CCBC12": null, "P&KU2": null, "CCBCBA": null, "MH2023": null, "JH2024": null, "P&KU3a": null, "CCBC15": null, "JUST1": {"rank": 45, "time": "77.98"}, "GnPH": {"rank": 12, "time": "24:35:31"}, "CCBC16": {"rank": 33, "time": "81:30"}, "US-TC": {"rank": 8, "time": null}, "ZJUPH1": {"rank": 16, "time": null}, "SECO2": {"rank": 17, "time": "53:57"}, "P&KU3b": null, "CCBC17": null}, "深色墨点": {"P&KU1": null, "CCBC12": null, "P&KU2": null, "CCBCBA": null, "MH2023": null, "JH2024": {"rank": 41, "time": "162:39"}, "P&KU3a": {"rank": 91, "time": "200:18:12"}, "CCBC15": null, "JUST1": null, "GnPH": {"rank": 22, "time": "32:44:18"}, "CCBC16": {"rank": 34, "time": "82:54"}, "US-TC": {"rank": 42, "time": null}, "ZJUPH1": {"rank": 55, "time": null}, "SECO2": {"rank": 7, "time": "43:44"}, "P&KU3b": null, "CCBC17": null}, "绿色圆圈": {"P&KU1": null, "CCBC12": null, "P&KU2": null, "CCBCBA": null, "MH2023": null, "JH2024": null, "P&KU3a": null, "CCBC15": null, "JUST1": null, "GnPH": null, "CCBC16": null, "US-TC": {"rank": 37, "time": null}, "ZJUPH1": {"rank": 30, "time": null}, "SECO2": {"rank": 9, "time": "49:16"}, "P&KU3b": null, "CCBC17": null}, "Puzzlesweeper": {"P&KU1": null, "CCBC12": null, "P&KU2": {"rank": 12, "time": "72:24:45"}, "CCBCBA": {"rank": 11, "time": "71.69"}, "MH2023": {"rank": 12, "time": "56:10:36"}, "JH2024": {"rank": 25, "time": "96:27"}, "P&KU3a": {"rank": 33, "time": "98:38:49"}, "CCBC15": {"rank": 17, "time": "75.41"}, "JUST1": {"rank": 9, "time": "44.93"}, "GnPH": {"rank": 63, "time": "63:06:04"}, "CCBC16": {"rank": 39, "time": "89:21"}, "US-TC": null, "ZJUPH1": {"rank": 51, "time": null}, "SECO2": null, "P&KU3b": null, "CCBC17": null}, "Not A Hunter": {"P&KU1": null, "CCBC12": null, "P&KU2": null, "CCBCBA": null, "MH2023": {"rank": 21, "time": "93:55:31"}, "JH2024": null, "P&KU3a": {"rank": 18, "time": "79:53:18"}, "CCBC15": {"rank": 30, "time": "94.59"}, "JUST1": {"rank": 13, "time": "48.14"}, "GnPH": {"rank": 30, "time": "40:51:34"}, "CCBC16": {"rank": 10, "time": "52:15"}, "US-TC": null, "ZJUPH1": {"rank": 29, "time": null}, "SECO2": {"rank": 24, "time": "66:29"}, "P&KU3b": null, "CCBC17": null}, "Cyfur": {"P&KU1": null, "CCBC12": null, "P&KU2": null, "CCBCBA": {"rank": 50, "time": "151.36"}, "MH2023": {"rank": 37, "time": "119:07:56"}, "JH2024": {"rank": 23, "time": "94:30"}, "P&KU3a": {"rank": 16, "time": "73:28:47"}, "CCBC15": {"rank": 15, "time": "75.28"}, "JUST1": {"rank": 21, "time": "53.01"}, "GnPH": {"rank": 20, "time": "31:52:28"}, "CCBC16": {"rank": 69, "time": "118:28"}, "US-TC": {"rank": 22, "time": null}, "ZJUPH1": {"rank": 25, "time": null}, "SECO2": {"rank": 8, "time": "48:39"}, "P&KU3b": null, "CCBC17": null}, "耗": {"P&KU1": {"rank": 6, "time": "52.99"}, "CCBC12": {"rank": 2, "time": "46.13"}, "P&KU2": {"rank": 25, "time": "92:00:55"}, "CCBCBA": {"rank": 26, "time": "110.11"}, "MH2023": null, "JH2024": null, "P&KU3a": null, "CCBC15": {"rank": 16, "time": "75.35"}, "JUST1": null, "GnPH": null, "CCBC16": {"rank": 35, "time": "86:17"}, "US-TC": null, "ZJUPH1": null, "SECO2": null, "P&KU3b": null, "CCBC17": null}, "FloorOfLava": {"P&KU1": null, "CCBC12": null, "P&KU2": {"rank": 56, "time": "148:12:36"}, "CCBCBA": {"rank": 29, "time": "111.12"}, "MH2023": {"rank": 14, "time": "72:09:55"}, "JH2024": {"rank": 20, "time": "93:40"}, "P&KU3a": {"rank": 15, "time": "73:02:38"}, "CCBC15": {"rank": 13, "time": "71.63"}, "JUST1": null, "GnPH": {"rank": 57, "time": "56:18:40"}, "CCBC16": {"rank": 18, "time": "69:03"}, "US-TC": null, "ZJUPH1": {"rank": 40, "time": null}, "SECO2": {"rank": 42, "time": "78:23"}, "P&KU3b": null, "CCBC17": null}, "队名包含不适宜内容": {"P&KU1": null, "CCBC12": null, "P&KU2": {"rank": 20, "time": "87:27:12"}, "CCBCBA": {"rank": 47, "time": "143.38"}, "MH2023": {"rank": 16, "time": "74:42:49"}, "JH2024": {"rank": 13, "time": "75:03"}, "P&KU3a": {"rank": 36, "time": "100:23:36"}, "CCBC15": {"rank": 20, "time": "79.96"}, "JUST1": {"rank": 14, "time": "48.44"}, "GnPH": {"rank": 38, "time": "44:18:23"}, "CCBC16": {"rank": 26, "time": "77:29"}, "US-TC": null, "ZJUPH1": {"rank": 19, "time": null}, "SECO2": {"rank": 39, "time": "77:45"}, "P&KU3b": null, "CCBC17": null}, "你在为难我胖虎": {"P&KU1": null, "CCBC12": null, "P&KU2": null, "CCBCBA": null, "MH2023": null, "JH2024": {"rank": 15, "time": "89:39"}, "P&KU3a": {"rank": 24, "time": "91:05:51"}, "CCBC15": {"rank": 18, "time": "78.32"}, "JUST1": {"rank": 15, "time": "48.96"}, "GnPH": {"rank": 50, "time": "52:09:11"}, "CCBC16": {"rank": 46, "time": "95:04"}, "US-TC": {"rank": 55, "time": null}, "ZJUPH1": {"rank": 28, "time": null}, "SECO2": {"rank": 46, "time": "88:35"}, "P&KU3b": null, "CCBC17": null}, "一车面包人": {"P&KU1": null, "CCBC12": {"rank": 19, "time": "79.57"}, "P&KU2": {"rank": 34, "time": "109:24:43"}, "CCBCBA": {"rank": 20, "time": "98.37"}, "MH2023": {"rank": 13, "time": "56:37:27"}, "JH2024": {"rank": 22, "time": "94:13"}, "P&KU3a": null, "CCBC15": {"rank": 21, "time": "80.61"}, "JUST1": {"rank": 17, "time": "49.44"}, "GnPH": null, "CCBC16": null, "US-TC": null, "ZJUPH1": null, "SECO2": null, "P&KU3b": null, "CCBC17": null}, "NZND": {"P&KU1": null, "CCBC12": {"rank": 25, "time": "102.24"}, "P&KU2": {"rank": 18, "time": "80:56:17"}, "CCBCBA": {"rank": 57, "time": "159.44"}, "MH2023": {"rank": 47, "time": "140:06:11"}, "JH2024": {"rank": 29, "time": "116:21"}, "P&KU3a": {"rank": 13, "time": "68:35:16"}, "CCBC15": {"rank": 28, "time": "92.19"}, "JUST1": {"rank": 38, "time": "72.90"}, "GnPH": {"rank": 24, "time": "33:19:39"}, "CCBC16": {"rank": 148, "time": "166:20"}, "US-TC": {"rank": 109, "time": null}, "ZJUPH1": null, "SECO2": null, "P&KU3b": null, "CCBC17": null}, "幼齒": {"P&KU1": null, "CCBC12": null, "P&KU2": null, "CCBCBA": {"rank": 4, "time": "57.01"}, "MH2023": {"rank": 18, "time": "81:27:28"}, "JH2024": {"rank": 30, "time": "120:39"}, "P&KU3a": {"rank": 14, "time": "72:58:34"}, "CCBC15": {"rank": 27, "time": "91.88"}, "JUST1": null, "GnPH": {"rank": 26, "time": "39:06:43"}, "CCBC16": {"rank": 73, "time": "120:12"}, "US-TC": null, "ZJUPH1": null, "SECO2": null, "P&KU3b": null, "CCBC17": null}, "卡在那個題": {"P&KU1": {"rank": 25, "time": "137.41"}, "CCBC12": {"rank": 3, "time": "46.53"}, "P&KU2": {"rank": 32, "time": "103:08:47"}, "CCBCBA": {"rank": 10, "time": "69.77"}, "MH2023": {"rank": 32, "time": "107:55:00"}, "JH2024": {"rank": 59, "time": "213:14"}, "P&KU3a": null, "CCBC15": null, "JUST1": null, "GnPH": null, "CCBC16": null, "US-TC": null, "ZJUPH1": null, "SECO2": null, "P&KU3b": null, "CCBC17": null}, "有道法体育慕课答案": {"P&KU1": {"rank": 3, "time": "47.04"}, "CCBC12": null, "P&KU2": {"rank": 30, "time": "101:10:13"}, "CCBCBA": {"rank": 54, "time": "157.07"}, "MH2023": {"rank": 15, "time": "73:42:23"}, "JH2024": {"rank": 36, "time": "141:57"}, "P&KU3a": {"rank": 34, "time": "98:56:43"}, "CCBC15": {"rank": 49, "time": "127.04"}, "JUST1": {"rank": 43, "time": "76.08"}, "GnPH": null, "CCBC16": {"rank": 61, "time": "112:59"}, "US-TC": null, "ZJUPH1": null, "SECO2": null, "P&KU3b": null, "CCBC17": null}, "真相猎人": {"P&KU1": null, "CCBC12": {"rank": 12, "time": "68.24"}, "P&KU2": {"rank": 26, "time": "92:08:09"}, "CCBCBA": {"rank": 27, "time": "110.30"}, "MH2023": {"rank": 28, "time": "102:08:37"}, "JH2024": null, "P&KU3a": {"rank": 41, "time": "113:32:37"}, "CCBC15": {"rank": 40, "time": "114.98"}, "JUST1": null, "GnPH": null, "CCBC16": {"rank": 115, "time": "146:18"}, "US-TC": null, "ZJUPH1": {"rank": 119, "time": null}, "SECO2": null, "P&KU3b": null, "CCBC17": null}, "东北一霸": {"P&KU1": null, "CCBC12": {"rank": 27, "time": "106.26"}, "P&KU2": {"rank": 14, "time": "75:52:33"}, "CCBCBA": {"rank": 17, "time": "84.23"}, "MH2023": null, "JH2024": null, "P&KU3a": {"rank": 21, "time": "88:45:49"}, "CCBC15": {"rank": 36, "time": "108.73"}, "JUST1": null, "GnPH": null, "CCBC16": {"rank": 45, "time": "94:34"}, "US-TC": null, "ZJUPH1": null, "SECO2": null, "P&KU3b": null, "CCBC17": null}, "Live Fast Die Young": {"P&KU1": null, "CCBC12": null, "P&KU2": {"rank": 48, "time": "128:46:48"}, "CCBCBA": {"rank": 37, "time": "128.50"}, "MH2023": {"rank": 22, "time": "94:15:23"}, "JH2024": {"rank": 14, "time": "76:17"}, "P&KU3a": {"rank": 23, "time": "90:32:47"}, "CCBC15": {"rank": 35, "time": "104.11"}, "JUST1": {"rank": 18, "time": "49.81"}, "GnPH": {"rank": 102, "time": "90:19:21"}, "CCBC16": {"rank": 58, "time": "103:33"}, "US-TC": {"rank": 26, "time": null}, "ZJUPH1": {"rank": 33, "time": null}, "SECO2": null, "P&KU3b": null, "CCBC17": null}, "Omega5": {"P&KU1": null, "CCBC12": null, "P&KU2": null, "CCBCBA": {"rank": 33, "time": "117.60"}, "MH2023": {"rank": 54, "time": "162:39:20"}, "JH2024": null, "P&KU3a": {"rank": 59, "time": "154:54:48"}, "CCBC15": {"rank": 19, "time": "78.83"}, "JUST1": {"rank": 16, "time": "49.09"}, "GnPH": {"rank": 16, "time": "28:48:56"}, "CCBC16": {"rank": 27, "time": "77:59"}, "US-TC": {"rank": 35, "time": null}, "ZJUPH1": null, "SECO2": null, "P&KU3b": null, "CCBC17": null}, "Hungergame": {"P&KU1": null, "CCBC12": null, "P&KU2": null, "CCBCBA": null, "MH2023": null, "JH2024": null, "P&KU3a": {"rank": 30, "time": "94:58:34"}, "CCBC15": {"rank": 48, "time": "125.23"}, "JUST1": null, "GnPH": {"rank": 56, "time": "55:49:03"}, "CCBC16": {"rank": 32, "time": "80:11"}, "US-TC": {"rank": 16, "time": null}, "ZJUPH1": null, "SECO2": null, "P&KU3b": null, "CCBC17": null}, "丁香鱼徒步运动": {"P&KU1": null, "CCBC12": null, "P&KU2": null, "CCBCBA": null, "MH2023": null, "JH2024": null, "P&KU3a": {"rank": 17, "time": "74:04:54"}, "CCBC15": null, "JUST1": {"rank": 22, "time": "54.02"}, "GnPH": {"rank": 51, "time": "54:13:22"}, "CCBC16": {"rank": 30, "time": "79:56"}, "US-TC": {"rank": 178, "time": null}, "ZJUPH1": null, "SECO2": null, "P&KU3b": null, "CCBC17": null}, "给猫铲屎去了": {"P&KU1": null, "CCBC12": null, "P&KU2": null, "CCBCBA": {"rank": 89, "time": "196.25"}, "MH2023": {"rank": 41, "time": "132:08:34"}, "JH2024": {"rank": 21, "time": "94:11"}, "P&KU3a": {"rank": 35, "time": "99:08:41"}, "CCBC15": {"rank": 26, "time": "90.86"}, "JUST1": {"rank": 25, "time": "56.92"}, "GnPH": {"rank": 49, "time": "49:45:52"}, "CCBC16": {"rank": 64, "time": "115:14"}, "US-TC": {"rank": 28, "time": null}, "ZJUPH1": {"rank": 12, "time": null}, "SECO2": {"rank": 21, "time": "60.07"}, "P&KU3b": null, "CCBC17": null}};
+var LINKS = {"P&KU1": "https://pnku1.pkupuzzle.art/", "P&KU1_rank": "https://pnku1.pkupuzzle.art/scoreboard", "CCBC12": "https://ccbc12.cipherpuzzles.com/", "CCBC12_rank": "https://archive.cipherpuzzles.com/index.html#/scoreboard?c=ccbc12/scoreboard", "P&KU2": "https://pnku2.pkupuzzle.art/", "P&KU2_rank": "https://pnku2.pkupuzzle.art/#/board/score_board", "CCBCBA": "https://ccbc13.cipherpuzzles.com/", "CCBCBA_rank": "https://archive.cipherpuzzles.com/ccbc13/board14.html", "MH2023": "https://mh2023.puzzlehunt.cn/", "MH2023_rank": "https://mh2023.puzzlehunt.cn/boards?key=score_board", "JH2024": "https://jh2024.jianghujiemi.fun/", "JH2024_rank": "https://jh2024.jianghujiemi.fun/teams", "P&KU3a": "https://pnku3a.pkupuzzle.art/", "P&KU3a_rank": "https://pnku3a.pkupuzzle.art/boards?key=score_board", "CCBC15": "https://ccbc15.cipherpuzzles.com/", "CCBC15_rank": "https://archive.cipherpuzzles.com/ccbc15/board15.html", "JUST1": "https://justhunt.cn/archive/just-one/", "JUST1_rank": "https://justhunt.cn/#/rankings", "GnPH": "https://goldenph.art/", "GnPH_rank": "https://goldenph.art/boards?key=score_board", "CCBC16": "https://ccbc16.cipherpuzzles.com/", "CCBC16_rank": "https://ccbc16.cipherpuzzles.com/leaderboard", "US-TC": "http://us-tc.top/", "US-TC_rank": "http://us-tc.top/", "ZJUPH1": "https://2025.zjuph.fun/", "ZJUPH1_rank": "https://2025.zjuph.fun/", "SECO2": "https://archive.secopuzzle.com/#/main/seco2", "SECO2_rank": "https://archive.secopuzzle.com/#/scoreboard/seco2", "P&KU3b": "https://pnku3.pkupuzzle.art/", "P&KU3b_rank": "https://pnku3.pkupuzzle.art/", "CCBC17": "https://ccbc17.cipherpuzzles.com/", "CCBC17_rank": "https://ccbc17.cipherpuzzles.com/"};
 var COMP_EPOCHS = {"P&KU1": 1656072000000, "CCBC12": 1660305600000, "P&KU2": 1682683200000, "CCBCBA": 1691755200000, "MH2023": 1703851200000, "JH2024": 1708689600000, "P&KU3a": 1721390400000, "CCBC15": 1723204800000, "JUST1": 1725624000000, "GnPH": 1752840000000, "CCBC16": 1754654400000, "US-TC": 1759752000000, "ZJUPH1": 1763726400000, "SECO2": 1769860800000, "P&KU3b": 1783684800000, "CCBC17": 1786708800000};
 
 (function() {
-var comps=COMPETITIONS,rankings=RANKINGS,links=LINKS,compResults=COMP_RESULTS,epochs=COMP_EPOCHS;
+var comps=COMPETITIONS,rankings=RANKINGS,links=LINKS,epochs=COMP_EPOCHS;
+
+// ====== 评分计算核心逻辑 ======
 
 function compWeight(id){if(id.indexOf('P&KU')===0||id.indexOf('CCBC')===0)return 1;return 0.8;}
 function isMajor(id){return id.indexOf('P&KU')===0||id.indexOf('CCBC')===0;}
 function esc(s){if(!s)return'';return s.replace(/&/g,'&amp;').replace(/</g,'&lt;');}
 function boldComp(id){return isMajor(id)?'<b>'+esc(id)+'</b>':esc(id);}
 function decayCoeff(compId,w){var days=(epochs[compId]-refDate)/86400000;return Math.exp(days/365/2)*w;}
+function decayCoeffAt(compId,w,refEpoch){var days=(epochs[compId]-refEpoch)/86400000;return Math.exp(days/365/2)*w;}
 
-// Filter state
-var filterPkCcbc=false;
-var refDate=Date.now();
-var dateSlider=document.getElementById('dateSlider');
-var pkCcbcCheck=document.getElementById('pkCcbcCheck');
-var dateLabel=document.getElementById('dateLabel');
-var pkCcbcLabel=document.getElementById('pkCcbcLabel');
-
-// Init date slider: map comp epoch range to 0-100, capped to today
-var allEpochs=comps.map(function(c){return epochs[c.id];});
-allEpochs.sort(function(a,b){return a-b;});
-var epochMin=allEpochs[0],epochMax=Date.now();
-var epochRange=epochMax-epochMin;
-function sliderToEpoch(v){return epochMin+(epochRange*v/100);}
-dateSlider.value=100;
-dateLabel.textContent=fmtDate(new Date());
-
-function fmtDate(d){var mm=d.getMonth()+1,dd=d.getDate();return d.getFullYear()+'-'+(mm<10?'0':'')+mm+'-'+(dd<10?'0':'')+dd;}
-
-function getFilterDateMax(){return sliderToEpoch(parseInt(dateSlider.value,10));}
-
-function getFilteredComps(){
-  var dmax=getFilterDateMax(),now=Date.now();
-  return comps.filter(function(c){
-    if(epochs[c.id]>now)return false;
-    if(filterPkCcbc&&!isMajor(c.id))return false;
-    if(epochs[c.id]>dmax)return false;
-    return true;
-  });
-}
 function rankScore(r){
   if(r===null||r===undefined||r==='')return 0;
   if(typeof r==='object'&&r!==null)r=r.rank;
@@ -4954,14 +999,12 @@ function hasRank(r){var v=getRank(r);return v!==null&&v!==undefined&&v!=='';}
 function parseRank(r){var v=getRank(r);if(v===null)return null;if(typeof v==='string'&&v.indexOf('50+')!==-1)return 50;var n=parseInt(v,10);return isNaN(n)?null:n;}
 function fmtTime(t){
   if(!t)return'-';
-  // Already HH:MM or HH:MM:SS
   if(/^\d+:\d{2}(:\d{2})?$/.test(t)){
     var parts=t.split(':');var h=parseInt(parts[0]),m=parseInt(parts[1]);
     if(parts.length>2)m+=Math.round(parseInt(parts[2])/60);
     if(m>=60){h+=Math.floor(m/60);m=m%60;}
     return h+':'+(m<10?'0':'')+m;
   }
-  // Decimal hours like "21.22"
   if(/^\d+\.\d+$/.test(t)){
     var d=parseFloat(t);var h=Math.floor(d);var m=Math.round((d-h)*60);
     if(m>=60){h+=Math.floor(m/60);m=m%60;}
@@ -4989,6 +1032,7 @@ function calcFinish(dateStr, timeStr, durationStr){
     (dt.getHours()<10?'0':'')+dt.getHours()+':'+(dt.getMinutes()<10?'0':'')+dt.getMinutes();
 }
 
+// 并队检测
 var mergedMap={},rankBuckets={};
 for(var tn in rankings){for(var cid in rankings[tn]){var r=getRank(rankings[tn][cid]);if(r===null||typeof r==='string')continue;var n=parseInt(r,10);if(!isNaN(n)){var key=cid+'_'+n;if(!rankBuckets[key])rankBuckets[key]=[];rankBuckets[key].push(tn);}}}
 for(var key in rankBuckets){if(rankBuckets[key].length>1){var cid=key.split('_')[0];rankBuckets[key].forEach(function(tn){mergedMap[tn+'_'+cid]=true;});}}
@@ -5004,8 +1048,10 @@ function computeScores(tr,tname,compsList){
   return{total:fs+sa,frontSum:fs,stableAvg:sa};
 }
 
+var HIDDEN_TEAMS=['喵喵喵'];
+function isLocalEnv(){var p=window.location.protocol,h=window.location.hostname;return p==='file:'||h==='localhost'||h==='127.0.0.1';}
 var teams=[];
-var teamAch={}; // defined early for recomputeTeams reference
+var teamAch={};
 function recomputeTeams(compsList){
   compsList=compsList||comps;
   teams=TEAMS.map(function(t){
@@ -5014,18 +1060,19 @@ function recomputeTeams(compsList){
     for(var i=0;i<compsList.length;i++){var r=rankings[t.name][compsList[i].id];if(hasRank(r)){count++;tw+=decayCoeff(compsList[i].id,compWeight(compsList[i].id));}}
     return{name:t.name,origName:t.name,total:s.total,frontSum:s.frontSum,stableAvg:s.stableAvg,count:count,tw:tw,achCount:(teamAch[t.name]||[]).length};
   });
-  teams=teams.filter(function(t){return t.count>0;});teams.sort(function(a,b){return b.total-a.total;});
+  teams=teams.filter(function(t){return t.count>0;});
+  if(!isLocalEnv())teams=teams.filter(function(t){return HIDDEN_TEAMS.indexOf(t.origName)===-1;});
+  teams.sort(function(a,b){return b.total-a.total;});
   teams.forEach(function(t,i){t.rank=i+1;t.tier=t.total>=500?'tw':t.total>=300?'t0':t.total>=200?'t1':t.total>=100?'t2':t.total>=25?'t3':'t4';});
 }
-recomputeTeams(comps);
 
-// ====== Achievement Engine ======
-function decayCoeffAt(compId,w,refEpoch){var days=(epochs[compId]-refEpoch)/86400000;return Math.exp(days/365/2)*w;}
 function totalScoreAt(tr,tname,compsList,refEpoch){
   var fs=0,ss=0,sw=0;
   for(var i=0;i<compsList.length;i++){var c=compsList[i],r=tr[c.id],rs=rankScore(r);if(tname&&isMerged(tname,c.id))rs/=2;var dc=decayCoeffAt(c.id,compWeight(c.id),refEpoch),rd=decayCoeffAt(c.id,1,refEpoch);fs+=dc*rs;if(hasRank(r)){ss+=rd*rs;sw+=rd;}}
   return sw>0?fs+ss/sw:fs;
 }
+
+// 历史排名（按时间排序的比赛列表）
 var chronoComps=comps.slice().sort(function(a,b){return epochs[a.id]-epochs[b.id];});
 var histRankings={};var prevComps=[];
 chronoComps.forEach(function(c){
@@ -5036,7 +1083,9 @@ chronoComps.forEach(function(c){
   prevComps.push(c);
 });
 
-// Tier check: what's the max tier a team ever reached (across all historical points)?
+
+// ====== 成就系统 ======
+
 function maxTierEver(teamName){
   var tr=rankings[teamName];if(!tr)return't4';
   var acc=[],maxT='t4',maxScore=0;
@@ -5048,16 +1097,13 @@ function maxTierEver(teamName){
   return {tier:maxT,score:maxScore};
 }
 
-// Get all comps a team participated in, sorted chronologically, with ranks
 function teamComps(teamName){
   var tr=rankings[teamName];if(!tr)return[];
   return chronoComps.filter(function(c){return hasRank(tr[c.id]);}).map(function(c){return{compId:c.id,rank:getRank(tr[c.id]),epoch:epochs[c.id]};});
 }
 
-// Get all unique competition years
 function compYears(){var yrs={};comps.forEach(function(c){yrs[new Date(epochs[c.id]).getFullYear()]=true;});return Object.keys(yrs).map(Number).sort();}
 
-// Check if a team participated in all comps of a given year
 function fullYearYears(teamName){
   var tr=rankings[teamName],yrs=compYears(),result=[];
   yrs.forEach(function(y){
@@ -5067,54 +1113,6 @@ function fullYearYears(teamName){
     if(joined.length===allInYear.length)result.push(String(y));
   });
   return result;
-}
-
-// Find teams that ever got competition rank 1 (比赛冠军, not total score #1)
-var compChampions={};
-for(var ctn in rankings){var ctr=rankings[ctn];if(!compChampions[ctn])compChampions[ctn]=[];}
-chronoComps.forEach(function(c){
-  for(var ctn in rankings){if(parseInt(rankings[ctn][c.id],10)===1)compChampions[ctn].push(c.id);}
-});
-var championList=[];for(var ctn in compChampions){if(compChampions[ctn].length>0)championList.push(ctn);}
-
-// Pre-compute max tier for all teams (used by 一穿三)
-var teamMaxTier={};for(var tmn in rankings){teamMaxTier[tmn]=maxTierEver(tmn).tier;}
-
-// Compute all achievements for all teams
-var teamAch={};
-function computeOneTeamAch(tn,tr,tc,mt,firstEpoch){
-  var ach=[];
-  // ---- 铂金 ----
-  (function(){var cover={r1:false,r2:false,r3:false,r4:false};tc.forEach(function(e){var n=parseInt(e.rank,10);if(isNaN(n))return;if(n<=3)cover.r1=true;else if(n<=10)cover.r2=true;else if(n<=20)cover.r3=true;else cover.r4=true;});if(cover.r1&&cover.r2&&cover.r3&&cover.r4)ach.push({id:'fullspectrum',tier:'platinum',name:'雨露均沾',detail:''});})();
-  if(mt.tier==='tw')ach.push({id:'max_tw',tier:'platinum',name:'恭喜爹可以称帝了',detail:''});
-  if(mt.tier==='t0')ach.push({id:'max_t0',tier:'platinum',name:'冠绝一时',detail:''});
-  // ---- 金 ----
-  (function(){var has=tc.some(function(e){return parseInt(e.rank,10)===1;});if(has)ach.push({id:'champion',tier:'gold',name:'我们是冠军！',detail:''});})();
-  (function(){var streak=0,maxStreak=0;tc.forEach(function(e){var n=parseInt(e.rank,10);if(!isNaN(n)&&n<=10){streak++;if(streak>maxStreak)maxStreak=streak;}else streak=0;});if(maxStreak>=5)ach.push({id:'top10_streak5',tier:'gold',name:'前十钉子户',detail:maxStreak+'次'});})();
-  (function(){var pk=false,cc=false;tc.forEach(function(e){var n=parseInt(e.rank,10);if(isNaN(n))return;if(e.compId.indexOf('P&KU')===0&&n<=5)pk=true;if(e.compId.indexOf('CCBC')===0&&n<=5)cc=true;});if(pk&&cc)ach.push({id:'mini_slam',tier:'gold',name:'小满贯',detail:''});})();
-  (function(){var rivals=[];for(var otn in rankings){if(otn===tn)continue;var tro=rankings[otn];var wins=0,losses=0,total=0;tc.forEach(function(e){var ro=tro[e.compId];if(ro===null||ro===undefined||ro==='')return;var rn=parseInt(e.rank,10),orn=parseInt(ro,10);if(isNaN(rn)||isNaN(orn))return;if(rn>20||orn>20)return;if(rn<orn)wins++;else if(orn<rn)losses++;});if(wins+losses>=8&&Math.abs(wins-losses)<=2)rivals.push('对'+otn+' '+wins+':'+losses);}if(rivals.length>0)ach.push({id:'rival',tier:'silver',name:'宿敌',detail:rivals.join('\n')});})();
-  (function(){var results=[];chronoComps.forEach(function(c){if(c===chronoComps[0])return;var hr=histRankings[c.id];if(!hr||!hr.ranked||hr.ranked.length===0)return;var prev1=hr.ranked[0];if(prev1===tn)return;var myR=tr[c.id],p1R=rankings[prev1][c.id];if(myR===null||myR===undefined||myR===''||p1R===null||p1R===undefined||p1R==='')return;var mn=parseInt(myR,10),pn=parseInt(p1R,10);if(isNaN(mn)||isNaN(pn))return;if(mn<pn)results.push(c.id+' 超越'+prev1);});if(results.length>0)ach.push({id:'dragonslayer',tier:'gold',name:'屠龙勇士',detail:results.join('\n')});})();
-  if(mt.tier==='t1')ach.push({id:'max_t1',tier:'gold',name:'登堂入室',detail:''});
-  // ---- 银 ----
-  (function(){if(tc.length>0){var n=parseInt(tc[0].rank,10);if(!isNaN(n)&&n<=10)ach.push({id:'debut_top10',tier:'silver',name:'出道即巅峰',detail:tc[0].compId+' #'+tc[0].rank});}})();
-  (function(){var c10=tc.filter(function(e){return parseInt(e.rank,10)===10;}).length;if(c10>=2)ach.push({id:'gold_line',tier:'silver',name:'金牌线',detail:c10+'次'});})();
-  (function(){var start=0,segs=[];for(var i=1;i<=tc.length;i++){var ok=i<tc.length;if(ok){var r1=parseInt(tc[i-1].rank,10),r2=parseInt(tc[i].rank,10);ok=!isNaN(r1)&&!isNaN(r2)&&Math.abs(r1-r2)<=2;}if(!ok){if(i-start>=3){var s=[];for(var j=start;j<i;j++)s.push(tc[j].compId+'#'+tc[j].rank);segs.push(s.join(' → '));}start=i;}}if(segs.length>0)ach.push({id:'hattrick',tier:'silver',name:'帽子戏法',detail:segs.join('\n')});})();
-  (function(){var start=0,segs=[];for(var i=1;i<=tc.length;i++){var ok=i<tc.length;if(ok){var r1=parseInt(tc[i-1].rank,10),r2=parseInt(tc[i].rank,10);ok=!isNaN(r1)&&!isNaN(r2)&&r2<r1;}if(!ok){if(i-start>=3){var s=[];for(var j=start;j<i;j++)s.push(tc[j].compId+'#'+tc[j].rank);segs.push(s.join(' → '));}start=i;}}if(segs.length>0)ach.push({id:'rising',tier:'silver',name:'节节高',detail:segs.join('\n')});})();
-  (function(){for(var i=1;i<tc.length;i++){var r1=parseInt(tc[i-1].rank,10),r2=parseInt(tc[i].rank,10);if(!isNaN(r1)&&!isNaN(r2)&&r1-r2>=30){ach.push({id:'comeback',tier:'silver',name:'逆袭',detail:tc[i-1].compId+' #'+r1+' → '+tc[i].compId+' #'+r2});break;}}})();
-  (function(){var beaten=[];championList.forEach(function(ch){if(ch===tn)return;var chFirstEpoch=null;compChampions[ch].forEach(function(cid){var ep=epochs[cid];if(chFirstEpoch===null||ep<chFirstEpoch)chFirstEpoch=ep;});var bc=[];tc.forEach(function(e){if(e.epoch<=chFirstEpoch)return;var rch=rankings[ch][e.compId];if(rch===null||rch===undefined||rch==='')return;var mn=parseInt(e.rank,10),cn=parseInt(rch,10);if(isNaN(mn)||isNaN(cn))return;if(mn>20||cn>20)return;if(typeof e.rank==='string'&&e.rank.indexOf('50+')!==-1)return;if(typeof rch==='string'&&rch.indexOf('50+')!==-1)return;if(mn<cn)bc.push(e.compId);});if(bc.length>0)beaten.push(ch+': '+bc.join('、'));});if(beaten.length>=5)ach.push({id:'guillotine',tier:'silver',name:'断头台',detail:beaten.join('\n')});})();
-  (function(){var results=[];chronoComps.forEach(function(c){var hr=histRankings[c.id];if(!hr||!hr.ranked)return;var myRank=tr[c.id];if(myRank===null||myRank===undefined||myRank===''||epochs[c.id]===firstEpoch)return;var mn=parseInt(myRank,10);if(isNaN(mn))return;var myIdx=-1;for(var ri=0;ri<hr.ranked.length;ri++){if(hr.ranked[ri]===tn){myIdx=ri;break;}}if(myIdx===-1)return;var beaten=[];for(var ri=0;ri<myIdx;ri++){var otn=hr.ranked[ri],or=rankings[otn][c.id];if(or===null||or===undefined||or==='')continue;var os=hr.scores[otn]||0,ot=os>=500?'tw':os>=300?'t0':os>=200?'t1':os>=100?'t2':os>=25?'t3':'t4';if(ot!=='tw'&&ot!=='t0'&&ot!=='t1')continue;var on=parseInt(or,10);if(!isNaN(on)&&on<=20&&mn<on)beaten.push(otn);}if(beaten.length>=3)results.push(c.id+': '+beaten.join('、'));});if(results.length>0)ach.push({id:'onetouchfive',tier:'gold',name:'一穿三',detail:results.join('\n')});})();
-  if(mt.tier==='t2')ach.push({id:'max_t2',tier:'silver',name:'崭露头角',detail:''});
-  // ---- 铜 ----
-  (function(){var has=tc.some(function(e){var n=parseInt(e.rank,10);if(isNaN(n)){if(typeof e.rank==='string'&&e.rank.indexOf('50')!==-1)return true;return false;}return n>=50;});if(has)ach.push({id:'backrow',tier:'bronze',name:'后排俱乐部',detail:''});})();
-  if(tc.length>=10)ach.push({id:'ten_battles',tier:'bronze',name:'十役',detail:tc.length+'场'});
-  (function(){var pastComps=chronoComps.filter(function(c){return epochs[c.id]<=Date.now();});var firstIdx=-1;for(var i=0;i<pastComps.length;i++){if(hasRank(tr[pastComps[i].id])){firstIdx=i;break;}}if(firstIdx===-1)return;var maxMiss=0,curMiss=0;for(var i=firstIdx;i<pastComps.length;i++){var r=tr[pastComps[i].id];if(!hasRank(r)){curMiss++;if(curMiss>maxMiss)maxMiss=curMiss;}else curMiss=0;}if(maxMiss<=1)ach.push({id:'follow_group',tier:'bronze',name:'有团必跟',detail:''});})();
-  (function(){var merged=false;tc.forEach(function(e){if(isMerged(tn,e.compId))merged=true;});if(merged)ach.push({id:'merge_happy',tier:'bronze',name:'合作愉快',detail:''});})();
-  (function(){var hasStaff=false;for(var cid in tr){if(tr[cid]&&typeof tr[cid]==='object'&&tr[cid].staff){hasStaff=true;break;}}if(hasStaff)ach.push({id:'staff_duty',tier:'silver',name:'因公缺席',detail:''});})();
-  (function(){var yrs=fullYearYearsFromTr(tr);if(yrs.length>0)ach.push({id:'full_year',tier:'bronze',name:'全年无休',detail:yrs.join('、')});})();
-  (function(){var results=[];chronoComps.forEach(function(c){var hr=histRankings[c.id];if(!hr||!hr.ranked)return;var myRank=tr[c.id];if(myRank===null||myRank===undefined||myRank===''||epochs[c.id]===firstEpoch)return;var mn=parseInt(myRank,10);if(isNaN(mn))return;var myIdx=-1;for(var ri=0;ri<hr.ranked.length;ri++){if(hr.ranked[ri]===tn){myIdx=ri;break;}}if(myIdx===-1)return;for(var ri=0;ri<myIdx;ri++){var otn=hr.ranked[ri],or=rankings[otn][c.id];if(or===null||or===undefined||or==='')continue;var on=parseInt(or,10);if(!isNaN(on)&&on-mn===1)results.push(c.id+' 超越'+otn+' (#'+mn+' vs #'+on+')');}});if(results.length>0)ach.push({id:'sniper',tier:'bronze',name:'狙击手',detail:results.join('\n')});})();
-  if(mt.tier==='t3')ach.push({id:'max_t3',tier:'bronze',name:'脱颖而出',detail:''});
-  var seen={},dedup=[];ach.forEach(function(a){if(!seen[a.id]){seen[a.id]=true;dedup.push(a);}});
-  return dedup;
 }
 
 function fullYearYearsFromTr(tr){
@@ -5132,6 +1130,54 @@ function teamCompsForTr(tn,tr){
   return chronoComps.filter(function(c){return hasRank(tr[c.id]);}).map(function(c){return{compId:c.id,rank:getRank(tr[c.id]),epoch:epochs[c.id]};});
 }
 
+// 冠军队伍列表
+var compChampions={};
+for(var ctn in rankings){var ctr=rankings[ctn];if(!compChampions[ctn])compChampions[ctn]=[];}
+chronoComps.forEach(function(c){
+  for(var ctn in rankings){if(parseInt(rankings[ctn][c.id],10)===1)compChampions[ctn].push(c.id);}
+});
+var championList=[];for(var ctn in compChampions){if(compChampions[ctn].length>0)championList.push(ctn);}
+
+// 最高梯队预计算
+var teamMaxTier={};for(var tmn in rankings){teamMaxTier[tmn]=maxTierEver(tmn).tier;}
+
+// 计算单个队伍成就
+function computeOneTeamAch(tn,tr,tc,mt,firstEpoch){
+  var ach=[];
+  // 铂金
+  (function(){var cover={r1:false,r2:false,r3:false,r4:false};tc.forEach(function(e){var n=parseInt(e.rank,10);if(isNaN(n))return;if(n<=3)cover.r1=true;else if(n<=10)cover.r2=true;else if(n<=20)cover.r3=true;else cover.r4=true;});if(cover.r1&&cover.r2&&cover.r3&&cover.r4)ach.push({id:'fullspectrum',tier:'platinum',name:'雨露均沾',detail:''});})();
+  if(mt.tier==='tw')ach.push({id:'max_tw',tier:'platinum',name:'恭喜爹可以称帝了',detail:''});
+  if(mt.tier==='t0')ach.push({id:'max_t0',tier:'platinum',name:'冠绝一时',detail:''});
+  // 金
+  (function(){var has=tc.some(function(e){return parseInt(e.rank,10)===1;});if(has)ach.push({id:'champion',tier:'gold',name:'我们是冠军！',detail:''});})();
+  (function(){var streak=0,maxStreak=0;tc.forEach(function(e){var n=parseInt(e.rank,10);if(!isNaN(n)&&n<=10){streak++;if(streak>maxStreak)maxStreak=streak;}else streak=0;});if(maxStreak>=5)ach.push({id:'top10_streak5',tier:'gold',name:'前十钉子户',detail:maxStreak+'次'});})();
+  (function(){var pk=false,cc=false;tc.forEach(function(e){var n=parseInt(e.rank,10);if(isNaN(n))return;if(e.compId.indexOf('P&KU')===0&&n<=5)pk=true;if(e.compId.indexOf('CCBC')===0&&n<=5)cc=true;});if(pk&&cc)ach.push({id:'mini_slam',tier:'gold',name:'小满贯',detail:''});})();
+  (function(){var rivals=[];for(var otn in rankings){if(otn===tn)continue;var tro=rankings[otn];var wins=0,losses=0,total=0;tc.forEach(function(e){var ro=tro[e.compId];if(ro===null||ro===undefined||ro==='')return;var rn=parseInt(e.rank,10),orn=parseInt(ro,10);if(isNaN(rn)||isNaN(orn))return;if(rn>20||orn>20)return;if(rn<orn)wins++;else if(orn<rn)losses++;});if(wins+losses>=8&&Math.abs(wins-losses)<=2)rivals.push('对'+otn+' '+wins+':'+losses);}if(rivals.length>0)ach.push({id:'rival',tier:'silver',name:'宿敌',detail:rivals.join('\n')});})();
+  (function(){var results=[];chronoComps.forEach(function(c){if(c===chronoComps[0])return;var hr=histRankings[c.id];if(!hr||!hr.ranked||hr.ranked.length===0)return;var prev1=hr.ranked[0];if(prev1===tn)return;var myR=tr[c.id],p1R=rankings[prev1][c.id];if(myR===null||myR===undefined||myR===''||p1R===null||p1R===undefined||p1R==='')return;var mn=parseInt(myR,10),pn=parseInt(p1R,10);if(isNaN(mn)||isNaN(pn))return;if(mn<pn)results.push(c.id+' 超越'+prev1);});if(results.length>0)ach.push({id:'dragonslayer',tier:'gold',name:'屠龙勇士',detail:results.join('\n')});})();
+  if(mt.tier==='t1')ach.push({id:'max_t1',tier:'gold',name:'登堂入室',detail:''});
+  // 银
+  (function(){if(tc.length>0){var n=parseInt(tc[0].rank,10);if(!isNaN(n)&&n<=10)ach.push({id:'debut_top10',tier:'silver',name:'出道即巅峰',detail:tc[0].compId+' #'+tc[0].rank});}})();
+  (function(){var c10=tc.filter(function(e){return parseInt(e.rank,10)===10;}).length;if(c10>=2)ach.push({id:'gold_line',tier:'silver',name:'金牌线',detail:c10+'次'});})();
+  (function(){var start=0,segs=[];for(var i=1;i<=tc.length;i++){var ok=i<tc.length;if(ok){var r1=parseInt(tc[i-1].rank,10),r2=parseInt(tc[i].rank,10);ok=!isNaN(r1)&&!isNaN(r2)&&Math.abs(r1-r2)<=2;}if(!ok){if(i-start>=3){var s=[];for(var j=start;j<i;j++)s.push(tc[j].compId+'#'+tc[j].rank);segs.push(s.join(' → '));}start=i;}}if(segs.length>0)ach.push({id:'hattrick',tier:'silver',name:'帽子戏法',detail:segs.join('\n')});})();
+  (function(){var start=0,segs=[];for(var i=1;i<=tc.length;i++){var ok=i<tc.length;if(ok){var r1=parseInt(tc[i-1].rank,10),r2=parseInt(tc[i].rank,10);ok=!isNaN(r1)&&!isNaN(r2)&&r2<r1;}if(!ok){if(i-start>=3){var s=[];for(var j=start;j<i;j++)s.push(tc[j].compId+'#'+tc[j].rank);segs.push(s.join(' → '));}start=i;}}if(segs.length>0)ach.push({id:'rising',tier:'silver',name:'节节高',detail:segs.join('\n')});})();
+  (function(){for(var i=1;i<tc.length;i++){var r1=parseInt(tc[i-1].rank,10),r2=parseInt(tc[i].rank,10);if(!isNaN(r1)&&!isNaN(r2)&&r1-r2>=30){ach.push({id:'comeback',tier:'silver',name:'逆袭',detail:tc[i-1].compId+' #'+r1+' → '+tc[i].compId+' #'+r2});break;}}})();
+  (function(){var beaten=[];championList.forEach(function(ch){if(ch===tn)return;var chFirstEpoch=null;compChampions[ch].forEach(function(cid){var ep=epochs[cid];if(chFirstEpoch===null||ep<chFirstEpoch)chFirstEpoch=ep;});var bc=[];tc.forEach(function(e){if(e.epoch<=chFirstEpoch)return;var rch=rankings[ch][e.compId];if(rch===null||rch===undefined||rch==='')return;var mn=parseInt(e.rank,10),cn=parseInt(rch,10);if(isNaN(mn)||isNaN(cn))return;if(mn>20||cn>20)return;if(typeof e.rank==='string'&&e.rank.indexOf('50+')!==-1)return;if(typeof rch==='string'&&rch.indexOf('50+')!==-1)return;if(mn<cn)bc.push(e.compId);});if(bc.length>0)beaten.push(ch+': '+bc.join('、'));});if(beaten.length>=5)ach.push({id:'guillotine',tier:'silver',name:'断头台',detail:beaten.join('\n')});})();
+  (function(){var results=[];chronoComps.forEach(function(c){var hr=histRankings[c.id];if(!hr||!hr.ranked)return;var myRank=tr[c.id];if(myRank===null||myRank===undefined||myRank===''||epochs[c.id]===firstEpoch)return;var mn=parseInt(myRank,10);if(isNaN(mn))return;var myIdx=-1;for(var ri=0;ri<hr.ranked.length;ri++){if(hr.ranked[ri]===tn){myIdx=ri;break;}}if(myIdx===-1)return;var beaten=[];for(var ri=0;ri<myIdx;ri++){var otn=hr.ranked[ri],or=rankings[otn][c.id];if(or===null||or===undefined||or==='')continue;var os=hr.scores[otn]||0,ot=os>=500?'tw':os>=300?'t0':os>=200?'t1':os>=100?'t2':os>=25?'t3':'t4';if(ot!=='tw'&&ot!=='t0'&&ot!=='t1')continue;var on=parseInt(or,10);if(!isNaN(on)&&on<=20&&mn<on)beaten.push(otn);}if(beaten.length>=3)results.push(c.id+': '+beaten.join('、'));});if(results.length>0)ach.push({id:'onetouchfive',tier:'gold',name:'一穿三',detail:results.join('\n')});})();
+  if(mt.tier==='t2')ach.push({id:'max_t2',tier:'silver',name:'崭露头角',detail:''});
+  // 铜
+  (function(){var has=tc.some(function(e){var n=parseInt(e.rank,10);if(isNaN(n)){if(typeof e.rank==='string'&&e.rank.indexOf('50')!==-1)return true;return false;}return n>=50;});if(has)ach.push({id:'backrow',tier:'bronze',name:'后排俱乐部',detail:''});})();
+  if(tc.length>=10)ach.push({id:'ten_battles',tier:'bronze',name:'十役',detail:tc.length+'场'});
+  (function(){var pastComps=chronoComps.filter(function(c){return epochs[c.id]<=Date.now();});var firstIdx=-1;for(var i=0;i<pastComps.length;i++){if(hasRank(tr[pastComps[i].id])){firstIdx=i;break;}}if(firstIdx===-1)return;var maxMiss=0,curMiss=0;for(var i=firstIdx;i<pastComps.length;i++){var r=tr[pastComps[i].id];if(!hasRank(r)){curMiss++;if(curMiss>maxMiss)maxMiss=curMiss;}else curMiss=0;}if(maxMiss<=1)ach.push({id:'follow_group',tier:'bronze',name:'有团必跟',detail:''});})();
+  (function(){var merged=false;tc.forEach(function(e){if(isMerged(tn,e.compId))merged=true;});if(merged)ach.push({id:'merge_happy',tier:'bronze',name:'合作愉快',detail:''});})();
+  (function(){var hasStaff=false;for(var cid in tr){if(tr[cid]&&typeof tr[cid]==='object'&&tr[cid].staff){hasStaff=true;break;}}if(hasStaff)ach.push({id:'staff_duty',tier:'silver',name:'因公缺席',detail:''});})();
+  (function(){var yrs=fullYearYearsFromTr(tr);if(yrs.length>0)ach.push({id:'full_year',tier:'bronze',name:'全年无休',detail:yrs.join('、')});})();
+  (function(){var results=[];chronoComps.forEach(function(c){var hr=histRankings[c.id];if(!hr||!hr.ranked)return;var myRank=tr[c.id];if(myRank===null||myRank===undefined||myRank===''||epochs[c.id]===firstEpoch)return;var mn=parseInt(myRank,10);if(isNaN(mn))return;var myIdx=-1;for(var ri=0;ri<hr.ranked.length;ri++){if(hr.ranked[ri]===tn){myIdx=ri;break;}}if(myIdx===-1)return;for(var ri=0;ri<myIdx;ri++){var otn=hr.ranked[ri],or=rankings[otn][c.id];if(or===null||or===undefined||or==='')continue;var on=parseInt(or,10);if(!isNaN(on)&&on-mn===1)results.push(c.id+' 超越'+otn+' (#'+mn+' vs #'+on+')');}});if(results.length>0)ach.push({id:'sniper',tier:'bronze',name:'狙击手',detail:results.join('\n')});})();
+  if(mt.tier==='t3')ach.push({id:'max_t3',tier:'bronze',name:'脱颖而出',detail:''});
+  var seen={},dedup=[];ach.forEach(function(a){if(!seen[a.id]){seen[a.id]=true;dedup.push(a);}});
+  return dedup;
+}
+
+// 计算所有队伍成就
 for(var tn in rankings){
   var tr=rankings[tn],tc=teamCompsForTr(tn,tr);
   if(tc.length===0){teamAch[tn]=[];continue;}
@@ -5139,8 +1185,20 @@ for(var tn in rankings){
   teamAch[tn]=computeOneTeamAch(tn,tr,tc,mt,firstEpoch);
 }
 
-// Render achievements for a team
-var achSection=document.getElementById('achSection'),achGrid=document.getElementById('achGrid');
+// 成就比例统计
+var achPercentages={},achCounts={},activeTeams=0;
+for(var tmn in teamAch){
+  var has=false;for(var cid in rankings[tmn]){if(hasRank(rankings[tmn][cid])){has=true;break;}}
+  if(has)activeTeams++;
+  teamAch[tmn].forEach(function(a){achCounts[a.id]=(achCounts[a.id]||0)+1;});
+}
+for(var id in achCounts){achPercentages[id]=Math.round(achCounts[id]/activeTeams*100);}
+
+// 反向索引
+var achTeams={};
+for(var tmn in teamAch){teamAch[tmn].forEach(function(a){if(!achTeams[a.id])achTeams[a.id]=[];achTeams[a.id].push(tmn);});}
+
+// 成就描述
 var achDescs={
   fullspectrum:'名次分布覆盖过1~3、4~10、11~20、20+四个区间',
   max_tw:'最高曾进入过论外梯队',max_t0:'最高曾进入过T0梯队',max_t1:'最高曾进入过T1梯队',
@@ -5154,109 +1212,16 @@ var achDescs={
   rising:'至少连续三场比赛之间排名连续上升',
   comeback:'两场比赛之间排名上升至少30名',
   guillotine:'超越过至少5支曾获得过比赛第1名的队伍（仅计算前二十名内的胜负）',
-onetouchfive:'在一场比赛中超越了至少3支此前总分排名更高的T1及以上队伍（仅计算前二十名内的胜负）',
-backrow:'获得过50名开外的名次',ten_battles:'参与过至少10场比赛',
-follow_group:'自第一次参赛以来最多只连续1次不参赛',
-merge_happy:'并队参与过比赛',full_year:'在某自然年内参加了该年所有比赛',staff_duty:'因担任STAFF从参赛队伍中缺席',
-sniper:'在一场比赛中超越了此前总分排名更高的队伍恰好1名'
+  onetouchfive:'在一场比赛中超越了至少3支此前总分排名更高的T1及以上队伍（仅计算前二十名内的胜负）',
+  backrow:'获得过50名开外的名次',ten_battles:'参与过至少10场比赛',
+  follow_group:'自第一次参赛以来最多只连续1次不参赛',
+  merge_happy:'并队参与过比赛',full_year:'在某自然年内参加了该年所有比赛',staff_duty:'因担任STAFF从参赛队伍中缺席',
+  sniper:'在一场比赛中超越了此前总分排名更高的队伍恰好1名'
 };
-function renderAchievements(teamName){
-  var ach=teamAch[teamName]||[];
-  if(ach.length===0){achSection.style.display='none';return;}
-  renderAchList(ach);
-}
-function renderAchList(ach){
-  achSection.style.display='block';achGrid.innerHTML='';
-  document.getElementById('achTitle').textContent='成就 ('+ach.length+')';
-  var tierPriority={platinum:4,gold:3,silver:2,bronze:1};
-  ach.sort(function(a,b){var tp=tierPriority[b.tier]-tierPriority[a.tier];if(tp!==0)return tp;var aMax=a.id.indexOf('max_')===0?0:1,bMax=b.id.indexOf('max_')===0?0:1;return aMax-bMax;});
-  var tierIcons={platinum:'\u2666',gold:'\u2605',silver:'\u25C6',bronze:'\u25CF'};
-  ach.forEach(function(a){
-    var item=document.createElement('div');item.className='ach-item '+a.tier;
-    var icon=document.createElement('div');icon.className='ach-item-icon '+a.tier;icon.textContent=tierIcons[a.tier]||'';
-    var body=document.createElement('div');body.className='ach-item-body';
-    var nameEl=document.createElement('div');nameEl.className='ach-item-name';nameEl.textContent=a.name;
-    body.appendChild(nameEl);
-    var descEl=document.createElement('div');descEl.className='ach-item-desc';descEl.textContent=achDescs[a.id]||'';body.appendChild(descEl);
-    if(a.detail){var detEl=document.createElement('div');detEl.className='ach-item-detail';detEl.textContent=a.detail;body.appendChild(detEl);}
-    item.appendChild(icon);item.appendChild(body);
-    var pct=achPercentages[a.id]||0;if(pct>0){var pctEl=document.createElement('div');pctEl.className='ach-item-pct';pctEl.textContent=pct+'%';item.appendChild(pctEl);}
-    var teams=achTeams[a.id]||[];
-    if(teams.length>0){item.style.cursor='pointer';
-      item.addEventListener('mouseenter',function(e){var t=achTeams[a.id]||[];tooltip.textContent='\u5DF2\u83B7\u5F97\u961F\u4F0D\uFF1A'+t.join('\u3001');tooltip.style.left='-999px';tooltip.classList.add('show');var tw=tooltip.offsetWidth,th=tooltip.offsetHeight;var rect=this.getBoundingClientRect();var x=rect.right+10;if(x+tw>window.innerWidth-4)x=rect.left-tw-10;var y=rect.top;if(y+th>window.innerHeight-4)y=window.innerHeight-th-4;tooltip.style.left=x+'px';tooltip.style.top=y+'px';});
-      item.addEventListener('mouseleave',hideTT);}
-    achGrid.appendChild(item);
-  });
-}
 
-// Compute achievement percentages across all active teams
-var achPercentages={},achCounts={},activeTeams=0;
-for(var tmn in teamAch){
-  var has=false;for(var cid in rankings[tmn]){if(hasRank(rankings[tmn][cid])){has=true;break;}}
-  if(has)activeTeams++;
-  teamAch[tmn].forEach(function(a){achCounts[a.id]=(achCounts[a.id]||0)+1;});
-}
-for(var id in achCounts){achPercentages[id]=Math.round(achCounts[id]/activeTeams*100);}
 
-// Reverse mapping: achievement id -> team names
-var achTeams={};
-for(var tmn in teamAch){teamAch[tmn].forEach(function(a){if(!achTeams[a.id])achTeams[a.id]=[];achTeams[a.id].push(tmn);});}
+// ====== 图表渲染 ======
 
-var tooltip=document.getElementById('tooltip');
-function showTT(e,text,el){tooltip.textContent=text;tooltip.style.left='-999px';tooltip.classList.add('show');var tw=tooltip.offsetWidth,th=tooltip.offsetHeight;var rect=el.getBoundingClientRect();var x=rect.left+rect.width/2-tw/2;var y=rect.top-th-6;if(y<0)y=rect.bottom+6;if(x<4)x=4;if(x+tw>window.innerWidth-4)x=window.innerWidth-tw-4;tooltip.style.left=x+'px';tooltip.style.top=y+'px';}
-function hideTT(){tooltip.classList.remove('show');}
-
-document.querySelectorAll('.tab-btn').forEach(function(btn){btn.addEventListener('click',function(){
-  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
-  document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active');});
-  btn.classList.add('active');document.getElementById(btn.dataset.tab).classList.add('active');
-  document.getElementById('fabBtn').style.display=(btn.dataset.tab==='tab1'||btn.dataset.tab==='tab2')?'':'none';
-  var panel=document.getElementById('simPanel');if(btn.dataset.tab!=='tab1')panel.classList.remove('show');
-  if(btn.dataset.tab==='tab2')buildTeamHistory(tsel.value);
-});});
-
-// TAB 1
-var chead=document.getElementById('compHeads');
-function renderCompHeads(){
-  chead.innerHTML='';
-  var fcomps=getFilteredComps();
-  fcomps.forEach(function(c){
-    var a=document.createElement('a');a.className='comp-link'+(isMajor(c.id)?' bold-link':'');
-    a.textContent=c.id;a.href=links[c.id]||'#';a.target='_blank';a.rel='noopener';
-    var dc=decayCoeff(c.id,compWeight(c.id));
-    a.addEventListener('mouseenter',function(e){showTT(e,c.id+' | '+c.date+' | \u6743\u91CD '+dc.toFixed(2),this);});
-    a.addEventListener('mouseleave',hideTT);chead.appendChild(a);
-  });
-}
-renderCompHeads();
-
-function badgeCls(r){var n=parseRank(r);if(n===null)return'bg-null';if(n>=1&&n<=20)return'bg-'+n;return'bg-mid';}
-function badgeText(r){var v=getRank(r);if(v===null||v===undefined||v==='')return'-';if(typeof v==='number'&&v>50)return'50+';return typeof v==='string'?v:String(v);}
-
-var app=document.getElementById('app');
-var simTeams=[];
-try{var saved=localStorage.getItem('hunt_sim_teams');if(saved)simTeams=JSON.parse(saved);}catch(e){}
-function saveSimTeams(){try{localStorage.setItem('hunt_sim_teams',JSON.stringify(simTeams));}catch(e){}populateSimTeams();}
-
-function simRanksToObj(ranks){var o={};ranks.forEach(function(e){o[e.c]=e.r;});return o;}
-
-var sortBy='total';
-function setSort(metric,el){
-  sortBy=metric;
-  document.querySelectorAll('.ch-total,.ch-front,.ch-stable,.ch-count,.ch-ach').forEach(function(e){e.classList.remove('sort-active');});
-  el.classList.add('sort-active');
-  renderAll();
-}
-
-function renderAll(){
-  recomputeTeams(getFilteredComps());
-  renderCompHeads();
-  renderLeaderboard();
-  drawBarChart();
-  if(window.innerWidth<=768){buildMobileBoard();}
-}
-
-// Bar chart
 var barCanvas=document.getElementById('barChart');
 
 function drawBarChart(){
@@ -5280,12 +1245,10 @@ function drawBarChart(){
 
   ctx.clearRect(0,0,cssW,cssH);
 
-  // Title
-  var labels={total:'\u603B\u5206',frontSum:'\u7D2F\u79EF\u5206',stableAvg:'\u7A33\u5B9A\u5206',count:'\u53C2\u8D5B\u6570',achCount:'\u6210\u5C31\u6570'};
+  var labels={total:'总分',frontSum:'累积分',stableAvg:'稳定分',count:'参赛数',achCount:'成就数'};
   ctx.fillStyle='#888';ctx.font='12px sans-serif';ctx.textAlign='left';
   ctx.fillText(labels[sortBy]||'',8,18);
 
-  // Grid lines at 100 (or 20 for stable)
   var step=sortBy==='stableAvg'?20:sortBy==='count'||sortBy==='achCount'?5:100;
   ctx.setLineDash([4,3]);ctx.strokeStyle='#e0e0e0';ctx.lineWidth=1;
   for(var v=step;v<=ceilY;v+=step){
@@ -5309,7 +1272,6 @@ function drawBarChart(){
     ctx.fillStyle=color;ctx.fillRect(x,pad.top+ph-h,colW,h);
 
     if(isMob){
-      // Mobile: only first of each tier, left-aligned
       var curTier=t.tier||(isSim?'tsim':'t4');
       if(curTier!==prevTier){
         ctx.fillStyle='#444';ctx.font='bold 9px sans-serif';ctx.textAlign='left';
@@ -5318,7 +1280,6 @@ function drawBarChart(){
         prevTier=curTier;
       }
     }else{
-      // Desktop: all labels centered + team names below
       ctx.fillStyle='#444';ctx.font='bold 10px sans-serif';ctx.textAlign='center';
       var ny2=pad.top+ph-h-4;if(ny2<pad.top-8)ny2=pad.top-8;
       ctx.fillText(val.toFixed(1),x+colW/2,ny2);
@@ -5329,218 +1290,7 @@ function drawBarChart(){
   });
 }
 
-var sortTotal=document.querySelector('.ch-total');
-var sortFront=document.querySelector('.ch-front');
-var sortStable=document.querySelector('.ch-stable');
-var sortCount=document.querySelector('.ch-count');
-var sortAch=document.querySelector('.ch-ach');
-sortTotal.classList.add('sort-active');
-sortTotal.addEventListener('click',function(){setSort('total',this);});
-sortFront.addEventListener('click',function(){setSort('frontSum',this);});
-sortStable.addEventListener('click',function(){setSort('stableAvg',this);});
-sortCount.addEventListener('click',function(){setSort('count',this);});
-sortAch.addEventListener('click',function(){setSort('achCount',this);});
-
-function renderLeaderboard(){
-  app.innerHTML='';
-  var showSim=document.getElementById('simToggle').checked;
-  var fcomps=getFilteredComps();
-  var all=(showSim?simTeams.map(function(st){var tr=simRanksToObj(st.ranks||[]),s=computeScores(tr,null,fcomps);return{name:st.name,total:s.total,frontSum:s.frontSum,stableAvg:s.stableAvg,_ranks:tr,_sim:true,rank:0,tier:'tsim',count:Object.values(tr).filter(function(v){return v!==null&&v!==undefined&&v!=='';}).length,tw:0};}).concat(teams):teams);
-  all.sort(function(a,b){var va=a[sortBy]||0,vb=b[sortBy]||0;if(vb!==va)return vb-va;if(sortBy==='count')return (b.tw||0)-(a.tw||0);return 0;});
-  all.forEach(function(t,i){t.rank=i+1;});
-  all.forEach(function(t){renderCard(t);});
-}
-
-function renderCard(team){
-  var tr2=team._ranks||rankings[team.origName]||{},isSim=!!team._sim;
-  var card=document.createElement('div');  card.className='card '+(isSim?'tsim':team.tier||'t4');
-  var strip=document.createElement('div');strip.className='card-strip';card.appendChild(strip);
-  var info=document.createElement('div');info.className='card-info';
-  [{c:'card-rank',v:team.rank},{c:'card-name',v:team.name},{c:'card-total',v:team.total.toFixed(1)},{c:'card-front',v:team.frontSum.toFixed(1)},{c:'card-stable',v:team.stableAvg.toFixed(1)},{c:'card-count',v:team.count},{c:'card-ach',v:team.achCount}].forEach(function(it){var s=document.createElement('span');s.className=it.c;s.textContent=it.v;info.appendChild(s);});
-  card.appendChild(info);
-  var badges=document.createElement('div');badges.className='card-badges';
-  var fcomps=getFilteredComps();
-  for(var k=0;k<fcomps.length;k++){(function(c){
-    var r=tr2[c.id],b=document.createElement('span');
-    var isStaff=r&&typeof r==='object'&&r.staff;
-    if(isStaff){b.className='badge bg-staff';b.textContent='\u5DE5';}
-    else{var cls=badgeCls(r),merged=!isSim&&isMerged(team.origName||'',c.id);
-    b.className='badge '+cls+(merged?' merged':'');
-    b.textContent=badgeText(r);}
-    var dc=decayCoeff(c.id,compWeight(c.id));
-    var alpha=Math.max(0.2,Math.min(1,dc/0.8));
-    b.style.opacity=alpha;
-    b.addEventListener('mouseenter',function(){this.style.opacity='1';});
-    b.addEventListener('mouseleave',function(){this.style.opacity=alpha;});
-    if(!isStaff&&hasRank(r)){
-      var rs=rankScore(r);if(merged)rs/=2;var contrib=dc*rs;
-      var tipText=c.id+' | \u5F97\u5206 '+rs.toFixed(1)+' | \u79EF\u5206 '+contrib.toFixed(1)+(merged?' | \u5E76\u961F':'');
-      b.setAttribute('data-tip',tipText);
-      b.addEventListener('mouseenter',function(e){showTT(e,tipText,this);});
-      b.addEventListener('mouseleave',hideTT);
-      b.addEventListener('click',function(){var u=links[c.id+'_rank']||links[c.id];if(u)window.open(u,'_blank');});
-    }
-    badges.appendChild(b);
-  })(fcomps[k]);}
-  card.appendChild(badges);app.appendChild(card);
-}
-
-// Mobile two-panel board
-function buildMobileBoard(){
-  if(window.innerWidth>768)return;
-  var bmLeftRows=document.getElementById('bmLeftRows');
-  var bmRightInner=document.getElementById('bmRightInner');
-  var fcomps=getFilteredComps();
-
-  bmRightInner.innerHTML='';
-
-  // Build competition header row (right side)
-  var hRow=document.createElement('div');hRow.className='bm-rh-row';
-  fcomps.forEach(function(c){
-    var link=document.createElement('span');
-    link.className='comp-link'+(isMajor(c.id)?' bold-link':'');link.textContent=c.id;
-    var dc=decayCoeff(c.id,compWeight(c.id));
-    var tipText=c.id+' | '+c.date+' | \u6743\u91CD '+dc.toFixed(2);
-    link.addEventListener('click',function(e){
-      var tt=document.getElementById('tooltip');
-      if(tt.classList.contains('show')&&tt._bmTarget===link){
-        tt.classList.remove('show');tt._bmTarget=null;
-      }else{
-        if(tt._bmTarget)tt._bmTarget.style.opacity='';
-        showTT(e,tipText,link);
-        tt._bmTarget=link;
-      }
-    });
-    hRow.appendChild(link);
-  });
-  var hSpacer=document.createElement('div');
-  hSpacer.style.cssText='flex-shrink:0;min-width:4px;height:1px;';
-  hRow.appendChild(hSpacer);
-  bmRightInner.appendChild(hRow);
-
-  // Build data rows
-  var cards=document.querySelectorAll('#app .card');
-  bmLeftRows.innerHTML='';
-  cards.forEach(function(card){
-    // Left cell: frozen columns
-    var leftRow=document.createElement('div');leftRow.className='bm-row';
-    var left=document.createElement('div');
-    var tierCls='';
-    card.classList.forEach(function(c){if(c.match(/^t/))tierCls=c;});
-    left.className='bm-row-left '+tierCls;
-
-    var strip=document.createElement('div');strip.className='card-strip';
-    strip.style.background=card.querySelector('.card-strip').style.background||'';
-    left.appendChild(strip);
-
-    ['card-rank','card-name','card-total'].forEach(function(cls){
-      var el=document.createElement('span');el.className=cls;
-      el.textContent=card.querySelector('.'+cls).textContent;
-      left.appendChild(el);
-    });
-    leftRow.appendChild(left);
-    bmLeftRows.appendChild(leftRow);
-
-    // Right cell: badges row (in shared scroll container)
-    var rRow=document.createElement('div');rRow.className='bm-rr-row';
-    var badges=card.querySelectorAll('.card-badges .badge');
-    badges.forEach(function(b){
-      var clone=b.cloneNode(true);
-      var tipText=b.getAttribute('data-tip');
-      if(tipText){
-        clone.addEventListener('click',function(e){
-          var tt=document.getElementById('tooltip');
-          if(tt.classList.contains('show')&&tt._bmTarget===clone){
-            tt.classList.remove('show');tt._bmTarget=null;clone.style.opacity='';
-          }else{
-            if(tt._bmTarget)tt._bmTarget.style.opacity='';
-            showTT(e,tipText,clone);
-            tt._bmTarget=clone;clone.style.opacity='1';
-          }
-        });
-      }
-      rRow.appendChild(clone);
-    });
-    var rSpacer=document.createElement('div');
-    rSpacer.style.cssText='flex-shrink:0;min-width:4px;height:42px;';
-    rRow.appendChild(rSpacer);
-    bmRightInner.appendChild(rRow);
-  });
-
-  // Hide tooltip on outside tap (mobile)
-  document.addEventListener('click',function(e){
-    if(window.innerWidth>768)return;
-    var tt=document.getElementById('tooltip');
-    if(!tt.classList.contains('show'))return;
-    var badgeOrLink=e.target.closest('.bm-rr-row .badge')||e.target.closest('.bm-rh-row .comp-link');
-    if(badgeOrLink===tt._bmTarget)return;
-    if(tt._bmTarget)tt._bmTarget.style.opacity='';
-    tt.classList.remove('show');tt._bmTarget=null;
-  });
-
-  // Scroll right panel to newest
-  var rs=document.getElementById('bmRightScroll');
-  requestAnimationFrame(function(){
-    requestAnimationFrame(function(){
-      rs.scrollLeft=rs.scrollWidth-rs.clientWidth;
-    });
-  });
-}
-
-// Restore toggle + initial render
-(function(){var v=localStorage.getItem('hunt_sim_show');document.getElementById('simToggle').checked=v==='true';})();
-renderAll();
-
-// Filter event listeners
-function onFilterChange(){
-  var v=parseInt(dateSlider.value,10);
-  if(v>=100){refDate=Date.now();dateLabel.textContent=fmtDate(new Date());playBtn.disabled=true;}
-  else{refDate=sliderToEpoch(v);dateLabel.textContent=fmtDate(new Date(refDate));playBtn.disabled=false;}
-  renderAll();
-  if(document.getElementById('tab2').classList.contains('active')){
-    buildTeamHistory(tsel.value);
-  }
-}
-dateSlider.addEventListener('input',function(){
-  onFilterChange();
-});
-pkCcbcCheck.addEventListener('change',function(){
-  filterPkCcbc=this.checked;
-  pkCcbcLabel.classList.toggle('checked',filterPkCcbc);
-  onFilterChange();
-});
-
-// Play button animation
-var playBtn=document.getElementById('playBtn'),playAnim=null;
-playBtn.addEventListener('click',function(){
-  if(parseInt(dateSlider.value,10)>=100)return;
-  if(playAnim){cancelAnimationFrame(playAnim);playAnim=null;playBtn.textContent='\u25B6';playBtn.classList.remove('playing');return;}
-  var startV=parseInt(dateSlider.value,10),startT=performance.now();
-  var duration=Math.max(4000,(100-startV)/100*16000);
-  playBtn.textContent='\u23F8';playBtn.classList.add('playing');
-  function step(now){
-    var p=Math.min(1,(now-startT)/duration);
-    var v=Math.round(startV+(100-startV)*p);
-    dateSlider.value=v;onFilterChange();
-    if(p<1){playAnim=requestAnimationFrame(step);}
-    else{playAnim=null;playBtn.textContent='\u25B6';playBtn.classList.remove('playing');}
-  }
-  playAnim=requestAnimationFrame(step);
-});
-
-// TAB 2
-var tsel=document.getElementById('teamSelect');
-teams.forEach(function(t){var o=document.createElement('option');o.value=t.origName;o.textContent=t.name;tsel.appendChild(o);});
-function populateSimTeams(){
-  // Remove old sim options first
-  var opts=tsel.querySelectorAll('option.sim-opt');for(var i=0;i<opts.length;i++)opts[i].remove();
-  if(simTeams.length>0){var sep=document.createElement('option');sep.disabled=true;sep.textContent='\u2500\u2500 \u81EA\u5EFA\u961F\u4F0D \u2500\u2500';tsel.appendChild(sep);}
-  simTeams.forEach(function(st){var o=document.createElement('option');o.className='sim-opt';o.value='__sim__'+st.name;o.textContent=st.name;tsel.appendChild(o);});
-}
-populateSimTeams();
-var tinfo=document.getElementById('teamInfo'),thist=document.getElementById('teamHistory');
-var tchart=document.getElementById('teamChart');
-
+// 队伍图表
 function chartY(r,ph,pad){return pad.top+ph*Math.pow((r-1)/49,0.4);}
 
 function drawChart(tname){
@@ -5558,7 +1308,6 @@ function drawChart(tname){
 
   ctx.clearRect(0,0,cssW,cssH);
 
-  // Score grid lines & right Y-axis labels
   ctx.setLineDash([4,3]);ctx.strokeStyle='#f0e0d0';ctx.lineWidth=1;
   ctx.fillStyle='#d4a080';ctx.font='10px sans-serif';ctx.textAlign='left';
   for(var s=100;s<=500;s+=100){
@@ -5568,7 +1317,6 @@ function drawChart(tname){
   }
   ctx.setLineDash([]);
 
-  // Rank grid lines & left Y-axis labels
   ctx.strokeStyle='#eee';ctx.lineWidth=1;
   [1,10,20,30,40,50].forEach(function(r){var gy=chartY(r,ph,pad);ctx.beginPath();ctx.moveTo(pad.left,gy);ctx.lineTo(cssW-pad.right,gy);ctx.stroke();});
   ctx.strokeStyle='#ccc';ctx.beginPath();ctx.moveTo(pad.left,pad.top);ctx.lineTo(pad.left,cssH-pad.bottom);ctx.stroke();
@@ -5576,13 +1324,11 @@ function drawChart(tname){
   ctx.fillStyle='#bbb';ctx.font='11px sans-serif';ctx.textAlign='right';
   [1,10,20,30,40,50].forEach(function(r){ctx.fillText(r,pad.left-4,chartY(r,ph,pad)+4);});
   ctx.textAlign='right';ctx.fillStyle='#bbb';ctx.font='10px sans-serif';
-  // Time-based X axis setup
   var fcompsSorted=fcomps.slice().sort(function(a,b){return epochs[a.id]-epochs[b.id];});
   var tMin=epochs[fcompsSorted[0].id],tMax=Date.now(),tSpan=Math.max(tMax-tMin,1);
   function tX(ep){return pad.left+(ep-tMin)/tSpan*pw;}
   fcompsSorted.forEach(function(c){ctx.save();ctx.translate(tX(epochs[c.id]),cssH-pad.bottom+8);ctx.rotate(-0.6);ctx.fillText(c.id,0,0);ctx.restore();});
 
-  // Continuous score curve
   var scoreCurve=[],acc=[];
   var tierFill={tw:'rgba(51,51,51,0.35)',t0:'rgba(231,76,60,0.35)',t1:'rgba(240,160,48,0.35)',t2:'rgba(155,124,184,0.35)',t3:'rgba(91,155,213,0.35)',t4:'rgba(93,168,93,0.35)'};
   var tierStroke={tw:'rgba(51,51,51,0.5)',t0:'rgba(231,76,60,0.5)',t1:'rgba(240,160,48,0.5)',t2:'rgba(155,124,184,0.5)',t3:'rgba(91,155,213,0.5)',t4:'rgba(93,168,93,0.5)'};
@@ -5620,7 +1366,6 @@ function drawChart(tname){
     }
   }
 
-  // Rank points & line (drawn on top, time-based X)
   var pts=[];
   fcompsSorted.forEach(function(c){
     if(!hasRank(tr[c.id]))return;
@@ -5640,15 +1385,344 @@ function drawChart(tname){
     ctx.beginPath();ctx.arc(p.x,p.y,4,0,Math.PI*2);
     if(n===1)ctx.fillStyle='#E74C3C';else if(n<=3)ctx.fillStyle='#F0A030';else if(n<=6)ctx.fillStyle='#9B7CB8';else if(n<=10)ctx.fillStyle='#2471A3';else if(n<=20)ctx.fillStyle='#4CAF50';else ctx.fillStyle='#7F8C8D';
     ctx.fill();
-    // Smart label position: avoid the connecting lines
     var above=false;
-    if(i===0){above=pts.length>1&&pts[1].y>p.y;} // first: check if next is below
-    else if(i===pts.length-1){above=pts[i-1].y>p.y;} // last: check if prev is below
+    if(i===0){above=pts.length>1&&pts[1].y>p.y;}
+    else if(i===pts.length-1){above=pts[i-1].y>p.y;}
     else{var ly1=pts[i-1].y,ly2=pts[i+1].y;above=(ly1>=p.y&&ly2>=p.y)?true:(ly1<=p.y&&ly2<=p.y)?false:p.y<pad.top+ph/2;}
     var ly=above?p.y-10:p.y+14;if(above&&ly<pad.top+4)ly=p.y+14;if(!above&&ly>pad.top+ph-4)ly=p.y-10;
     ctx.fillStyle='#333';ctx.fillText(lbl,p.x,ly);
   }
-  }); // rAF
+  });
+}
+
+
+// ====== UI 渲染与交互 ======
+
+// 筛选状态
+var filterPkCcbc=false;
+var refDate=Date.now();
+var dateSlider=document.getElementById('dateSlider');
+var pkCcbcCheck=document.getElementById('pkCcbcCheck');
+var dateLabel=document.getElementById('dateLabel');
+var pkCcbcLabel=document.getElementById('pkCcbcLabel');
+
+var allEpochs=comps.map(function(c){return epochs[c.id];});
+allEpochs.sort(function(a,b){return a-b;});
+var epochMin=allEpochs[0],epochMax=Date.now();
+var epochRange=epochMax-epochMin;
+function sliderToEpoch(v){return epochMin+(epochRange*v/100);}
+dateSlider.value=100;
+dateLabel.textContent=fmtDate(new Date());
+
+function fmtDate(d){var mm=d.getMonth()+1,dd=d.getDate();return d.getFullYear()+'-'+(mm<10?'0':'')+mm+'-'+(dd<10?'0':'')+dd;}
+
+function getFilterDateMax(){return sliderToEpoch(parseInt(dateSlider.value,10));}
+
+function getFilteredComps(){
+  var dmax=getFilterDateMax(),now=Date.now();
+  return comps.filter(function(c){
+    if(epochs[c.id]>now)return false;
+    if(filterPkCcbc&&!isMajor(c.id))return false;
+    if(epochs[c.id]>dmax)return false;
+    return true;
+  });
+}
+
+// Tooltip
+var tooltip=document.getElementById('tooltip');
+function showTT(e,text,el){tooltip.textContent=text;tooltip.style.left='-999px';tooltip.classList.add('show');var tw=tooltip.offsetWidth,th=tooltip.offsetHeight;var rect=el.getBoundingClientRect();var x=rect.left+rect.width/2-tw/2;var y=rect.top-th-6;if(y<0)y=rect.bottom+6;if(x<4)x=4;if(x+tw>window.innerWidth-4)x=window.innerWidth-tw-4;tooltip.style.left=x+'px';tooltip.style.top=y+'px';}
+function hideTT(){tooltip.classList.remove('show');}
+
+// 标签页切换
+document.querySelectorAll('.tab-btn').forEach(function(btn){btn.addEventListener('click',function(){
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+  document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active');});
+  btn.classList.add('active');document.getElementById(btn.dataset.tab).classList.add('active');
+  document.getElementById('fabBtn').style.display=(btn.dataset.tab==='tab1'||btn.dataset.tab==='tab2')?'':'none';
+  var panel=document.getElementById('simPanel');if(btn.dataset.tab!=='tab1')panel.classList.remove('show');
+  if(btn.dataset.tab==='tab2')buildTeamHistory(tsel.value);
+});});
+
+// 比赛表头
+var chead=document.getElementById('compHeads');
+function renderCompHeads(){
+  chead.innerHTML='';
+  var fcomps=getFilteredComps();
+  fcomps.forEach(function(c){
+    var a=document.createElement('a');a.className='comp-link'+(isMajor(c.id)?' bold-link':'');
+    a.textContent=c.id;a.href=links[c.id]||'#';a.target='_blank';a.rel='noopener';
+    var dc=decayCoeff(c.id,compWeight(c.id));
+    a.addEventListener('mouseenter',function(e){showTT(e,c.id+' | '+c.date+' | 权重 '+dc.toFixed(2),this);});
+    a.addEventListener('mouseleave',hideTT);chead.appendChild(a);
+  });
+}
+renderCompHeads();
+
+// 徽章辅助
+function badgeCls(r){var n=parseRank(r);if(n===null)return'bg-null';if(n>=1&&n<=20)return'bg-'+n;return'bg-mid';}
+function badgeText(r){var v=getRank(r);if(v===null||v===undefined||v==='')return'-';if(typeof v==='number'&&v>50)return'50+';return typeof v==='string'?v:String(v);}
+
+// 自建队伍
+var app=document.getElementById('app');
+var simTeams=[];
+try{var saved=localStorage.getItem('hunt_sim_teams');if(saved)simTeams=JSON.parse(saved);}catch(e){}
+function saveSimTeams(){try{localStorage.setItem('hunt_sim_teams',JSON.stringify(simTeams));}catch(e){}populateSimTeams();}
+function simRanksToObj(ranks){var o={};ranks.forEach(function(e){o[e.c]=e.r;});return o;}
+
+// 排序
+var sortBy='total';
+function setSort(metric,el){
+  sortBy=metric;
+  document.querySelectorAll('.ch-total,.ch-front,.ch-stable,.ch-count,.ch-ach').forEach(function(e){e.classList.remove('sort-active');});
+  el.classList.add('sort-active');
+  renderAll();
+}
+
+function renderAll(){
+  recomputeTeams(getFilteredComps());
+  renderCompHeads();
+  renderLeaderboard();
+  drawBarChart();
+  populateTeamSelect();
+  if(window.innerWidth<=768){buildMobileBoard();}
+}
+
+// 排序头部绑定
+var sortTotal=document.querySelector('.ch-total');
+var sortFront=document.querySelector('.ch-front');
+var sortStable=document.querySelector('.ch-stable');
+var sortCount=document.querySelector('.ch-count');
+var sortAch=document.querySelector('.ch-ach');
+sortTotal.classList.add('sort-active');
+sortTotal.addEventListener('click',function(){setSort('total',this);});
+sortFront.addEventListener('click',function(){setSort('frontSum',this);});
+sortStable.addEventListener('click',function(){setSort('stableAvg',this);});
+sortCount.addEventListener('click',function(){setSort('count',this);});
+sortAch.addEventListener('click',function(){setSort('achCount',this);});
+
+// 榜单渲染
+function renderLeaderboard(){
+  app.innerHTML='';
+  var showSim=document.getElementById('simToggle').checked;
+  var fcomps=getFilteredComps();
+  var all=(showSim?simTeams.map(function(st){var tr=simRanksToObj(st.ranks||[]),s=computeScores(tr,null,fcomps);return{name:st.name,total:s.total,frontSum:s.frontSum,stableAvg:s.stableAvg,_ranks:tr,_sim:true,rank:0,tier:'tsim',count:Object.values(tr).filter(function(v){return v!==null&&v!==undefined&&v!=='';}).length,tw:0};}).concat(teams):teams);
+  all.sort(function(a,b){var va=a[sortBy]||0,vb=b[sortBy]||0;if(vb!==va)return vb-va;if(sortBy==='count')return (b.tw||0)-(a.tw||0);return 0;});
+  all.forEach(function(t,i){t.rank=i+1;});
+  all.forEach(function(t){renderCard(t);});
+}
+
+function renderCard(team){
+  var tr2=team._ranks||rankings[team.origName]||{},isSim=!!team._sim;
+  var card=document.createElement('div');  card.className='card '+(isSim?'tsim':team.tier||'t4');
+  var strip=document.createElement('div');strip.className='card-strip';card.appendChild(strip);
+  var info=document.createElement('div');info.className='card-info';
+  [{c:'card-rank',v:team.rank},{c:'card-name',v:team.name},{c:'card-total',v:team.total.toFixed(1)},{c:'card-front',v:team.frontSum.toFixed(1)},{c:'card-stable',v:team.stableAvg.toFixed(1)},{c:'card-count',v:team.count},{c:'card-ach',v:team.achCount}].forEach(function(it){var s=document.createElement('span');s.className=it.c;s.textContent=it.v;info.appendChild(s);});
+  card.appendChild(info);
+  var badges=document.createElement('div');badges.className='card-badges';
+  var fcomps=getFilteredComps();
+  for(var k=0;k<fcomps.length;k++){(function(c){
+    var r=tr2[c.id],b=document.createElement('span');
+    var isStaff=r&&typeof r==='object'&&r.staff;
+    if(isStaff){b.className='badge bg-staff';b.textContent='工';}
+    else{var cls=badgeCls(r),merged=!isSim&&isMerged(team.origName||'',c.id);
+    b.className='badge '+cls+(merged?' merged':'');
+    b.textContent=badgeText(r);}
+    var dc=decayCoeff(c.id,compWeight(c.id));
+    var alpha=Math.max(0.2,Math.min(1,dc/0.8));
+    b.style.opacity=alpha;
+    b.addEventListener('mouseenter',function(){this.style.opacity='1';});
+    b.addEventListener('mouseleave',function(){this.style.opacity=alpha;});
+    if(!isStaff&&hasRank(r)){
+      var rs=rankScore(r);if(merged)rs/=2;var contrib=dc*rs;
+      var tipText=c.id+' | 得分 '+rs.toFixed(1)+' | 积分 '+contrib.toFixed(1)+(merged?' | 并队':'');
+      b.setAttribute('data-tip',tipText);
+      b.addEventListener('mouseenter',function(e){showTT(e,tipText,this);});
+      b.addEventListener('mouseleave',hideTT);
+      b.addEventListener('click',function(){var u=links[c.id+'_rank']||links[c.id];if(u)window.open(u,'_blank');});
+    }
+    badges.appendChild(b);
+  })(fcomps[k]);}
+  card.appendChild(badges);app.appendChild(card);
+}
+
+// 移动端双面板
+function buildMobileBoard(){
+  if(window.innerWidth>768)return;
+  var bmLeftRows=document.getElementById('bmLeftRows');
+  var bmRightInner=document.getElementById('bmRightInner');
+  var fcomps=getFilteredComps();
+
+  bmRightInner.innerHTML='';
+
+  var hRow=document.createElement('div');hRow.className='bm-rh-row';
+  fcomps.forEach(function(c){
+    var link=document.createElement('span');
+    link.className='comp-link'+(isMajor(c.id)?' bold-link':'');link.textContent=c.id;
+    var dc=decayCoeff(c.id,compWeight(c.id));
+    var tipText=c.id+' | '+c.date+' | 权重 '+dc.toFixed(2);
+    link.addEventListener('click',function(e){
+      var tt=document.getElementById('tooltip');
+      if(tt.classList.contains('show')&&tt._bmTarget===link){
+        tt.classList.remove('show');tt._bmTarget=null;
+      }else{
+        if(tt._bmTarget)tt._bmTarget.style.opacity='';
+        showTT(e,tipText,link);
+        tt._bmTarget=link;
+      }
+    });
+    hRow.appendChild(link);
+  });
+  var hSpacer=document.createElement('div');
+  hSpacer.style.cssText='flex-shrink:0;min-width:4px;height:1px;';
+  hRow.appendChild(hSpacer);
+  bmRightInner.appendChild(hRow);
+
+  var cards=document.querySelectorAll('#app .card');
+  bmLeftRows.innerHTML='';
+  cards.forEach(function(card){
+    var leftRow=document.createElement('div');leftRow.className='bm-row';
+    var left=document.createElement('div');
+    var tierCls='';
+    card.classList.forEach(function(c){if(c.match(/^t/))tierCls=c;});
+    left.className='bm-row-left '+tierCls;
+
+    var strip=document.createElement('div');strip.className='card-strip';
+    strip.style.background=card.querySelector('.card-strip').style.background||'';
+    left.appendChild(strip);
+
+    ['card-rank','card-name','card-total'].forEach(function(cls){
+      var el=document.createElement('span');el.className=cls;
+      el.textContent=card.querySelector('.'+cls).textContent;
+      left.appendChild(el);
+    });
+    leftRow.appendChild(left);
+    bmLeftRows.appendChild(leftRow);
+
+    var rRow=document.createElement('div');rRow.className='bm-rr-row';
+    var badges=card.querySelectorAll('.card-badges .badge');
+    badges.forEach(function(b){
+      var clone=b.cloneNode(true);
+      var tipText=b.getAttribute('data-tip');
+      if(tipText){
+        clone.addEventListener('click',function(e){
+          var tt=document.getElementById('tooltip');
+          if(tt.classList.contains('show')&&tt._bmTarget===clone){
+            tt.classList.remove('show');tt._bmTarget=null;clone.style.opacity='';
+          }else{
+            if(tt._bmTarget)tt._bmTarget.style.opacity='';
+            showTT(e,tipText,clone);
+            tt._bmTarget=clone;clone.style.opacity='1';
+          }
+        });
+      }
+      rRow.appendChild(clone);
+    });
+    var rSpacer=document.createElement('div');
+    rSpacer.style.cssText='flex-shrink:0;min-width:4px;height:42px;';
+    rRow.appendChild(rSpacer);
+    bmRightInner.appendChild(rRow);
+  });
+
+  document.addEventListener('click',function(e){
+    if(window.innerWidth>768)return;
+    var tt=document.getElementById('tooltip');
+    if(!tt.classList.contains('show'))return;
+    var badgeOrLink=e.target.closest('.bm-rr-row .badge')||e.target.closest('.bm-rh-row .comp-link');
+    if(badgeOrLink===tt._bmTarget)return;
+    if(tt._bmTarget)tt._bmTarget.style.opacity='';
+    tt.classList.remove('show');tt._bmTarget=null;
+  });
+
+  var rs=document.getElementById('bmRightScroll');
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){
+      rs.scrollLeft=rs.scrollWidth-rs.clientWidth;
+    });
+  });
+}
+
+// 筛选事件
+function onFilterChange(){
+  var v=parseInt(dateSlider.value,10);
+  if(v>=100){refDate=Date.now();dateLabel.textContent=fmtDate(new Date());playBtn.disabled=true;}
+  else{refDate=sliderToEpoch(v);dateLabel.textContent=fmtDate(new Date(refDate));playBtn.disabled=false;}
+  renderAll();
+  if(document.getElementById('tab2').classList.contains('active')){
+    buildTeamHistory(tsel.value);
+  }
+}
+dateSlider.addEventListener('input',function(){
+  onFilterChange();
+});
+pkCcbcCheck.addEventListener('change',function(){
+  filterPkCcbc=this.checked;
+  pkCcbcLabel.classList.toggle('checked',filterPkCcbc);
+  onFilterChange();
+});
+
+// 播放按钮
+var playBtn=document.getElementById('playBtn'),playAnim=null;
+playBtn.addEventListener('click',function(){
+  if(parseInt(dateSlider.value,10)>=100)return;
+  if(playAnim){cancelAnimationFrame(playAnim);playAnim=null;playBtn.textContent='▶';playBtn.classList.remove('playing');return;}
+  var startV=parseInt(dateSlider.value,10),startT=performance.now();
+  var duration=Math.max(4000,(100-startV)/100*16000);
+  playBtn.textContent='⏸';playBtn.classList.add('playing');
+  function step(now){
+    var p=Math.min(1,(now-startT)/duration);
+    var v=Math.round(startV+(100-startV)*p);
+    dateSlider.value=v;onFilterChange();
+    if(p<1){playAnim=requestAnimationFrame(step);}
+    else{playAnim=null;playBtn.textContent='▶';playBtn.classList.remove('playing');}
+  }
+  playAnim=requestAnimationFrame(step);
+});
+
+// TAB 2: 队伍详情
+var tsel=document.getElementById('teamSelect');
+var tinfo=document.getElementById('teamInfo'),thist=document.getElementById('teamHistory');
+var tchart=document.getElementById('teamChart');
+
+function populateTeamSelect(){
+  var opts=tsel.querySelectorAll('option:not(.sim-opt)');for(var i=0;i<opts.length;i++)opts[i].remove();
+  teams.forEach(function(t){var o=document.createElement('option');o.value=t.origName;o.textContent=t.name;tsel.appendChild(o);});
+  populateSimTeams();
+}
+function populateSimTeams(){
+  var opts=tsel.querySelectorAll('option.sim-opt');for(var i=0;i<opts.length;i++)opts[i].remove();
+  if(simTeams.length>0){var sep=document.createElement('option');sep.disabled=true;sep.textContent='── 自建队伍 ──';tsel.appendChild(sep);}
+  simTeams.forEach(function(st){var o=document.createElement('option');o.className='sim-opt';o.value='__sim__'+st.name;o.textContent=st.name;tsel.appendChild(o);});
+}
+populateSimTeams();
+
+var achSection=document.getElementById('achSection'),achGrid=document.getElementById('achGrid');
+function renderAchievements(teamName){
+  var ach=teamAch[teamName]||[];
+  if(ach.length===0){achSection.style.display='none';return;}
+  renderAchList(ach);
+}
+function renderAchList(ach){
+  achSection.style.display='block';achGrid.innerHTML='';
+  document.getElementById('achTitle').textContent='成就 ('+ach.length+')';
+  var tierPriority={platinum:4,gold:3,silver:2,bronze:1};
+  ach.sort(function(a,b){var tp=tierPriority[b.tier]-tierPriority[a.tier];if(tp!==0)return tp;var aMax=a.id.indexOf('max_')===0?0:1,bMax=b.id.indexOf('max_')===0?0:1;return aMax-bMax;});
+  var tierIcons={platinum:'♦',gold:'★',silver:'◆',bronze:'●'};
+  ach.forEach(function(a){
+    var item=document.createElement('div');item.className='ach-item '+a.tier;
+    var icon=document.createElement('div');icon.className='ach-item-icon '+a.tier;icon.textContent=tierIcons[a.tier]||'';
+    var body=document.createElement('div');body.className='ach-item-body';
+    var nameEl=document.createElement('div');nameEl.className='ach-item-name';nameEl.textContent=a.name;
+    body.appendChild(nameEl);
+    var descEl=document.createElement('div');descEl.className='ach-item-desc';descEl.textContent=achDescs[a.id]||'';body.appendChild(descEl);
+    if(a.detail){var detEl=document.createElement('div');detEl.className='ach-item-detail';detEl.textContent=a.detail;body.appendChild(detEl);}
+    item.appendChild(icon);item.appendChild(body);
+    var pct=achPercentages[a.id]||0;if(pct>0){var pctEl=document.createElement('div');pctEl.className='ach-item-pct';pctEl.textContent=pct+'%';item.appendChild(pctEl);}
+    var teams=achTeams[a.id]||[];
+    if(teams.length>0){item.style.cursor='pointer';
+      item.addEventListener('mouseenter',function(e){var t=achTeams[a.id]||[];tooltip.textContent='已获得队伍：'+t.join('、');tooltip.style.left='-999px';tooltip.classList.add('show');var tw=tooltip.offsetWidth,th=tooltip.offsetHeight;var rect=this.getBoundingClientRect();var x=rect.right+10;if(x+tw>window.innerWidth-4)x=rect.left-tw-10;var y=rect.top;if(y+th>window.innerHeight-4)y=window.innerHeight-th-4;tooltip.style.left=x+'px';tooltip.style.top=y+'px';});
+      item.addEventListener('mouseleave',hideTT);}
+    achGrid.appendChild(item);
+  });
 }
 
 function buildTeamHistory(tname){
@@ -5656,14 +1730,13 @@ function buildTeamHistory(tname){
   var tr=isSim?simRanksToObj((simTeams.find(function(st){return st.name===simName;})||{}).ranks||[]):(rankings[tname]||{});
   var parts=0,frontSum=0,ss=0,sw=0;thist.innerHTML='';
   var fcomps=getFilteredComps();
-  fcomps.forEach(function(c){var r=tr[c.id];if(r===null||r===undefined||r==='')return;var isStaffEntry=r&&typeof r==='object'&&r.staff;if(isStaffEntry)parts++;var rs=rankScore(r),merged=!isSim&&isMerged(tname,c.id);if(merged)rs/=2;var dc=decayCoeff(c.id,compWeight(c.id)),rd=decayCoeff(c.id,1),integral=dc*rs;ss+=rd*rs;sw+=rd;frontSum+=integral;
+  fcomps.forEach(function(c){var r=tr[c.id];if(r===null||r===undefined||r==='')return;parts++;var isStaffEntry=r&&typeof r==='object'&&r.staff;var rs=rankScore(r),merged=!isSim&&isMerged(tname,c.id);if(merged)rs/=2;var dc=decayCoeff(c.id,compWeight(c.id)),rd=decayCoeff(c.id,1),integral=dc*rs;ss+=rd*rs;sw+=rd;frontSum+=integral;
     var card=document.createElement('div');card.className='history-card';var strip=document.createElement('div');strip.className='hcard-strip';
     var n=parseRank(r);if(isStaffEntry)strip.className+=' s-staff';else if(n===null)n=999;if(n===1)strip.className+=' s-1';else if(n<=3)strip.className+=' s-2';else if(n<=6)strip.className+=' s-4';else if(n<=10)strip.className+=' s-top10';else if(n<=20)strip.className+=' s-mid';else if(!isStaffEntry)strip.className+=' s-low';
     if(merged)strip.className+=' sr-merged';
     card.appendChild(strip);var body=document.createElement('div');body.className='hcard-body';
     var nm=document.createElement('a');nm.className='hcard-name';nm.innerHTML=boldComp(c.id);nm.href=links[c.id]||'#';nm.target='_blank';nm.rel='noopener';nm.style.cssText='text-decoration:none;color:inherit;';
     var dt=document.createElement('span');dt.className='hcard-date';dt.textContent=c.date;
-    var isStaffEntry=r&&typeof r==='object'&&r.staff;
     var rk=document.createElement('span');rk.className='hcard-rank';var rn=parseRank(r);
     if(isStaffEntry){rk.className+=' sr-staff';rk.textContent='STAFF';}
     else{if(rn===1)rk.className+=' sr-1';else if(rn<=3)rk.className+=' sr-2';else if(rn<=6)rk.className+=' sr-4';else if(rn<=10)rk.className+=' sr-7';else if(rn<=20)rk.className+=' sr-mid';else rk.className+=' sr-low';
@@ -5674,7 +1747,7 @@ function buildTeamHistory(tname){
     body.appendChild(nm);body.appendChild(dt);var sp=document.createElement('span');sp.className='hh-spacer-right';body.appendChild(sp);body.appendChild(rk);body.appendChild(sc);body.appendChild(wt);body.appendChild(it);card.appendChild(body);thist.appendChild(card);
   });
   var sa=sw>0?ss/sw:0;
-  tinfo.innerHTML='\u53C2\u8D5B <strong>'+parts+'</strong> / '+fcomps.length+' \u573A &nbsp;|&nbsp; \u603B\u5206 <strong>'+(frontSum+sa).toFixed(1)+'</strong> &nbsp;|&nbsp; \u7D2F\u79EF\u5206 <strong>'+frontSum.toFixed(1)+'</strong> &nbsp;|&nbsp; \u7A33\u5B9A\u5206 <strong>'+sa.toFixed(1)+'</strong>';
+  tinfo.innerHTML='参赛 <strong>'+parts+'</strong> / '+fcomps.length+' 场 &nbsp;|&nbsp; 总分 <strong>'+(frontSum+sa).toFixed(1)+'</strong> &nbsp;|&nbsp; 累积分 <strong>'+frontSum.toFixed(1)+'</strong> &nbsp;|&nbsp; 稳定分 <strong>'+sa.toFixed(1)+'</strong>';
   drawChart(tname);
   if(tname.indexOf('__sim__')===0){
     var simTr=simRanksToObj((simTeams.find(function(st){return st.name===simName;})||{}).ranks||[]);
@@ -5686,16 +1759,17 @@ function buildTeamHistory(tname){
       simAch=computeOneTeamAch(simName,simTr,simTc,simMt,simFe);
       if(oldRk===undefined)delete rankings[simName];else rankings[simName]=oldRk;
     }
-    if(simAch.length===0){achSection.style.display='block';achGrid.innerHTML='<div style=\"font-size:12px;color:#ccc;padding:10px 0;\">暂无成就</div>';document.getElementById('achTitle').textContent='成就 (0)';}
+    if(simAch.length===0){achSection.style.display='block';achGrid.innerHTML='<div style="font-size:12px;color:#ccc;padding:10px 0;">暂无成就</div>';document.getElementById('achTitle').textContent='成就 (0)';}
     else{achSection.style.display='block';renderAchList(simAch);}
   }
   else renderAchievements(tname);
 }
 tsel.addEventListener('change',function(){buildTeamHistory(tsel.value);});
-// Redraw on window resize
+
+// 窗口缩放重绘
 var resizeTimer;window.addEventListener('resize',function(){clearTimeout(resizeTimer);resizeTimer=setTimeout(function(){if(document.getElementById('tab2').classList.contains('active'))buildTeamHistory(tsel.value);},200);});
 
-// TAB 3
+// TAB 3: 比赛详情
 var csel=document.getElementById('compSelect');
 comps.forEach(function(c){var o=document.createElement('option');o.value=c.id;o.textContent=c.id;csel.appendChild(o);});
 var cdetail=document.getElementById('compDetail');
@@ -5706,20 +1780,20 @@ function buildCompDetail(cid){
   var dc=decayCoeff(cid,compWeight(cid)),rawDecay=dc/compWeight(cid),w=compWeight(cid);
   var compRanks={};for(var i=0;i<data.length;i++){var rk=data[i].rank;if(!compRanks[rk])compRanks[rk]=[];compRanks[rk].push(i);}
   var shown={};
-  var html='<div class=\"comp-card\"><h3><a href=\"'+(links[cid]||'#')+'\" target=\"_blank\" rel=\"noopener\" style=\"color:inherit;text-decoration:none;\">'+cid+'</a></h3>';
+  var html='<div class="comp-card"><h3><a href="'+(links[cid]||'#')+'" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">'+cid+'</a><span style="float:right;font-size:13px;font-weight:400;color:#999;">开赛时间：'+c.date+(c.time?' '+c.time:'')+'</span></h3>';
   var totalTeams=0;for(var tn in rankings){totalTeams++;}
-  html+='<div class=\"cmeta\"><span>\u5F00\u8D5B\u65F6\u95F4\uff1a'+c.date+(c.time?' '+c.time:'')+' &nbsp;|&nbsp; \u65F6\u5EF6\u7CFB\u6570 '+rawDecay.toFixed(2)+' \u00D7 '+w.toFixed(2)+' = \u6743\u91CD '+dc.toFixed(2)+'</span><span>'+data.length+' / '+totalTeams+' \u961F</span></div>';
-  html+='<table class=\"comp-table\"><thead><tr><th>\u540D\u6B21</th><th>\u961F\u4F0D</th><th>\u5B8C\u8D5B\u65F6\u95F4</th><th>\u7528\u65F6</th><th>\u5F97\u5206</th><th>\u79EF\u5206</th></tr></thead><tbody>';
+  html+='<div class="cmeta"><span>'+data.length+' / '+totalTeams+' 队</span><span style="color:#999;">时延系数 '+rawDecay.toFixed(2)+' × '+w.toFixed(2)+' = 权重 '+dc.toFixed(2)+'</span></div>';
+  html+='<table class="comp-table"><thead><tr><th>名次</th><th>队伍</th><th>完赛时间</th><th>用时</th><th>得分</th><th>积分</th></tr></thead><tbody>';
   for(var i=0;i<data.length;i++){if(shown[i])continue;var d=data[i],rs=rankScore(d.rank),integral=dc*rs;
     var mergedTeams=compRanks[d.rank];var teamName=d.team;
     if(mergedTeams&&mergedTeams.length>1){teamName=mergedTeams.map(function(idx){shown[idx]=true;return data[idx].team;}).join(' & ');rs/=2;integral/=2;}
-    var timeStr=fmtTime(d.time);var finishStr=calcFinish(c.date,c.time,d.time);
-    html+='<tr><td class=\"'+rankCls(d.rank)+'\">#'+d.rank+'</td><td>'+esc(teamName)+'</td><td>'+esc(finishStr)+'</td><td>'+esc(timeStr)+'</td><td>'+rs.toFixed(1)+'</td><td>'+integral.toFixed(1)+'</td></tr>';}
+    var timeStr=fmtTime(d.time);var finishStr=calcFinish(c.date,c.time,d.time);if(window.innerWidth<=768)finishStr=finishStr.replace(/^\d{4}-/,'');
+    html+='<tr><td class="'+rankCls(d.rank)+'">#'+d.rank+'</td><td>'+esc(teamName)+'</td><td>'+esc(finishStr)+'</td><td>'+esc(timeStr)+'</td><td>'+rs.toFixed(1)+'</td><td>'+integral.toFixed(1)+'</td></tr>';}
   html+='</tbody></table></div>';cdetail.innerHTML=html;
 }
 csel.addEventListener('change',function(){buildCompDetail(csel.value);});buildCompDetail(csel.value);
 
-// SIM PANEL
+// 自建队伍面板
 document.getElementById('simToggle').addEventListener('change',function(){renderAll();try{localStorage.setItem('hunt_sim_show',this.checked);}catch(e){}});
 document.getElementById('fabBtn').addEventListener('click',function(){
   document.getElementById('simPanel').classList.toggle('show');
@@ -5734,7 +1808,7 @@ function renderSimPanel(){
   simTeams.forEach(function(st,i){
     var card=document.createElement('div');card.className='sim-team-card';
     var hdr=document.createElement('div');hdr.className='sim-team-header';
-    var nm=document.createElement('span');nm.className='sim-team-name';nm.textContent=st.name||'\u672A\u547D\u540D';
+    var nm=document.createElement('span');nm.className='sim-team-name';nm.textContent=st.name||'未命名';
     nm.addEventListener('click',function(){
       var inp=document.createElement('input');inp.className='sim-team-name-edit';inp.value=st.name;
       nm.replaceWith(inp);inp.focus();inp.select();
@@ -5742,14 +1816,14 @@ function renderSimPanel(){
       inp.addEventListener('keydown',function(e){if(e.key==='Enter')saveName();});
       function saveName(){var v=inp.value.trim();if(v)st.name=v;saveSimTeams();renderSimPanel();renderAll();}
     });
-    var del=document.createElement('button');del.className='sim-team-del';del.textContent='\u2715';
+    var del=document.createElement('button');del.className='sim-team-del';del.textContent='✕';
     del.addEventListener('click',function(){simTeams.splice(i,1);saveSimTeams();renderSimPanel();renderAll();});
     hdr.appendChild(nm);hdr.appendChild(del);card.appendChild(hdr);
 
     (st.ranks||[]).forEach(function(e,j){
       var row=document.createElement('div');row.className='sim-result-row';
       row.innerHTML='<span class="sr-comp">'+e.c+'</span><span class="sr-rank">#'+badgeText(e.r)+'</span>';
-      var rd=document.createElement('button');rd.className='sr-del';rd.textContent='\u2715';
+      var rd=document.createElement('button');rd.className='sr-del';rd.textContent='✕';
       rd.addEventListener('click',function(){simTeams[i].ranks.splice(j,1);saveSimTeams();renderSimPanel();renderAll();});
       row.appendChild(rd);card.appendChild(row);
     });
@@ -5760,7 +1834,7 @@ function renderSimPanel(){
     comps.forEach(function(c){sel.innerHTML+='<option value="'+c.id+'">'+c.id+'</option>';});
     var inp=document.createElement('input');inp.type='text';inp.placeholder='名次';inp.style.width='48px';
     inp.addEventListener('input',function(){this.value=this.value.replace(/[^0-9]/g,'');});
-    var btn=document.createElement('button');btn.textContent='\u6DFB\u52A0';
+    var btn=document.createElement('button');btn.textContent='添加';
     btn.addEventListener('click',function(){
       var cid=sel.value,rn=parseInt(inp.value,10);if(!cid||isNaN(rn))return;
       if(!simTeams[i].ranks)simTeams[i].ranks=[];
@@ -5771,10 +1845,10 @@ function renderSimPanel(){
     body.appendChild(card);
   });
 
-  var addTeamBtn=document.createElement('button');addTeamBtn.className='sim-add-team-btn';addTeamBtn.textContent='+ \u6DFB\u52A0\u961F\u4F0D';
+  var addTeamBtn=document.createElement('button');addTeamBtn.className='sim-add-team-btn';addTeamBtn.textContent='+ 添加队伍';
   var addTeamForm=document.createElement('div');addTeamForm.className='sim-add-team-form';
-  var addTeamInp=document.createElement('input');addTeamInp.placeholder='\u961F\u540D';
-  var addTeamSubmit=document.createElement('button');addTeamSubmit.textContent='\u521B\u5EFA';
+  var addTeamInp=document.createElement('input');addTeamInp.placeholder='队名';
+  var addTeamSubmit=document.createElement('button');addTeamSubmit.textContent='创建';
   addTeamSubmit.addEventListener('click',function(){
     var nm=addTeamInp.value.trim();if(!nm)return;
     simTeams.push({name:nm,ranks:[]});saveSimTeams();
@@ -5787,6 +1861,18 @@ function renderSimPanel(){
   });
   body.appendChild(addTeamBtn);body.appendChild(addTeamForm);
 }
+
+
+// ====== 入口初始化 ======
+
+// 恢复自建队伍显示开关
+(function(){var v=localStorage.getItem('hunt_sim_show');document.getElementById('simToggle').checked=v==='true';})();
+
+// 初始计算并渲染
+recomputeTeams(comps);
+renderAll();
+
+
 })();
 </script>
 <script>document.querySelectorAll('.formula[data-latex]').forEach(function(el){try{katex.render(el.dataset.latex,el,{throwOnError:false})}catch(e){}});</script>
