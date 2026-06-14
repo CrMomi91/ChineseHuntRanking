@@ -291,7 +291,7 @@ body {
 .hcard-strip.s-3 { background: #F0A030; }
 .hcard-strip.s-4 { background: #9B7CB8; }
 .hcard-strip.s-top10 { background: #2471A3; }
-.hcard-strip.s-mid { background: #9B7CB8; }
+.hcard-strip.s-mid { background: #5DA85D; }
 .hcard-strip.s-low { background: #ccc; }
 .hcard-strip.s-staff { background: #555; }
 
@@ -429,6 +429,56 @@ body {
   width: 16px; height: 16px; accent-color: #555; cursor: pointer;
 }
 .pk-ccbc-check.checked { color: #333; font-weight: 500; }
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .wrap { padding: 16px 8px 40px; }
+  .page-header h1 { font-size: 22px; }
+  .tab-btn { padding: 6px 12px; font-size: 13px; }
+  .filter-bar { gap: 8px; padding: 6px 8px; }
+  .date-slider-wrap input[type="range"] { width: 100px; }
+  .date-label { font-size: 11px; min-width: 60px; }
+  .pk-ccbc-check { font-size: 12px; }
+  .col-heads { font-size: 11px; padding: 0 0 6px; }
+  .ch-spacer, .card-strip { width: 3px; }
+  .ch-rank, .card-rank { width: 30px; }
+  .ch-name, .card-name { width: 100px; }
+  .card-rank { font-size: 14px; }
+  .card-name { font-size: 13px; }
+  .ch-total, .ch-front, .ch-stable { width: 48px; }
+  .ch-count, .ch-ach { width: 38px; }
+  .card-total { width: 48px; font-size: 13px; }
+  .card-front, .card-stable { width: 48px; font-size: 13px; }
+  .card-count, .card-ach { width: 38px; font-size: 13px; }
+  .card { height: 46px; }
+  .badge { width: 30px; height: 30px; min-width: 30px; font-size: 13px; }
+  .comp-link { width: 30px; min-width: 30px; font-size: 10px; }
+  .card-badges { gap: 6px; padding: 0 6px; }
+  .comp-heads { gap: 6px; padding: 0 6px; }
+  .tab2-wrap, .tab3-wrap { max-width: 100%; }
+  .main-ach-row { flex-direction: column; }
+  .ach-col { width: 100%; }
+  .sel-row { flex-wrap: wrap; }
+  .sel-row select { min-width: 140px; }
+  .info-bar { margin-left: 0; font-size: 12px; }
+  #tab2, #tab3 { width: 100% !important; }
+  .comp-table { font-size: 13px; }
+  .comp-table th { font-size: 12px; padding: 6px 2px; }
+  .comp-table td { padding: 6px 2px; }
+  .history-header { font-size: 11px; padding: 0 8px 4px; }
+  .hh-name { width: 100px; }
+  .hh-date { width: 60px; }
+  .hcard-name { width: 100px; font-size: 14px; }
+  .hcard-date { width: 60px; font-size: 12px; }
+  .hcard-score { width: 44px; font-size: 13px; }
+  .hcard-weight { width: 48px; font-size: 12px; }
+  .hcard-integral { width: 48px; font-size: 13px; }
+  .fab { bottom: 16px; right: 16px; width: 40px; height: 40px; font-size: 18px; }
+  .sim-panel { right: 16px; bottom: 70px; width: 320px; }
+
+  .center-col { align-items: flex-start; }
+  .board-scroll { width: 100%; overflow-x: auto; }
+}
 </style>
 </head>
 <body>
