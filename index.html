@@ -469,9 +469,9 @@ body {
   .comp-heads { gap: 5px; padding: 0 5px; }
 
   .board-scroll { display: none; }
-  .board-mobile { display: block; overflow-x: clip; }
+  .board-mobile { display: block; overflow-x: clip; position: relative; }
 
-  .bm-header { position: relative; height: 16px; margin-bottom: 2px; }
+  .bm-header { position: relative; height: 18px; margin-bottom: 4px; }
   .bm-h-left {
     position: absolute; left: 0; top: 0; bottom: 0; width: 163px; z-index: 2;
     display: flex; align-items: flex-end;
@@ -482,12 +482,7 @@ body {
   .bm-hl-name { width: 90px; text-align: center; }
   .bm-hl-total { width: 42px; text-align: center; }
 
-  .bm-h-right { position: absolute; left: 163px; right: 0; top: 0; bottom: 0; overflow-x: auto; overflow-y: hidden; }
-  .bm-h-right::-webkit-scrollbar { height: 0; }
-  .bm-h-right-inner { display: flex; gap: 5px; padding-left: 8px; align-items: flex-end; padding-bottom: 2px; }
-  .bm-h-right-inner .comp-link { width: 26px; min-width: 26px; font-size: 8px; }
-
-  .bm-body { display: flex; flex-direction: column; }
+  .bm-left-rows { position: relative; }
   .bm-row { position: relative; height: 42px; margin-bottom: 3px; }
   .bm-row-left {
     position: absolute; left: 0; top: 0; bottom: 0; width: 163px; z-index: 2;
@@ -506,10 +501,15 @@ body {
   .bm-row-left .card-name { width: 90px; display: flex; align-items: center; font-size: 10px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0 4px; }
   .bm-row-left .card-total { width: 42px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; }
 
-  .bm-row-right { position: absolute; left: 163px; right: 0; top: 0; bottom: 0; overflow-x: auto; overflow-y: hidden; background: #fff; border-radius: 0 6px 6px 0; }
-  .bm-row-right::-webkit-scrollbar { height: 0; }
-  .bm-row-right-inner { display: flex; gap: 5px; padding-left: 8px; align-items: center; height: 42px; }
-  #tab1.active, #tab2.active, #tab3.active { width: 100%; }
+  .bm-right-scroll { position: absolute; left: 163px; right: 0; top: 0; bottom: 0; overflow-x: auto; overflow-y: hidden; }
+  .bm-right-scroll::-webkit-scrollbar { height: 0; }
+  .bm-right-inner { display: flex; flex-direction: column; min-width: max-content; }
+  .bm-rh-row { display: flex; gap: 5px; padding: 0 8px 2px 8px; align-items: flex-end; height: 18px; }
+  .bm-rh-row .comp-link { width: 26px; min-width: 26px; font-size: 8px; text-align: center; color: #aaa; cursor: pointer; }
+  .bm-rr-row { display: flex; gap: 5px; padding: 0 8px; align-items: center; height: 42px; margin-bottom: 3px; background: #fff; border-radius: 0 6px 6px 0; }
+  .bm-rr-row .badge { width: 26px; height: 26px; min-width: 26px; font-size: 12px; border-radius: 4px; touch-action: manipulation; }
+  .bm-rr-row .badge:last-child { margin-right: 0; }
+  #tab2.active, #tab3.active { width: 100%; }
 
   /* Frozen columns on mobile: card children only (header fixed via parent sticky) */
   .card .card-strip, .card .card-rank, .card .card-name, .card .card-total {
@@ -624,9 +624,11 @@ body {
             <span class="bm-hl-name">队伍</span>
             <span class="bm-hl-total">总分</span>
           </div>
-          <div class="bm-h-right" id="bmHRight"></div>
         </div>
-        <div class="bm-body" id="bmBody"></div>
+        <div class="bm-left-rows" id="bmLeftRows"></div>
+        <div class="bm-right-scroll" id="bmRightScroll">
+          <div class="bm-right-inner" id="bmRightInner"></div>
+        </div>
       </div>
     </div>
 
@@ -5375,13 +5377,14 @@ function renderCard(team){
 // Mobile two-panel board
 function buildMobileBoard(){
   if(window.innerWidth>768)return;
-  var bmHRight=document.getElementById('bmHRight');
-  var bmBody=document.getElementById('bmBody');
+  var bmLeftRows=document.getElementById('bmLeftRows');
+  var bmRightInner=document.getElementById('bmRightInner');
   var fcomps=getFilteredComps();
 
-  // Build competition header
-  var hInner=document.createElement('div');
-  hInner.className='bm-h-right-inner';
+  bmRightInner.innerHTML='';
+
+  // Build competition header row (right side)
+  var hRow=document.createElement('div');hRow.className='bm-rh-row';
   fcomps.forEach(function(c){
     var link=document.createElement('span');
     link.className='comp-link';link.textContent=c.id;
@@ -5397,20 +5400,19 @@ function buildMobileBoard(){
         tt._bmTarget=link;
       }
     });
-    hInner.appendChild(link);
+    hRow.appendChild(link);
   });
   var hSpacer=document.createElement('div');
   hSpacer.style.cssText='flex-shrink:0;min-width:4px;height:1px;';
-  hInner.appendChild(hSpacer);
-  bmHRight.innerHTML='';bmHRight.appendChild(hInner);
+  hRow.appendChild(hSpacer);
+  bmRightInner.appendChild(hRow);
 
-  // Build rows from existing cards
+  // Build data rows
   var cards=document.querySelectorAll('#app .card');
-  bmBody.innerHTML='';
+  bmLeftRows.innerHTML='';
   cards.forEach(function(card){
-    var row=document.createElement('div');row.className='bm-row';
-
     // Left cell: frozen columns
+    var leftRow=document.createElement('div');leftRow.className='bm-row';
     var left=document.createElement('div');
     var tierCls='';
     card.classList.forEach(function(c){if(c.match(/^t/))tierCls=c;});
@@ -5425,11 +5427,11 @@ function buildMobileBoard(){
       el.textContent=card.querySelector('.'+cls).textContent;
       left.appendChild(el);
     });
-    row.appendChild(left);
+    leftRow.appendChild(left);
+    bmLeftRows.appendChild(leftRow);
 
-    // Right cell: badges area
-    var right=document.createElement('div');right.className='bm-row-right';
-    var rInner=document.createElement('div');rInner.className='bm-row-right-inner';
+    // Right cell: badges row (in shared scroll container)
+    var rRow=document.createElement('div');rRow.className='bm-rr-row';
     var badges=card.querySelectorAll('.card-badges .badge');
     badges.forEach(function(b){
       var clone=b.cloneNode(true);
@@ -5446,14 +5448,12 @@ function buildMobileBoard(){
           }
         });
       }
-      rInner.appendChild(clone);
+      rRow.appendChild(clone);
     });
-    // right edge spacer
-    var spacer=document.createElement('div');
-    spacer.style.cssText='flex-shrink:0;min-width:4px;height:42px;';
-    rInner.appendChild(spacer);
-    right.appendChild(rInner);row.appendChild(right);
-    bmBody.appendChild(row);
+    var rSpacer=document.createElement('div');
+    rSpacer.style.cssText='flex-shrink:0;min-width:4px;height:42px;';
+    rRow.appendChild(rSpacer);
+    bmRightInner.appendChild(rRow);
   });
 
   // Hide tooltip on outside tap (mobile)
@@ -5461,29 +5461,17 @@ function buildMobileBoard(){
     if(window.innerWidth>768)return;
     var tt=document.getElementById('tooltip');
     if(!tt.classList.contains('show'))return;
-    var badgeOrLink=e.target.closest('.bm-row-right-inner .badge')||e.target.closest('.bm-h-right-inner .comp-link');
+    var badgeOrLink=e.target.closest('.bm-rr-row .badge')||e.target.closest('.bm-rh-row .comp-link');
     if(badgeOrLink===tt._bmTarget)return;
     if(tt._bmTarget)tt._bmTarget.style.opacity='';
     tt.classList.remove('show');tt._bmTarget=null;
   });
-  var syncing=false;
-  var rights=document.querySelectorAll('.bm-row-right,.bm-h-right');
-  rights.forEach(function(el){
-    el.addEventListener('scroll',function(){
-      if(syncing)return;
-      syncing=true;
-      var sl=el.scrollLeft;
-      rights.forEach(function(r){if(r!==el)r.scrollLeft=sl;});
-      syncing=false;
-    });
-  });
 
-  // Scroll to rightmost (newest competitions)
+  // Scroll right panel to newest
+  var rs=document.getElementById('bmRightScroll');
   requestAnimationFrame(function(){
     requestAnimationFrame(function(){
-      var maxW=0;
-      rights.forEach(function(r){maxW=Math.max(maxW,r.scrollWidth-r.clientWidth);});
-      rights.forEach(function(r){r.scrollLeft=maxW;});
+      rs.scrollLeft=rs.scrollWidth-rs.clientWidth;
     });
   });
 }
