@@ -101,6 +101,23 @@ sortFront.addEventListener('click',function(){setSort('frontSum',this);});
 sortStable.addEventListener('click',function(){setSort('stableAvg',this);});
 sortCount.addEventListener('click',function(){setSort('count',this);});
 sortAch.addEventListener('click',function(){setSort('achCount',this);});
+var bmSortBtn=document.getElementById('bmSortBtn'),bmSortMenu=null;
+bmSortBtn.addEventListener('click',function(e){
+  e.stopPropagation();
+  if(!bmSortMenu){
+    bmSortMenu=document.createElement('div');bmSortMenu.className='bm-sort-menu';
+    document.body.appendChild(bmSortMenu);
+    [{v:'total',t:'总分'},{v:'frontSum',t:'累积分'},{v:'stableAvg',t:'稳定分'},{v:'count',t:'参赛数'},{v:'achCount',t:'成就数'}].forEach(function(o){
+      var d=document.createElement('div');d.textContent=o.t;
+      d.addEventListener('click',function(){bmSortBtn.innerHTML=o.t+' ▾';bmSortMenu.classList.remove('show');setSort(o.v,sortTotal);});
+      bmSortMenu.appendChild(d);
+    });
+  }
+  var r=bmSortBtn.getBoundingClientRect();
+  bmSortMenu.style.top=r.bottom+'px';bmSortMenu.style.left=(r.right-80)+'px';
+  bmSortMenu.classList.toggle('show');
+});
+document.addEventListener('click',function(){if(bmSortMenu)bmSortMenu.classList.remove('show');});
 
 // 榜单渲染
 function renderLeaderboard(){
@@ -118,7 +135,9 @@ function renderCard(team){
   var card=document.createElement('div');  card.className='card '+(isSim?'tsim':team.tier||'t4');
   var strip=document.createElement('div');strip.className='card-strip';card.appendChild(strip);
   var info=document.createElement('div');info.className='card-info';
-  [{c:'card-rank',v:team.rank},{c:'card-name',v:team.name},{c:'card-total',v:team.total.toFixed(1)},{c:'card-front',v:team.frontSum.toFixed(1)},{c:'card-stable',v:team.stableAvg.toFixed(1)},{c:'card-count',v:team.count},{c:'card-ach',v:team.achCount}].forEach(function(it){var s=document.createElement('span');s.className=it.c;s.textContent=it.v;info.appendChild(s);});
+  var sortVal=team[sortBy]||0;
+  var sortValFmt=(sortBy==='count'||sortBy==='achCount')?sortVal:sortVal.toFixed(1);
+  [{c:'card-rank',v:team.rank},{c:'card-name',v:team.name},{c:'card-total',v:sortValFmt},{c:'card-front',v:team.frontSum.toFixed(1)},{c:'card-stable',v:team.stableAvg.toFixed(1)},{c:'card-count',v:team.count},{c:'card-ach',v:team.achCount}].forEach(function(it){var s=document.createElement('span');s.className=it.c;s.textContent=it.v;info.appendChild(s);});
   card.appendChild(info);
   var badges=document.createElement('div');badges.className='card-badges';
   var fcomps=getFilteredComps();
