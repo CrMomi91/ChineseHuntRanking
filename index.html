@@ -442,7 +442,7 @@ body {
   #tab1.active, .tab-content.active { overflow-x: clip; }
   .page-header h1 { font-size: 20px; margin-bottom: 8px; }
   .page-header .subtitle { font-size: 11px; }
-  .tab-bar { gap: 2px; margin-bottom: 16px; }
+  .tab-bar { gap: 2px; margin-bottom: 16px; justify-content: center; }
   .tab-btn { padding: 6px 10px; font-size: 12px; }
   .bar-chart-wrap { padding: 8px 4px 6px; overflow: hidden; }
   .bar-chart-wrap canvas { max-width: 100%; }
@@ -471,21 +471,21 @@ body {
   .board-scroll { display: none; }
   .board-mobile { display: block; overflow-x: clip; position: relative; }
 
-  .bm-header { position: relative; height: 18px; margin-bottom: 4px; }
+  .bm-header { position: relative; height: 20px; margin-bottom: 4px; }
   .bm-h-left {
-    position: absolute; left: 0; top: 0; bottom: 0; width: 163px; z-index: 2;
+    position: absolute; left: 0; top: 0; bottom: 0; width: 189px; z-index: 2;
     display: flex; align-items: flex-end;
-    font-size: 10px; color: #aaa; font-weight: 500; padding: 0 0 4px 0;
+    font-size: 11px; color: #aaa; font-weight: 500; padding: 0 0 4px 0;
   }
-  .bm-hl-spacer { width: 3px; }
-  .bm-hl-rank { width: 28px; text-align: center; }
-  .bm-hl-name { width: 90px; text-align: center; }
-  .bm-hl-total { width: 42px; text-align: center; }
+  .bm-hl-spacer { width: 4px; }
+  .bm-hl-rank { width: 32px; text-align: center; }
+  .bm-hl-name { width: 105px; text-align: center; }
+  .bm-hl-total { width: 48px; text-align: center; }
 
   .bm-left-rows { position: relative; }
-  .bm-row { position: relative; height: 42px; margin-bottom: 3px; }
+  .bm-row { position: relative; height: 50px; margin-bottom: 3px; }
   .bm-row-left {
-    position: absolute; left: 0; top: 0; bottom: 0; width: 163px; z-index: 2;
+    position: absolute; left: 0; top: 0; bottom: 0; width: 189px; z-index: 2;
     display: flex; align-items: stretch;
     border-radius: 6px 0 0 6px; overflow: hidden;
   }
@@ -496,18 +496,18 @@ body {
   .bm-row-left.t4 { background: #EEF5EE; }
   .bm-row-left.tw { background: #333; color: #fff; }
   .bm-row-left.tsim { background: #f5f5f5; }
-  .bm-row-left .card-strip { width: 3px; min-width: 3px; }
-  .bm-row-left .card-rank { width: 28px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
-  .bm-row-left .card-name { width: 90px; display: flex; align-items: center; font-size: 10px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0 4px; }
-  .bm-row-left .card-total { width: 42px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; }
+  .bm-row-left .card-strip { width: 4px; min-width: 4px; }
+  .bm-row-left .card-rank { width: 32px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; }
+  .bm-row-left .card-name { width: 105px; display: flex; align-items: center; font-size: 12px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0 4px; }
+  .bm-row-left .card-total { width: 48px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; }
 
-  .bm-right-scroll { position: absolute; left: 163px; right: 0; top: 0; bottom: 0; overflow-x: auto; overflow-y: hidden; }
+  .bm-right-scroll { position: absolute; left: 189px; right: 0; top: 0; bottom: 0; overflow-x: auto; overflow-y: hidden; }
   .bm-right-scroll::-webkit-scrollbar { height: 0; }
   .bm-right-inner { display: flex; flex-direction: column; min-width: max-content; }
-  .bm-rh-row { display: flex; gap: 5px; padding: 0 8px 2px 8px; align-items: flex-end; height: 18px; }
-  .bm-rh-row .comp-link { width: 26px; min-width: 26px; font-size: 8px; text-align: center; color: #aaa; cursor: pointer; }
-  .bm-rr-row { display: flex; gap: 5px; padding: 0 8px; align-items: center; height: 42px; margin-bottom: 3px; background: #fff; border-radius: 0 6px 6px 0; }
-  .bm-rr-row .badge { width: 26px; height: 26px; min-width: 26px; font-size: 12px; border-radius: 4px; touch-action: manipulation; }
+  .bm-rh-row { display: flex; gap: 6px; padding: 0 2px 5px 8px; align-items: flex-end; height: 20px; margin-bottom: 4px; }
+  .bm-rh-row .comp-link { width: 30px; min-width: 30px; font-size: 9px; text-align: center; color: #aaa; cursor: pointer; }
+  .bm-rr-row { display: flex; gap: 6px; padding: 0 2px 0 8px; align-items: center; height: 50px; margin-bottom: 3px; background: #fff; border-radius: 0 6px 6px 0; }
+  .bm-rr-row .badge { width: 30px; height: 30px; min-width: 30px; font-size: 13px; border-radius: 4px; touch-action: manipulation; }
   .bm-rr-row .badge:last-child { margin-right: 0; }
   #tab2.active, #tab3.active { width: 100%; }
 
@@ -5273,9 +5273,10 @@ function drawBarChart(){
   canvas.width=cssW*dpr;canvas.height=cssH*dpr;ctx.scale(dpr,dpr);
 
   var ceilY=sortBy==='stableAvg'?100:sortBy==='count'||sortBy==='achCount'?30:500;
-  var pad={top:44,right:10,bottom:20,left:35};
+  var isMob=window.innerWidth<=768;
+  var pad=isMob?{top:44,right:10,bottom:20,left:35}:{top:44,right:16,bottom:56,left:50};
   var pw=cssW-pad.left-pad.right,ph=cssH-pad.top-pad.bottom;
-  var n=all.length,colW=Math.max(6,Math.min(20,pw/(n*1.3+1))),gap=(pw-colW*n)/(n+1);
+  var n=all.length,colW=isMob?Math.max(6,Math.min(20,pw/(n*1.3+1))):20,gap=(pw-colW*n)/(n+1);
 
   ctx.clearRect(0,0,cssW,cssH);
 
@@ -5307,13 +5308,23 @@ function drawBarChart(){
     var color;if(isSim)color='#ccc';else if(t.tier==='tw')color='#333';else if(t.tier==='t0')color='#E74C3C';else if(t.tier==='t1')color='#F0A030';else if(t.tier==='t2')color='#9B7CB8';else if(t.tier==='t3')color='#5B9BD5';else color='#5DA85D';
     ctx.fillStyle=color;ctx.fillRect(x,pad.top+ph-h,colW,h);
 
-    // Number above bar - only first of each tier, horizontal, left-aligned
-    var curTier=t.tier||(isSim?'tsim':'t4');
-    if(curTier!==prevTier){
-      ctx.fillStyle='#444';ctx.font='bold 9px sans-serif';ctx.textAlign='left';
-      var ny=pad.top+ph-h-4;if(ny<pad.top-8)ny=pad.top-8;
-      ctx.fillText(val.toFixed(1),x,ny);
-      prevTier=curTier;
+    if(isMob){
+      // Mobile: only first of each tier, left-aligned
+      var curTier=t.tier||(isSim?'tsim':'t4');
+      if(curTier!==prevTier){
+        ctx.fillStyle='#444';ctx.font='bold 9px sans-serif';ctx.textAlign='left';
+        var ny=pad.top+ph-h-4;if(ny<pad.top-8)ny=pad.top-8;
+        ctx.fillText(val.toFixed(1),x,ny);
+        prevTier=curTier;
+      }
+    }else{
+      // Desktop: all labels centered + team names below
+      ctx.fillStyle='#444';ctx.font='bold 10px sans-serif';ctx.textAlign='center';
+      var ny2=pad.top+ph-h-4;if(ny2<pad.top-8)ny2=pad.top-8;
+      ctx.fillText(val.toFixed(1),x+colW/2,ny2);
+      ctx.fillStyle='#333';ctx.font='10px sans-serif';ctx.textAlign='right';
+      ctx.save();ctx.translate(x+colW/2+8,cssH-pad.bottom+10);ctx.rotate(-0.4);
+      ctx.fillText(t.name||'',0,0);ctx.restore();
     }
   });
 }
@@ -5387,7 +5398,7 @@ function buildMobileBoard(){
   var hRow=document.createElement('div');hRow.className='bm-rh-row';
   fcomps.forEach(function(c){
     var link=document.createElement('span');
-    link.className='comp-link';link.textContent=c.id;
+    link.className='comp-link'+(isMajor(c.id)?' bold-link':'');link.textContent=c.id;
     var dc=decayCoeff(c.id,compWeight(c.id));
     var tipText=c.id+' | '+c.date+' | \u6743\u91CD '+dc.toFixed(2);
     link.addEventListener('click',function(e){
