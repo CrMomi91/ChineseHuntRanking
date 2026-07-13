@@ -54,7 +54,10 @@
     "CCBC17": null
   },
   "灵境TES": {
-    "P&KU1": null,
+    "P&KU1": {
+      "rank": 11,
+      "time": "66.83"
+    },
     "CCBC12": {
       "rank": 5,
       "time": "51.08"
