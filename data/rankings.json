@@ -864,10 +864,7 @@
       "rank": 5,
       "time": "36:44"
     },
-    "P&KU3b": {
-      "rank": 6,
-      "time": "74:04:45"
-    },
+    "P&KU3b": null,
     "CCBC17": null
   },
   "天翔战队ZOO连者！": {
@@ -930,7 +927,10 @@
       "time": null
     },
     "SECO2": null,
-    "P&KU3b": null,
+    "P&KU3b": {
+      "rank": 6,
+      "time": "74:04:45"
+    },
     "CCBC17": null
   },
   "反卷": {
