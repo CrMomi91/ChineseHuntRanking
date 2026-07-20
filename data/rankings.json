@@ -50,7 +50,10 @@
       "time": null
     },
     "SECO2": null,
-    "P&KU3b": null,
+    "P&KU3b": {
+      "rank": 1,
+      "time": "52:57:04"
+    },
     "CCBC17": null
   },
   "灵境TES": {
@@ -110,7 +113,10 @@
       "rank": 14,
       "time": "52:17"
     },
-    "P&KU3b": null,
+    "P&KU3b": {
+      "rank": 4,
+      "time": "70:11:52"
+    },
     "CCBC17": null
   },
   "识文解意的追迹者": {
@@ -170,7 +176,10 @@
       "rank": 3,
       "time": "27:22"
     },
-    "P&KU3b": null,
+    "P&KU3b": {
+      "rank": 3,
+      "time": "66:51:12"
+    },
     "CCBC17": {
       "staff": true
     }
@@ -217,7 +226,10 @@
     "US-TC": null,
     "ZJUPH1": null,
     "SECO2": null,
-    "P&KU3b": null,
+    "P&KU3b": {
+      "rank": 9,
+      "time": "76:21:08"
+    },
     "CCBC17": null
   },
   "杂鱼": {
@@ -247,7 +259,10 @@
       "time": null
     },
     "SECO2": null,
-    "P&KU3b": null,
+    "P&KU3b": {
+      "rank": 5,
+      "time": "74:03:27"
+    },
     "CCBC17": null
   },
   "Anonymous": {
@@ -332,7 +347,10 @@
       "rank": 1,
       "time": "23:48"
     },
-    "P&KU3b": null,
+    "P&KU3b": {
+      "rank": 2,
+      "time": "53:47:38"
+    },
     "CCBC17": null
   },
   "解谜怪盗团": {
@@ -386,7 +404,10 @@
       "time": null
     },
     "SECO2": null,
-    "P&KU3b": null,
+    "P&KU3b": {
+      "rank": 7,
+      "time": "74:12:26"
+    },
     "CCBC17": null
   },
   "海拉鲁野炊组": {
@@ -623,7 +644,10 @@
       "time": null
     },
     "SECO2": null,
-    "P&KU3b": null,
+    "P&KU3b": {
+      "rank": 6,
+      "time": "74:04:45"
+    },
     "CCBC17": null
   },
   "谜途旅人": {
@@ -840,7 +864,10 @@
       "rank": 5,
       "time": "36:44"
     },
-    "P&KU3b": null,
+    "P&KU3b": {
+      "rank": 6,
+      "time": "74:04:45"
+    },
     "CCBC17": null
   },
   "天翔战队ZOO连者！": {
@@ -1173,7 +1200,10 @@
       "rank": 24,
       "time": "66:29"
     },
-    "P&KU3b": null,
+    "P&KU3b": {
+      "rank": 8,
+      "time": "75:17:12"
+    },
     "CCBC17": null
   },
   "Cyfur": {
