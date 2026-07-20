@@ -268,7 +268,10 @@
   "Anonymous": {
     "P&KU1": null,
     "CCBC12": null,
-    "P&KU2": null,
+    "P&KU2": {
+      "rank": 17,
+      "time": "79:28:59"
+    },
     "CCBCBA": {
       "rank": 16,
       "time": "81.10"
@@ -1854,10 +1857,22 @@
     "CCBC17": null
   },
   "丁香鱼徒步运动": {
-    "P&KU1": null,
-    "CCBC12": null,
-    "P&KU2": null,
-    "CCBCBA": null,
+    "P&KU1": {
+      "rank": 15,
+      "time": "91.56"
+    },
+    "CCBC12": {
+      "rank": 14,
+      "time": "74.23"
+    },
+    "P&KU2": {
+      "rank": 22,
+      "time": "89:17:37"
+    },
+    "CCBCBA": {
+      "rank": 21,
+      "time": "98.88"
+    },
     "MH2023": null,
     "JH2024": null,
     "P&KU3a": {
