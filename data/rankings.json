@@ -508,7 +508,9 @@
       "time": null
     },
     "SECO2": null,
-    "P&KU3b": null,
+    "P&KU3b": {
+      "staff": true
+    },
     "CCBC17": null
   },
   "闲散解谜！": {
@@ -927,10 +929,7 @@
       "time": null
     },
     "SECO2": null,
-    "P&KU3b": {
-      "rank": 6,
-      "time": "74:04:45"
-    },
+    "P&KU3b": null,
     "CCBC17": null
   },
   "反卷": {
@@ -1044,7 +1043,10 @@
       "rank": 17,
       "time": "53:57"
     },
-    "P&KU3b": null,
+    "P&KU3b": {
+      "rank": 10,
+      "time": "78:56:59"
+    },
     "CCBC17": null
   },
   "深色墨点": {
