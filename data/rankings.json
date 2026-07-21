@@ -557,7 +557,10 @@
     "US-TC": null,
     "ZJUPH1": null,
     "SECO2": null,
-    "P&KU3b": null,
+    "P&KU3b": {
+      "rank": 18,
+      "time": "93:31:15"
+    },
     "CCBC17": null
   },
   "喵喵喵": {
@@ -738,7 +741,10 @@
       "time": null
     },
     "SECO2": null,
-    "P&KU3b": null,
+    "P&KU3b": {
+      "rank": 13,
+      "time": "84:09:52"
+    },
     "CCBC17": null
   },
   "幼稚园的小猫咪": {
@@ -869,7 +875,10 @@
       "rank": 5,
       "time": "36:44"
     },
-    "P&KU3b": null,
+    "P&KU3b": {
+      "rank": 15,
+      "time": "91:21:21"
+    },
     "CCBC17": null
   },
   "天翔战队ZOO连者！": {
@@ -1346,7 +1355,10 @@
       "rank": 42,
       "time": "78:23"
     },
-    "P&KU3b": null,
+    "P&KU3b": {
+      "rank": 16,
+      "time": "92:12:05"
+    },
     "CCBC17": null
   },
   "队名包含不适宜内容": {

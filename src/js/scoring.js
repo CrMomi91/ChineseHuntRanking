@@ -1,7 +1,7 @@
 // ====== 评分计算核心逻辑 ======
 
 var COLORS={
-  tier:{tw:'#222',twBg:'#333',t0:'#E74C3C',t0Bg:'#FDEDEC',t1:'#F0A030',t1Bg:'#FEF2E4',t2:'#9B7CB8',t2Bg:'#F4EEF8',t3:'#5B9BD5',t3Bg:'#EEF2F8',t4:'#5DA85D',t4Bg:'#EEF5EE',sim:'#bbb',simBg:'#f5f5f5'},
+  tier:{tw:'#222222',twBg:'#333333',t0:'#E74C3C',t0Bg:'#FDEDEC',t1:'#F0A030',t1Bg:'#FEF2E4',t2:'#9B7CB8',t2Bg:'#F4EEF8',t3:'#5B9BD5',t3Bg:'#EEF2F8',t4:'#5DA85D',t4Bg:'#EEF5EE',sim:'#bbbbbb',simBg:'#f5f5f5'},
   rank:{r1:{bg:'#FADBD8',fg:'#C0392B'},r3:{bg:'#FDEBD0',fg:'#D68910'},r6:{bg:'#E8DAEF',fg:'#7D3C98'},r10:{bg:'#D4E6F1',fg:'#2471A3'},r20:{bg:'#E0F0E0',fg:'#2E7D32'},mid:{bg:'#fff',fg:'#333'},null:{bg:'#f5f5f5',fg:'#ccc'},staff:{bg:'#555',fg:'#fff'}},
   ach:{p:{bg:'#f0e8f8',icon:'#d4c0e8',fg:'#6b3fa0'},g:{bg:'#fef9ee',icon:'#f0d060',fg:'#b8860b'},s:{bg:'#f5f5f5',icon:'#d8d8d8',fg:'#666'},b:{bg:'#fdf3eb',icon:'#e8c8a8',fg:'#b87333'}},
   misc:{text:'#1a1a1a',muted:'#888',subtle:'#999',card:'#fff',link:'#3A6EA5',bg:'#f5f5f7',line:'#e0e0e0',border:'#eee',beige:'#f0e0d0',brown:'#d4a080',green:'#4CAF50',gray:'#7F8C8D',dark:'#444'}

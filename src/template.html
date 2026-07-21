@@ -394,7 +394,7 @@ body {
   display: flex; align-items: flex-start; gap: 8px; position: relative; overflow: hidden;
   padding: 8px 10px; border-radius: 6px; margin-bottom: 6px;
 }
-.ach-item.platinum { background: linear-gradient(135deg, var(--ap), #e4d4f0); }
+.ach-item.diamond { background: linear-gradient(135deg, #def4fa, #c8ecf6); }
 .ach-item.gold     { background: var(--ag); }
 .ach-item.silver   { background: var(--sim-bg); }
 .ach-item.bronze   { background: var(--ab); }
@@ -403,7 +403,7 @@ body {
   display: flex; align-items: center; justify-content: center;
   font-size: 14px; font-weight: 700; line-height: 1;
 }
-.ach-item-icon.platinum { background: var(--ap-icon); color: var(--ap-fg); }
+.ach-item-icon.diamond { background: #68d0ec; color: #1a80a0; }
 .ach-item-icon.gold     { background: var(--ag-icon); color: var(--ag-fg); }
 .ach-item-icon.silver   { background: var(--as-icon); color: var(--as-fg); }
 .ach-item-icon.bronze   { background: var(--ab-icon); color: var(--ab-fg); }
@@ -696,6 +696,7 @@ body {
       <div class="tab3-wrap">
         <div class="sel-row"><label>选择比赛：</label><select id="compSelect"></select></div>
         <div id="compDetail"></div>
+        <div class="chart-wrap" style="margin-top:20px;"><canvas id="comparisonChart"></canvas></div>
       </div>
     </div>
 

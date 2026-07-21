@@ -58,14 +58,14 @@ var teamMaxTier={};for(var tmn in rankings){teamMaxTier[tmn]=maxTierEver(tmn).ti
 // 计算单个队伍成就
 function computeOneTeamAch(tn,tr,tc,mt,firstEpoch){
   var ach=[];
-  // 铂金
-  (function(){var cover={r1:false,r2:false,r3:false,r4:false};tc.forEach(function(e){var n=parseInt(e.rank,10);if(isNaN(n))return;if(n<=3)cover.r1=true;else if(n<=10)cover.r2=true;else if(n<=20)cover.r3=true;else cover.r4=true;});if(cover.r1&&cover.r2&&cover.r3&&cover.r4)ach.push({id:'fullspectrum',tier:'platinum',name:'雨露均沾',detail:''});})();
-  if(mt.tier==='tw')ach.push({id:'max_tw',tier:'platinum',name:'恭喜爹可以称帝了',detail:''});
-  if(mt.tier==='t0')ach.push({id:'max_t0',tier:'platinum',name:'冠绝一时',detail:''});
+  // 钻石
+  (function(){var cover={r1:false,r2:false,r3:false,r4:false};tc.forEach(function(e){var n=parseInt(e.rank,10);if(isNaN(n))return;if(n<=3)cover.r1=true;else if(n<=10)cover.r2=true;else if(n<=20)cover.r3=true;else cover.r4=true;});if(cover.r1&&cover.r2&&cover.r3&&cover.r4)ach.push({id:'fullspectrum',tier:'diamond',name:'雨露均沾',detail:''});})();
+  if(mt.tier==='tw')ach.push({id:'max_tw',tier:'diamond',name:'恭喜爹可以称帝了',detail:''});
+  if(mt.tier==='t0')ach.push({id:'max_t0',tier:'diamond',name:'冠绝一时',detail:''});
   // 金
   (function(){var has=tc.some(function(e){return parseInt(e.rank,10)===1;});if(has)ach.push({id:'champion',tier:'gold',name:'我们是冠军！',detail:''});})();
   (function(){var streak=0,maxStreak=0;tc.forEach(function(e){var n=parseInt(e.rank,10);if(!isNaN(n)&&n<=10){streak++;if(streak>maxStreak)maxStreak=streak;}else streak=0;});if(maxStreak>=5)ach.push({id:'top10_streak5',tier:'gold',name:'前十钉子户',detail:maxStreak+'次'});})();
-  (function(){var pk=false,cc=false;tc.forEach(function(e){var n=parseInt(e.rank,10);if(isNaN(n))return;if(e.compId.indexOf('P&KU')===0&&n<=5)pk=true;if(e.compId.indexOf('CCBC')===0&&n<=5)cc=true;});if(pk&&cc)ach.push({id:'mini_slam',tier:'gold',name:'小满贯',detail:''});})();
+  (function(){var pk=false,cc=false;tc.forEach(function(e){var n=parseInt(e.rank,10);if(isNaN(n))return;if(e.compId.indexOf('P&KU')===0&&n<=3)pk=true;if(e.compId.indexOf('CCBC')===0&&n<=3)cc=true;});if(pk&&cc)ach.push({id:'mini_slam',tier:'diamond',name:'小满贯',detail:''});})();
   (function(){var rivals=[];for(var otn in rankings){if(otn===tn)continue;var tro=rankings[otn];var wins=0,losses=0,total=0;tc.forEach(function(e){var ro=tro[e.compId];if(ro===null||ro===undefined||ro==='')return;var rn=parseInt(e.rank,10),orn=parseInt(ro,10);if(isNaN(rn)||isNaN(orn))return;if(rn>20||orn>20)return;if(rn<orn)wins++;else if(orn<rn)losses++;});if(wins+losses>=8&&Math.abs(wins-losses)<=2)rivals.push('对'+otn+' '+wins+':'+losses);}if(rivals.length>0)ach.push({id:'rival',tier:'silver',name:'宿敌',detail:rivals.join('\n')});})();
   (function(){var results=[];chronoComps.forEach(function(c){if(c===chronoComps[0])return;var hr=histRankings[c.id];if(!hr||!hr.ranked||hr.ranked.length===0)return;var prev1=hr.ranked[0];if(prev1===tn)return;var myR=tr[c.id],p1R=rankings[prev1][c.id];if(myR===null||myR===undefined||myR===''||p1R===null||p1R===undefined||p1R==='')return;var mn=parseInt(myR,10),pn=parseInt(p1R,10);if(isNaN(mn)||isNaN(pn))return;if(mn<pn)results.push(c.id+' 超越'+prev1);});if(results.length>0)ach.push({id:'dragonslayer',tier:'gold',name:'屠龙勇士',detail:results.join('\n')});})();
   if(mt.tier==='t1')ach.push({id:'max_t1',tier:'gold',name:'登堂入室',detail:''});
@@ -118,7 +118,7 @@ var achDescs={
   max_tw:'最高曾进入过论外梯队',max_t0:'最高曾进入过T0梯队',max_t1:'最高曾进入过T1梯队',
   max_t2:'最高曾进入过T2梯队',max_t3:'最高曾进入过T3梯队',
   champion:'获得过第1名',top10_streak5:'连续5次获得前10名',
-  mini_slam:'在CCBC与P&KU中均获得过前5名',
+  mini_slam:'在CCBC与P&KU中均获得过前3名',
   rival:'与另一支队伍交手至少8次且胜负相差不大于2（仅计算前二十名内的胜负）',
   dragonslayer:'在一场比赛中超越了此前总分排名第1的队伍',
   debut_top10:'首次参赛便获得前10名',gold_line:'至少获得过2次第10名',

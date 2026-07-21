@@ -325,9 +325,9 @@ function renderAchievements(teamName){
 function renderAchList(ach){
   achSection.style.display='block';achGrid.innerHTML='';
   document.getElementById('achTitle').textContent='成就 ('+ach.length+')';
-  var tierPriority={platinum:4,gold:3,silver:2,bronze:1};
+  var tierPriority={diamond:4,gold:3,silver:2,bronze:1};
   ach.sort(function(a,b){var tp=tierPriority[b.tier]-tierPriority[a.tier];if(tp!==0)return tp;var aMax=a.id.indexOf('max_')===0?0:1,bMax=b.id.indexOf('max_')===0?0:1;return aMax-bMax;});
-  var tierIcons={platinum:'♦',gold:'★',silver:'◆',bronze:'●'};
+  var tierIcons={diamond:'♦',gold:'★',silver:'◆',bronze:'●'};
   ach.forEach(function(a){
     var item=document.createElement('div');item.className='ach-item '+a.tier;
     var icon=document.createElement('div');icon.className='ach-item-icon '+a.tier;icon.textContent=tierIcons[a.tier]||'';

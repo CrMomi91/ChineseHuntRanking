@@ -74,7 +74,10 @@ function drawBarChart(){
 }
 
 // 队伍图表
-function chartY(r,ph,pad){return pad.top+ph*Math.pow((r-1)/49,0.4);}
+function chartY(r,ph,pad,maxR){
+  maxR=maxR||50;
+  return pad.top+ph*(0.04+0.96*Math.pow((r-1)/(maxR-1),0.4));
+}
 
 function drawChart(tname){
   var canvas=tchart,ctx=canvas.getContext('2d'),dpr=window.devicePixelRatio||1;
@@ -87,30 +90,16 @@ function drawChart(tname){
   var tr=isSim?simRanksToObj((simTeams.find(function(st){return st.name===simName;})||{}).ranks||[]):(rankings[tname]||{});
   var pad={top:22,right:50,bottom:40,left:34};
   var fcomps=getFilteredComps();
-  var pw=cssW-pad.left-pad.right,ph=cssH-pad.top-pad.bottom,maxR=50,maxScore=500;
+  var pw=cssW-pad.left-pad.right,ph=cssH-pad.top-pad.bottom;
 
   ctx.clearRect(0,0,cssW,cssH);
 
-  ctx.setLineDash([4,3]);ctx.strokeStyle=COLORS.misc.beige;ctx.lineWidth=1;
-  ctx.fillStyle=COLORS.misc.brown;ctx.font='10px sans-serif';ctx.textAlign='left';
-  for(var s=100;s<=500;s+=100){
-    var gy=pad.top+ph*(1-s/maxScore);
-    ctx.beginPath();ctx.moveTo(pad.left,gy);ctx.lineTo(cssW-pad.right,gy);ctx.stroke();
-    ctx.fillText(s,cssW-pad.right+4,gy+4);
-  }
-  ctx.setLineDash([]);
-
-  ctx.strokeStyle=COLORS.misc.border;ctx.lineWidth=1;
-  [1,10,20,30,40,50].forEach(function(r){var gy=chartY(r,ph,pad);ctx.beginPath();ctx.moveTo(pad.left,gy);ctx.lineTo(cssW-pad.right,gy);ctx.stroke();});
-  ctx.strokeStyle='#ccc';ctx.beginPath();ctx.moveTo(pad.left,pad.top);ctx.lineTo(pad.left,cssH-pad.bottom);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(pad.left,cssH-pad.bottom);ctx.lineTo(cssW-pad.right,cssH-pad.bottom);ctx.stroke();
-  ctx.fillStyle=COLORS.tier.sim;ctx.font='11px sans-serif';ctx.textAlign='right';
-  [1,10,20,30,40,50].forEach(function(r){ctx.fillText(r,pad.left-4,chartY(r,ph,pad)+4);});
-  ctx.textAlign='right';ctx.fillStyle=COLORS.tier.sim;ctx.font='10px sans-serif';
   var fcompsSorted=fcomps.slice().sort(function(a,b){return epochs[a.id]-epochs[b.id];});
-  var tMin=epochs[fcompsSorted[0].id],tMax=Date.now(),tSpan=Math.max(tMax-tMin,1);
+  if(fcompsSorted.length===0)return;
+  var tMin=epochs[fcompsSorted[0].id],lastEp=epochs[fcompsSorted[fcompsSorted.length-1].id];
+  var compSpan=lastEp-tMin;
+  var tXMax=lastEp+Math.max(compSpan*0.06,30*86400000),tSpan=Math.max(tXMax-tMin,1);
   function tX(ep){return pad.left+(ep-tMin)/tSpan*pw;}
-  fcompsSorted.forEach(function(c){ctx.save();ctx.translate(tX(epochs[c.id]),cssH-pad.bottom+8);ctx.rotate(-0.6);ctx.fillText(c.id,0,0);ctx.restore();});
 
   var scoreCurve=[],acc=[];
 var tierFill={};var tierStroke={};
@@ -122,14 +111,60 @@ var tierFill={};var tierStroke={};
   for(var ci=0;ci<fcompsSorted.length;ci++){
     var c=fcompsSorted[ci],curEp=epochs[c.id],r=tr[c.id];
     if(r!==null&&r!==undefined&&r!=='')acc.push(c);
-    var nextEp=ci+1<fcompsSorted.length?epochs[fcompsSorted[ci+1].id]:tMax;
+    var nextEp=ci+1<fcompsSorted.length?epochs[fcompsSorted[ci+1].id]:Math.max(tXMax,Date.now());
     var steps=Math.max(4,Math.ceil((nextEp-curEp)/(20*86400000)));
-    for(var s=0;s<=steps;s++){
-      var t=curEp+(nextEp-curEp)*s/steps;
+    for(var si=0;si<=steps;si++){
+      var t=curEp+(nextEp-curEp)*si/steps;
       var score=totalScoreAt(tr,tname,acc.slice(),t);
-      scoreCurve.push({x:tX(t),y:pad.top+ph*(1-Math.min(score,maxScore)/maxScore),score:score,tier:tierOf(score)});
+      scoreCurve.push({x:tX(t),y:0,score:score,tier:tierOf(score)});
     }
   }
+
+  var maxScore=500;
+  if(scoreCurve.length>0){
+    var actualMax=0;
+    for(var i=0;i<scoreCurve.length;i++)actualMax=Math.max(actualMax,scoreCurve[i].score);
+    maxScore=Math.max(500,Math.ceil(actualMax/100)*100);
+    for(var i=0;i<scoreCurve.length;i++)scoreCurve[i].y=pad.top+ph*(1-Math.min(scoreCurve[i].score,maxScore)/maxScore);
+  }
+
+  var pts=[],teamMaxR=0,maxR=50;
+  fcompsSorted.forEach(function(c){
+    if(!hasRank(tr[c.id]))return;
+    var raw=getRank(tr[c.id]),is50=typeof raw==='string'&&raw.indexOf('50+')!==-1;
+    var n=is50?50:parseInt(raw,10);if(isNaN(n))return;
+    if(n>maxR)n=maxR;if(n>teamMaxR)teamMaxR=n;
+    pts.push({x:tX(epochs[c.id]),y:0,r:n,raw:raw,is50:is50});
+  });
+
+  var rankMaxR=Math.min(Math.max(10,Math.ceil(teamMaxR/5)*5),50);
+  function rankY(r){return pad.top+ph*(0.04+0.96*Math.pow((r-1)/(rankMaxR-1),0.4));}
+  for(var i=0;i<pts.length;i++)pts[i].y=rankY(pts[i].r);
+
+  var rankRefs;
+  if(rankMaxR<=10)rankRefs=[1,2,3,4,5,6,7,8,9,10];
+  else if(rankMaxR<=20)rankRefs=[1,5,10,15,20];
+  else if(rankMaxR<=30)rankRefs=[1,5,10,15,20,25,30];
+  else if(rankMaxR<=40)rankRefs=[1,10,20,30,40];
+  else rankRefs=[1,10,20,30,40,50];
+
+  ctx.setLineDash([4,3]);ctx.strokeStyle=COLORS.misc.beige;ctx.lineWidth=1;
+  ctx.fillStyle=COLORS.misc.brown;ctx.font='10px sans-serif';ctx.textAlign='left';
+  for(var s=100;s<=maxScore;s+=100){
+    var gy=pad.top+ph*(1-s/maxScore);
+    ctx.beginPath();ctx.moveTo(pad.left,gy);ctx.lineTo(cssW-pad.right,gy);ctx.stroke();
+    ctx.fillText(s,cssW-pad.right+4,gy+4);
+  }
+  ctx.setLineDash([]);
+
+  ctx.strokeStyle=COLORS.misc.border;ctx.lineWidth=1;
+  rankRefs.forEach(function(r){var gy=rankY(r);ctx.beginPath();ctx.moveTo(pad.left,gy);ctx.lineTo(cssW-pad.right,gy);ctx.stroke();});
+  ctx.strokeStyle='#ccc';ctx.beginPath();ctx.moveTo(pad.left,pad.top);ctx.lineTo(pad.left,cssH-pad.bottom);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(pad.left,cssH-pad.bottom);ctx.lineTo(cssW-pad.right,cssH-pad.bottom);ctx.stroke();
+  ctx.fillStyle=COLORS.tier.sim;ctx.font='11px sans-serif';ctx.textAlign='right';
+  rankRefs.forEach(function(r){ctx.fillText(r,pad.left-4,rankY(r)+4);});
+  ctx.textAlign='right';ctx.fillStyle=COLORS.tier.sim;ctx.font='10px sans-serif';
+  fcompsSorted.forEach(function(c){ctx.save();ctx.translate(tX(epochs[c.id]),cssH-pad.bottom+8);ctx.rotate(-0.6);ctx.fillText(c.id,0,0);ctx.restore();});
 
   if(scoreCurve.length>1){
     var segStart=0;
@@ -151,14 +186,6 @@ var tierFill={};var tierStroke={};
       }
     }
   }
-
-  var pts=[];
-  fcompsSorted.forEach(function(c){
-    if(!hasRank(tr[c.id]))return;
-    var raw=getRank(tr[c.id]),is50=typeof raw==='string'&&raw.indexOf('50+')!==-1;
-    var n=is50?50:parseInt(raw,10);if(isNaN(n))return;
-    if(n>maxR)n=maxR;pts.push({x:tX(epochs[c.id]),y:chartY(n,ph,pad),r:n,raw:raw,is50:is50});
-  });
 
   if(pts.length>1){
     ctx.strokeStyle=COLORS.misc.link;ctx.lineWidth=2;ctx.lineJoin='round';ctx.lineCap='round';
