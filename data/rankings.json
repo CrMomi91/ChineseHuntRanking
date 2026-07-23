@@ -226,10 +226,7 @@
     "US-TC": null,
     "ZJUPH1": null,
     "SECO2": null,
-    "P&KU3b": {
-      "rank": 9,
-      "time": "76:21:08"
-    },
+    "P&KU3b": null,
     "CCBC17": null
   },
   "杂鱼": {
@@ -467,7 +464,10 @@
       "rank": 23,
       "time": "62:50"
     },
-    "P&KU3b": null,
+    "P&KU3b": {
+      "rank": 49,
+      "time": "146:17:50"
+    },
     "CCBC17": null
   },
   "金牌线": {
@@ -558,7 +558,7 @@
     "ZJUPH1": null,
     "SECO2": null,
     "P&KU3b": {
-      "rank": 18,
+      "rank": 16,
       "time": "93:31:15"
     },
     "CCBC17": null
@@ -742,7 +742,7 @@
     },
     "SECO2": null,
     "P&KU3b": {
-      "rank": 13,
+      "rank": 12,
       "time": "84:09:52"
     },
     "CCBC17": null
@@ -875,10 +875,7 @@
       "rank": 5,
       "time": "36:44"
     },
-    "P&KU3b": {
-      "rank": 15,
-      "time": "91:21:21"
-    },
+    "P&KU3b": null,
     "CCBC17": null
   },
   "天翔战队ZOO连者！": {
@@ -911,7 +908,10 @@
       "rank": 4,
       "time": "32:01"
     },
-    "P&KU3b": null,
+    "P&KU3b": {
+      "rank": 26,
+      "time": "119:48:32"
+    },
     "CCBC17": null
   },
   "看看题": {
@@ -986,6 +986,36 @@
     "P&KU3b": null,
     "CCBC17": null
   },
+  "绿色圆圈": {
+    "P&KU1": null,
+    "CCBC12": null,
+    "P&KU2": null,
+    "CCBCBA": null,
+    "MH2023": null,
+    "JH2024": null,
+    "P&KU3a": null,
+    "CCBC15": null,
+    "JUST1": null,
+    "GnPH": null,
+    "CCBC16": null,
+    "US-TC": {
+      "rank": 37,
+      "time": null
+    },
+    "ZJUPH1": {
+      "rank": 30,
+      "time": null
+    },
+    "SECO2": {
+      "rank": 9,
+      "time": "49:16"
+    },
+    "P&KU3b": {
+      "rank": 22,
+      "time": "114:55:59"
+    },
+    "CCBC17": null
+  },
   "何以为我": {
     "P&KU1": null,
     "CCBC12": null,
@@ -1019,7 +1049,10 @@
       "rank": 6,
       "time": "42:56"
     },
-    "P&KU3b": null,
+    "P&KU3b": {
+      "rank": 23,
+      "time": "115:52:44"
+    },
     "CCBC17": null
   },
   "凑不出": {
@@ -1056,7 +1089,7 @@
       "time": "53:57"
     },
     "P&KU3b": {
-      "rank": 10,
+      "rank": 9,
       "time": "78:56:59"
     },
     "CCBC17": null
@@ -1096,33 +1129,6 @@
     "SECO2": {
       "rank": 7,
       "time": "43:44"
-    },
-    "P&KU3b": null,
-    "CCBC17": null
-  },
-  "绿色圆圈": {
-    "P&KU1": null,
-    "CCBC12": null,
-    "P&KU2": null,
-    "CCBCBA": null,
-    "MH2023": null,
-    "JH2024": null,
-    "P&KU3a": null,
-    "CCBC15": null,
-    "JUST1": null,
-    "GnPH": null,
-    "CCBC16": null,
-    "US-TC": {
-      "rank": 37,
-      "time": null
-    },
-    "ZJUPH1": {
-      "rank": 30,
-      "time": null
-    },
-    "SECO2": {
-      "rank": 9,
-      "time": "49:16"
     },
     "P&KU3b": null,
     "CCBC17": null
@@ -1172,7 +1178,10 @@
       "time": null
     },
     "SECO2": null,
-    "P&KU3b": null,
+    "P&KU3b": {
+      "rank": 34,
+      "time": "126:43:59"
+    },
     "CCBC17": null
   },
   "Not A Hunter": {
@@ -1269,7 +1278,7 @@
       "time": "48:39"
     },
     "P&KU3b": {
-      "rank": 12,
+      "rank": 11,
       "time": "79:40:15"
     },
     "CCBC17": null
@@ -1356,7 +1365,7 @@
       "time": "78:23"
     },
     "P&KU3b": {
-      "rank": 16,
+      "rank": 14,
       "time": "92:12:05"
     },
     "CCBC17": null
@@ -1409,7 +1418,10 @@
       "rank": 39,
       "time": "77:45"
     },
-    "P&KU3b": null,
+    "P&KU3b": {
+      "rank": 25,
+      "time": "117:15:17"
+    },
     "CCBC17": null
   },
   "你在为难我胖虎": {
@@ -1742,7 +1754,10 @@
     "US-TC": null,
     "ZJUPH1": null,
     "SECO2": null,
-    "P&KU3b": null,
+    "P&KU3b": {
+      "rank": 30,
+      "time": "121:53:24"
+    },
     "CCBC17": null
   },
   "Live Fast Die Young": {
@@ -1793,7 +1808,10 @@
       "time": null
     },
     "SECO2": null,
-    "P&KU3b": null,
+    "P&KU3b": {
+      "rank": 28,
+      "time": "120:50:07"
+    },
     "CCBC17": null
   },
   "Omega5": {
@@ -1868,7 +1886,10 @@
     },
     "ZJUPH1": null,
     "SECO2": null,
-    "P&KU3b": null,
+    "P&KU3b": {
+      "rank": 29,
+      "time": "121:47:09"
+    },
     "CCBC17": null
   },
   "丁香鱼徒步运动": {
@@ -1914,7 +1935,7 @@
     "ZJUPH1": null,
     "SECO2": null,
     "P&KU3b": {
-      "rank": 11,
+      "rank": 10,
       "time": "79:09:36"
     },
     "CCBC17": null
@@ -1967,7 +1988,10 @@
       "rank": 21,
       "time": "60.07"
     },
-    "P&KU3b": null,
+    "P&KU3b": {
+      "rank": 36,
+      "time": "129:57:19"
+    },
     "CCBC17": null
   }
 }
